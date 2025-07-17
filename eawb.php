@@ -6,7 +6,7 @@ Description: Metodă personalizată de transport pentru WooCommerce
 Version: 1.0.0
 Author: Alin
 Author URI: https://eawb.ro/
-License: GPL-3.0+
+License: GPL-3.0+ pe naiba
 Text Domain: woocommerce-shipping-plugin
 Domain Path: /languages
 */
