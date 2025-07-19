@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || exit;
+require_once EAWB_ROOT_PATH . '/lib/eawb-customer.php';
 
 class WC_Eawb_Shipping extends WC_Shipping_Method {
 
@@ -16,9 +18,9 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
     }
 
     public function init() {
-        $this->init_form_fields();
         $this->init_settings();
-        add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
+        $this->init_form_fields();
+        //add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
     }
 
     public function init_form_fields() {
@@ -33,8 +35,55 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'title' => __('Method Title', 'woocommerce-shipping-plugin'),
                 'type' => 'text',
                 'description' => __('This controls the title which the user sees during checkout.', 'woocommerce-shipping-plugin'),
-                'default' => __('Custom Shippingx', 'woocommerce-shipping-plugin'),
+                'default' => __('Custom Shipping', 'woocommerce-shipping-plugin'),
                 'desc_tip' => true,
+            ),
+            'api_key' => array(
+                'title' => __('Api Key', 'woocommerce-shipping-plugin'),
+                'type' => 'text',
+                'description' => __('The key required to access the server.', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
+            ),
+        );
+        //$setings = get_option('woocommerce_eawb_shipping_settings');
+        $post_data = $this->get_post_data();
+        if (isset($post_data['woocommerce_'.$this->id.'_api_key'])) {
+            $this->process_admin_options();
+        }
+        if (!isset($this->settings['api_key']) || empty($this->settings['api_key'])) {
+            return;
+        }
+        $customer = new \EawbShipping\EawbCustomer;
+        $customer_info = $customer->getCustomerInfo();
+        if (!$customer) {
+            $this->form_fields = array_merge($this->form_fields, array(
+            'customer_info' => array(
+                'title' => __('Eroare la conectare', 'woocommerce-shipping-plugin'),
+                'type' => 'title',
+            )));
+            return;
+        }
+        $this->form_fields = array_merge($this->form_fields, array(
+            'customer_info' => array(// Nu va fi salvat, doar afișat
+                'title' => __($customer_info.' sunteti conectat la Eawb ', 'woocommerce-shipping-plugin'),
+                'type' => 'title',
+            ),
+            
+            'default_shipping' => array(
+                'title' => __('Default Pickup Address', 'woocommerce-shipping-plugin'),
+                'type' => 'select',
+                'description' => __('Default pickup address', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
+                'default' => "",
+                'options' => $customer->getPickUpAdresses(),
+            ),
+            'default_billing' => array(
+                'title' => __('Default Billing', 'woocommerce-shipping-plugin'),
+                'type' => 'select',
+                'description' => __('Default billing to innvoice', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
+                'default' => "",
+                'options' => $customer->getCutomerBillingAdresses(),
             ),
             'cost' => array(
                 'title' => __('Base Cost', 'woocommerce-shipping-plugin'),
@@ -73,7 +122,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                     'sameday' => __('SameDay 24H', 'woocommerce-shipping-plugin'),
                 ),
             ),
-        );
+        ));
     }
 
     public function process_admin_options() {

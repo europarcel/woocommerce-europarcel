@@ -12,6 +12,8 @@ Domain Path: /languages
 */
 
 defined('ABSPATH') || exit;
+define ('EAWB_API_URL','https://api.europarcel.com/api/'); 
+define('EAWB_ROOT_PATH', dirname(__FILE__));
 
 // Verifică dacă WooCommerce este activ
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
