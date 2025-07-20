@@ -4,7 +4,7 @@ Plugin Name: Eawb Shipping
 Plugin URI: https://eawb.ro/
 Description: Metodă personalizată de transport pentru WooCommerce
 Version: 1.0.0
-Author: Alin
+Author: Europarcel
 Author URI: https://eawb.ro/
 License: GPL-3.0+ pe naiba
 Text Domain: woocommerce-shipping-plugin
@@ -14,6 +14,7 @@ Domain Path: /languages
 defined('ABSPATH') || exit;
 define ('EAWB_API_URL','https://api.europarcel.com/api/'); 
 define('EAWB_ROOT_PATH', dirname(__FILE__));
+
 
 // Verifică dacă WooCommerce este activ
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {

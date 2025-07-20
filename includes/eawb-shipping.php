@@ -1,6 +1,9 @@
 <?php
-defined( 'ABSPATH' ) || exit;
+
+defined('ABSPATH') || exit;
 require_once EAWB_ROOT_PATH . '/lib/eawb-customer.php';
+require_once EAWB_ROOT_PATH . '/includes/eawb-custom-fields.php';
+include_once EAWB_ROOT_PATH . '/lib/eawb-constants.php';
 
 class WC_Eawb_Shipping extends WC_Shipping_Method {
 
@@ -47,7 +50,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         );
         //$setings = get_option('woocommerce_eawb_shipping_settings');
         $post_data = $this->get_post_data();
-        if (isset($post_data['woocommerce_'.$this->id.'_api_key'])) {
+        if (isset($post_data['woocommerce_' . $this->id . '_api_key'])) {
             $this->process_admin_options();
         }
         if (!isset($this->settings['api_key']) || empty($this->settings['api_key'])) {
@@ -57,18 +60,17 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         $customer_info = $customer->getCustomerInfo();
         if (!$customer) {
             $this->form_fields = array_merge($this->form_fields, array(
-            'customer_info' => array(
-                'title' => __('Eroare la conectare', 'woocommerce-shipping-plugin'),
-                'type' => 'title',
+                'customer_info' => array(
+                    'title' => __('Eroare la conectare', 'woocommerce-shipping-plugin'),
+                    'type' => 'title',
             )));
             return;
         }
         $this->form_fields = array_merge($this->form_fields, array(
             'customer_info' => array(// Nu va fi salvat, doar afișat
-                'title' => __($customer_info.' sunteti conectat la Eawb ', 'woocommerce-shipping-plugin'),
+                'title' => __($customer_info . ' sunteti conectat la Eawb ', 'woocommerce-shipping-plugin'),
                 'type' => 'title',
             ),
-            
             'default_shipping' => array(
                 'title' => __('Default Pickup Address', 'woocommerce-shipping-plugin'),
                 'type' => 'select',
@@ -85,13 +87,6 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'default' => "",
                 'options' => $customer->getCutomerBillingAdresses(),
             ),
-            'cost' => array(
-                'title' => __('Base Cost', 'woocommerce-shipping-plugin'),
-                'type' => 'text',
-                'description' => __('Base cost for shipping', 'woocommerce-shipping-plugin'),
-                //'default' => '10',
-                'desc_tip' => true,
-            ),
             'available_services' => array(
                 'title' => __('Agreate Services', 'woocommerce-shipping-plugin'),
                 'type' => 'multiselect',
@@ -100,29 +95,69 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px;height:450px;',
                 'default' => array(),
-                'options' => array(
-                    'cargus_national' => __('Cargus National', 'woocommerce-shipping-plugin'),
-                    'dpd_standard' => __('DPD Standard', 'woocommerce-shipping-plugin'),
-                    'fan_courier' => __('FanCourier Standard', 'woocommerce-shipping-plugin'),
-                    'gls_national' => __('GLS National', 'woocommerce-shipping-plugin'),
-                    'sameday' => __('SameDay 24H', 'woocommerce-shipping-plugin'),
-                ),
+                'options' => \EawbShipping\EawbConstants::getAvailableServices()
             ),
+            'courier_choice_method' => array(
+                'title' => __('Courier choice method', 'woocommerce-shipping-plugin'),
+                'type' => 'select',
+                'options' => array(
+                    'low_price' => __('Low price'),
+                    'carrier_order' => __('In the order entered')
+                ),
+                'default' => 'low_price',
+                'description' => __('Modul de alegere curier', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
+            ),
+            /*
             'default_service' => array(
                 'title' => __('Default Service', 'woocommerce-shipping-plugin'),
                 'type' => 'select',
                 'description' => __('Default selected service', 'woocommerce-shipping-plugin'),
                 'desc_tip' => true,
-                'default' => 'fan_courier',
+                'default' => 'none',
+                'options' => array_merge(['none' => ''], \EawbShipping\EawbConstants::getAvailableServices())
+            ),*/
+            'price_type' => array(
+                'title' => __('Tip preț transport', 'woocommerce-shipping-plugin'),
+                'type' => 'select',
                 'options' => array(
-                    'cargus_national' => __('Cargus National', 'woocommerce-shipping-plugin'),
-                    'dpd_standard' => __('DPD Standard', 'woocommerce-shipping-plugin'),
-                    'fan_courier' => __('FanCourier Standard', 'woocommerce-shipping-plugin'),
-                    'gls_national' => __('GLS National', 'woocommerce-shipping-plugin'),
-                    'sameday' => __('SameDay 24H', 'woocommerce-shipping-plugin'),
+                    'fixed' => __('Preț fix'),
+                    'calculated' => __('Preț calculat')
                 ),
+                'default' => 'fixed',
+                'description' => __('Modul de calculare pret pentru client fix/calculat prin api', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
+            ),
+            'fixed_price_group' => array(
+                'type' => 'fixed_price_group',
+                'class' => 'eawb-price-type-dependent eawb-fixed-price'
+            ),
+            'calculated_price_group' => array(
+                'type' => 'calculated_price_group',
+                'class' => 'eawb-price-type-dependent eawb-calculated-price'
+            ),
+            'free_shipping_from' => array(
+                'title' => __('Free shiping from ...', 'woocommerce-shipping-plugin'),
+                'type' => 'text',
+                'default' => '',
+                'description' => __('Minimum product price for free delivery.', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
             ),
         ));
+    }
+
+    /**
+     * Generează HTML pentru grupul de preț fix 
+     */
+    public function generate_fixed_price_group_html() {
+        return \EawbShipping\Eawb_Shipping_Custom_Fields::fixed_price_group($this);
+    }
+
+    /**
+     * Generează HTML pentru grupul de preț calculat 
+     */
+    public function generate_calculated_price_group_html() {
+        return \EawbShipping\Eawb_Shipping_Custom_Fields::calculated_price_group($this);
     }
 
     public function process_admin_options() {
@@ -141,12 +176,36 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 $this->add_error($e->getMessage());
             }
         }
-
+        $this->updateCustomFields();
         return update_option(
                 $this->get_option_key(),
                 apply_filters('woocommerce_shipping_' . $this->id . '_settings_values', $this->settings, $this),
                 'yes'
         );
+    }
+
+    public function updateCustomFields() {
+        // Procesează câmpurile noastre custom
+        $fixed_price = isset($_POST['woocommerce_eawb_shipping_fixed_price']) ?
+                wc_clean($_POST['woocommerce_eawb_shipping_fixed_price']) : '15';
+        $this->update_option('fixed_price', $fixed_price);
+
+        $default_weight = isset($_POST['woocommerce_eawb_shipping_default_weight']) ?
+                wc_clean($_POST['woocommerce_eawb_shipping_default_weight']) : '1';
+        $this->update_option('default_weight', $default_weight);
+        $default_length = isset($_POST['woocommerce_eawb_shipping_default_length']) ?
+                wc_clean($_POST['woocommerce_eawb_shipping_default_length']) : '15';
+        $this->update_option('default_length', $default_length);
+        $default_width = isset($_POST['woocommerce_eawb_shipping_default_width']) ?
+                wc_clean($_POST['woocommerce_eawb_shipping_default_width']) : '15';
+        $this->update_option('default_width', $default_width);
+        $default_height = isset($_POST['woocommerce_eawb_shipping_default_height']) ?
+                wc_clean($_POST['woocommerce_eawb_shipping_default_height']) : '15';
+        $this->update_option('default_height', $default_height);
+
+        $price_multiplier = isset($_POST['woocommerce_eawb_shipping_price_multiplier']) ?
+                wc_clean($_POST['woocommerce_eawb_shipping_price_multiplier']) : '1.2';
+        $this->update_option('price_multiplier', $price_multiplier);
     }
 
     public function calculate_shipping($package = array()) {
