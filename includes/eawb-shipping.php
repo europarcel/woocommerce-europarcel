@@ -281,7 +281,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'carrier_id' =>$price['carrier_id'],
                 'service_id' =>$price['service_id'],
                 'label' => 'Transport '.$price['carrier'],
-                'cost' => $price['price']['total'],
+                'cost' => $price['price']['total']*$settings['price_multiplier'],
                 'package' => $package,
             ));
             return;
