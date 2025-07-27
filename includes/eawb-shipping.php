@@ -58,17 +58,24 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         }
         $customer = new \EawbShipping\EawbCustomer;
         $customer_info = $customer->getCustomerInfo();
-        if (!$customer) {
+        if (!$customer_info) {
             $this->form_fields = array_merge($this->form_fields, array(
-                'customer_info' => array(
+                'eawb_customer' => array(
                     'title' => __('Eroare la conectare', 'woocommerce-shipping-plugin'),
                     'type' => 'title',
             )));
             return;
+        } else {
+            $this->update_option('eawb_customer', $customer_info);
+        }
+        $shipping_classes = get_terms(array('taxonomy' => 'product_shipping_class', 'hide_empty' => false));
+        $view_shipping_classes = [];
+        foreach ($shipping_classes as $shipping_class) {
+            $view_shipping_classes[$shipping_class->slug] = $shipping_class->name;
         }
         $this->form_fields = array_merge($this->form_fields, array(
             'customer_info' => array(// Nu va fi salvat, doar afișat
-                'title' => __($customer_info . ' sunteti conectat la Eawb ', 'woocommerce-shipping-plugin'),
+                'title' => __($customer_info['name'] . ' sunteti conectat la Eawb ', 'woocommerce-shipping-plugin'),
                 'type' => 'title',
             ),
             'default_shipping' => array(
@@ -109,14 +116,14 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'desc_tip' => true,
             ),
             /*
-            'default_service' => array(
-                'title' => __('Default Service', 'woocommerce-shipping-plugin'),
-                'type' => 'select',
-                'description' => __('Default selected service', 'woocommerce-shipping-plugin'),
-                'desc_tip' => true,
-                'default' => 'none',
-                'options' => array_merge(['none' => ''], \EawbShipping\EawbConstants::getAvailableServices())
-            ),*/
+              'default_service' => array(
+              'title' => __('Default Service', 'woocommerce-shipping-plugin'),
+              'type' => 'select',
+              'description' => __('Default selected service', 'woocommerce-shipping-plugin'),
+              'desc_tip' => true,
+              'default' => 'none',
+              'options' => array_merge(['none' => ''], \EawbShipping\EawbConstants::getAvailableServices())
+              ), */
             'price_type' => array(
                 'title' => __('Tip preț transport', 'woocommerce-shipping-plugin'),
                 'type' => 'select',
@@ -136,12 +143,28 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'type' => 'calculated_price_group',
                 'class' => 'eawb-price-type-dependent eawb-calculated-price'
             ),
-            'free_shipping_from' => array(
-                'title' => __('Free shiping from ...', 'woocommerce-shipping-plugin'),
-                'type' => 'text',
-                'default' => '',
-                'description' => __('Minimum product price for free delivery.', 'woocommerce-shipping-plugin'),
+            'free_shipping_amount' => array(
+                'title' => __('Free shiping from min amount', 'woocommerce-shipping-plugin'),
+                'type' => 'number',
+                'default' => 0,
+                'description' => __('Minimum order price for free delivery.', 'woocommerce-shipping-plugin'),
                 'desc_tip' => true,
+            ),
+            'free_shipping_classes' => array(
+                'title' => __('Free shiping for product classes', 'woocommerce-shipping-plugin'),
+                'type' => 'multiselect',
+                'class' => 'wc-enhanced-select',
+                'css' => 'width: 450px',
+                'default' => array(),
+                'description' => __('Free shiping dor classes.', 'woocommerce-shipping-plugin'),
+                'desc_tip' => true,
+                'options' => $view_shipping_classes
+            ),
+            'free_shipping_coupons' => array(
+                'title' => __('Free shiping for coupons', 'woocommerce-shipping-plugin'),
+                'type' => 'checkbox',
+                'label' => __('Free shiping for coupons', 'woocommerce-shipping-plugin'),
+                'default' => 'yes',
             ),
         ));
     }
@@ -209,11 +232,60 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
     }
 
     public function calculate_shipping($package = array()) {
-        $this->add_rate(array(
-            'id' => $this->id,
-            'label' => $this->title,
-            'cost' => $this->get_option('cost', 10),
-            'package' => $package,
-        ));
+        $settings = get_option('woocommerce_eawb_shipping_settings');
+        if (!$settings) {
+            return false;
+        }
+        $has_free_shipping = false;
+        if ($settings['free_shipping_amount'] > 0) {
+            $package_amount = WC()->cart->cart_contents_total +
+                    WC()->cart->tax_total;
+            if ($package_amount > $settings['free_shipping_amount']) {
+                $has_free_shipping = true;
+            }
+        }
+        if ($settings['free_shipping_coupons']) {
+            $applied_coupons = WC()->cart->get_applied_coupons();
+            foreach ($applied_coupons as $coupon_code) {
+                $coupon = new WC_Coupon($coupon_code);
+                if ($coupon->get_free_shipping()) {
+                    $has_free_shipping = true;
+                }
+            }
+        }
+        if ($settings['free_shipping_classes']) {
+            
+        }
+        if ($has_free_shipping) {
+            $this->add_rate(array(
+                'id' => $this->id,
+                'label' => 'Transport gratuit',
+                'cost' => 0,
+                'package' => $package,
+            ));
+            return;
+        }
+        if ($settings['price_type'] === 'fixed') {
+            $this->add_rate(array(
+                'id' => $this->id,
+                'label' => 'Cost Transport',
+                'cost' => $settings['fixed_price'],
+                'package' => $package,
+            ));
+            return;
+        }
+        $price = (new \EawbShipping\EawbCustomer())->getPrices($package);
+        if ($price && is_array($price)) {
+            $this->add_rate(array(
+                'id' => $this->id,
+                'carrier_id' =>$price['carrier_id'],
+                'service_id' =>$price['service_id'],
+                'label' => 'Transport '.$price['carrier'],
+                'cost' => $price['price']['total'],
+                'package' => $package,
+            ));
+            return;
+        }
+        return false;
     }
 }

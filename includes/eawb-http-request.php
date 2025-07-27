@@ -22,7 +22,7 @@ class EawbHttpRequest {
             int $timeout = 15) {
         $params = array(
             'body' => $data,
-            'headers' => getHeader(),
+            'headers' => self::getHeader(),
             'timeout' => $timeout
         );
         $url=EAWB_API_URL.$function;
