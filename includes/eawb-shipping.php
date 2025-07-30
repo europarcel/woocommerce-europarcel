@@ -108,8 +108,9 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'title' => __('Courier choice method', 'woocommerce-shipping-plugin'),
                 'type' => 'select',
                 'options' => array(
-                    'low_price' => __('Low price'),
-                    'carrier_order' => __('In the order entered')
+                    'low_price' => __('First Low price', 'woocommerce-shipping-plugin'),
+                    'carrier_order' => __('First In the order entered', 'woocommerce-shipping-plugin'),
+                    'client_choice' => __('Client Choice', 'woocommerce-shipping-plugin')
                 ),
                 'default' => 'low_price',
                 'description' => __('Modul de alegere curier', 'woocommerce-shipping-plugin'),
@@ -274,17 +275,55 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
             ));
             return;
         }
-        $price = (new \EawbShipping\EawbCustomer())->getPrices($package);
-        if ($price && is_array($price)) {
-            $this->add_rate(array(
-                'id' => $this->id,
-                'carrier_id' =>$price['carrier_id'],
-                'service_id' =>$price['service_id'],
-                'label' => 'Transport '.$price['carrier'],
-                'cost' => $price['price']['total']*$settings['price_multiplier'],
-                'package' => $package,
-            ));
-            return;
+        $prices = (new \EawbShipping\EawbCustomer())->getPrices($package);
+        if ($prices && is_array($prices)) {
+            if ($settings['courier_choice_method'] == 'client_choice') {
+                foreach ($prices[0] as $price) { //home to home
+                    $this->add_rate(array(
+                        'id' => $this->id.'_'.$price['carrier_id'].'_'.$price['service_id'],
+                        'carrier_id' => $price['carrier_id'],
+                        'service_id' => $price['service_id'],
+                        'label' => __('Shipping Home To Home with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                        'package' => $package,
+                    ));
+                }
+                foreach ($prices[1] as $price) { //home to locker
+                    $this->add_rate(array(
+                        'id' => $this->id.'_'.$price['carrier_id'].'_'.$price['service_id'],
+                        'carrier_id' => $price['carrier_id'],
+                        'service_id' => $price['service_id'],
+                        'label' => __('Shipping Home To Locker with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                        'package' => $package,
+                    ));
+                }
+                return;
+            } else {
+                if ($prices[0]) { //home to home
+                    $price = $prices[0][0];
+                    $this->add_rate(array(
+                        'id' => $this->id.'_'.$price['carrier_id'].'_'.$price['service_id'],
+                        'carrier_id' => $price['carrier_id'],
+                        'service_id' => $price['service_id'],
+                        'label' => __('Shipping Home To Home with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                        'package' => $package,
+                    ));
+                }
+                if ($prices[1]) { //home to locker
+                    $price = $prices[1][0];
+                    $this->add_rate(array(
+                        'id' => $this->id.'_'.$price['carrier_id'].'_'.$price['service_id'],
+                        'carrier_id' => $price['carrier_id'],
+                        'service_id' => $price['service_id'],
+                        'label' => __('Shipping Home To Locker with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                        'package' => $package,
+                    ));
+                }
+                return;
+            }
         }
         return false;
     }

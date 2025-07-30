@@ -97,10 +97,10 @@ class EawbCustomer {
         }
         if (is_array($response) && isset($response['data'])) {
             $services_config = \EawbShipping\EawbConstants::getSettingsServices($settings['available_services']);
-            $available_services_hth = []; // home to home
-            $available_services_htl = []; // home to locker
-            foreach ($response['data'] as $service) {
-                foreach ($services_config as $serv_conf) {
+            $available_services_hth = null; // home to home
+            $available_services_htl = null; // home to locker
+            foreach ($services_config as $serv_conf) {
+                foreach ($response['data'] as $service) {
                     if ($serv_conf['carrier_id']==$service['carrier_id'] && $serv_conf['service_id']==$service['service_id'] && $service['service_id']==1) {
                         $available_services_hth[]=$service;
                     }
@@ -112,11 +112,12 @@ class EawbCustomer {
         }
         if ($settings['courier_choice_method']=='low_price') {
             usort($available_services_hth,array($this,"sort_by_price"));
+            usort($available_services_htl,array($this,"sort_by_price"));
         } 
-        return $available_services_hth[0];
+        return [$available_services_hth,$available_services_htl];
 
     }
-    private static function sort_by_price($fp,$lp) {
+    private function sort_by_price($fp,$lp) {
         if ($fp['price']['total'] == $lp['price']['total']) {
             return 0;
         }
