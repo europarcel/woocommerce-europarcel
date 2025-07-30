@@ -278,15 +278,17 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         $prices = (new \EawbShipping\EawbCustomer())->getPrices($package);
         if ($prices && is_array($prices)) {
             if ($settings['courier_choice_method'] == 'client_choice') {
-                foreach ($prices[0] as $price) { //home to home
-                    $this->add_rate(array(
-                        'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-                        'carrier_id' => $price['carrier_id'],
-                        'service_id' => $price['service_id'],
-                        'label' => __('Shipping Home To Home with', 'woocommerce-shipping-plugin') . $price['carrier'],
-                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
-                        'package' => $package,
-                    ));
+                if ($prices[0]) {
+                    foreach ($prices[0] as $price) { //home to home
+                        $this->add_rate(array(
+                            'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
+                            'carrier_id' => $price['carrier_id'],
+                            'service_id' => $price['service_id'],
+                            'label' => __('Shipping Home To Home with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                            'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                            'package' => $package,
+                        ));
+                    }
                 }
                 if ($prices[1]) {
                     foreach ($prices[1] as $price) { //home to locker
