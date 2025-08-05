@@ -24,8 +24,8 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 add_action('woocommerce_shipping_init', 'eawb_shipping_init');
 
 function eawb_shipping_init() {
-    require_once plugin_dir_path(__FILE__) . 'includes/eawb-order-handler.php';
-    new \EawbShipping\EawbOrderHandler();
+    //require_once plugin_dir_path(__FILE__) . 'includes/eawb-order-handler.php';
+    //new \EawbShipping\EawbOrderHandler();
     if (!class_exists('WC_Eawb_Shipping')) {
         require_once plugin_dir_path(__FILE__) . 'includes/eawb-shipping.php';
     }
