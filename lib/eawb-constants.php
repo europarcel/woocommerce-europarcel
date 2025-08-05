@@ -6,14 +6,14 @@ class EawbConstants {
 
     public static function getAvailableServices() {
         return [
-            'cargus_national' => __('Cargus National', 'woocommerce-shipping-plugin'),
-            'dpd_standard' => __('DPD Standard', 'woocommerce-shipping-plugin'),
-            'fan_courier' => __('FanCourier Standard', 'woocommerce-shipping-plugin'),
-            'gls_national' => __('GLS National', 'woocommerce-shipping-plugin'),
-            'sameday' => __('SameDay', 'woocommerce-shipping-plugin'),
-            'easybox' => __('SameDay EasyBox', 'woocommerce-shipping-plugin'),
-            'fanbox' => __('FanCourier Box', 'woocommerce-shipping-plugin'),
-            'dpdbox' => __('DPD Box', 'woocommerce-shipping-plugin'),
+            'cargus_national' => __('Cargus National', 'europarcel'),
+            'dpd_standard' => __('DPD Standard', 'europarcel'),
+            'fan_courier' => __('FanCourier Standard', 'europarcel'),
+            'gls_national' => __('GLS National', 'europarcel'),
+            'sameday' => __('SameDay', 'europarcel'),
+            'easybox' => __('SameDay EasyBox', 'europarcel'),
+            'fanbox' => __('FanCourier Box', 'europarcel'),
+            'dpdbox' => __('DPD Box', 'europarcel'),
         ];
     }
     public static function getSettingsServices(array $services) {

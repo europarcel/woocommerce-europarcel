@@ -62,7 +62,7 @@ class EawbRequestData {
         ],
     ];
 
-    public function __construct() {
+    public function __construct($allow_locker=false) {
         $setings = get_option('woocommerce_eawb_shipping_settings');
         if (!$setings || $setings['enabled'] != 'yes' || !$setings['default_shipping'] || !$setings['default_billing'] || !$setings['available_services'] || !$setings['default_weight'] || !$setings['default_length'] || !$setings['default_width'] || !$setings['default_height']) {
             throw new \Exception();
@@ -76,7 +76,11 @@ class EawbRequestData {
             $carriers = count(array_unique(array_column($services_config, 'carrier_id')));
             $services = count(array_unique(array_column($services_config, 'service_id')));
             $this->request_data['carrier_id'] = $carriers == 1 ? intval($services_config[0]['carrier_id']) : 0;
-            $this->request_data['service_id'] = $services == 1 ? intval($services_config[0]['service_id']) : 0;
+            if ($allow_locker) {
+                $this->request_data['service_id'] = $services == 1 ? intval($services_config[0]['service_id']) : 0;
+            } else {
+                $this->request_data['service_id'] = 1;
+            }
         }
         $this->request_data['billing_to']['billing_address_id'] = intval($setings['default_billing']);
         $this->request_data['address_from']['address_id'] = intval($setings['default_shipping']);
@@ -95,8 +99,8 @@ class EawbRequestData {
         ];
     }
 
-    public function setCarierId($carier_id) {
-        $this->request_data['carier_id'] = $carier_id;
+    public function setCarrierId($carrier_id) {
+        $this->request_data['carrier_id'] = $carrier_id;
     }
 
     public function setServiceId($service_id) {
@@ -114,6 +118,7 @@ class EawbRequestData {
     public function setExtraOptions($param) {
         
     }
+
     public function getData() {
         return $this->request_data;
     }

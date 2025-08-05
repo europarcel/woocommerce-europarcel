@@ -10,8 +10,8 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
     public function __construct($instance_id = 0) {
         $this->id = 'eawb_shipping';
         $this->instance_id = absint($instance_id);
-        $this->method_title = __('Eawb Shipping', 'woocommerce-shipping-plugin');
-        $this->method_description = __('O metoda noua pentru a chema curierii', 'woocommerce-shipping-plugin');
+        $this->method_title = __('Eawb Shipping', 'europarcel');
+        $this->method_description = __('O metoda noua pentru a chema curierii', 'europarcel');
         $this->supports = array('shipping-zones', 'instance-settings');
         //$this->plugin_id = 'woocommerce_eawb_shipping_';
         $this->init();
@@ -29,22 +29,22 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
     public function init_form_fields() {
         $this->form_fields = array(
             'enabled' => array(
-                'title' => __('Enable/Disable', 'woocommerce-shipping-plugin'),
+                'title' => __('Enable/Disable', 'europarcel'),
                 'type' => 'checkbox',
-                'label' => __('Enable this shipping method', 'woocommerce-shipping-plugin'),
+                'label' => __('Enable this shipping method', 'europarcel'),
                 'default' => 'yes',
             ),
             'title' => array(
-                'title' => __('Method Title', 'woocommerce-shipping-plugin'),
+                'title' => __('Method Title', 'europarcel'),
                 'type' => 'text',
-                'description' => __('This controls the title which the user sees during checkout.', 'woocommerce-shipping-plugin'),
-                'default' => __('Custom Shipping', 'woocommerce-shipping-plugin'),
+                'description' => __('This controls the title which the user sees during checkout.', 'europarcel'),
+                'default' => __('Custom Shipping', 'europarcel'),
                 'desc_tip' => true,
             ),
             'api_key' => array(
-                'title' => __('Api Key', 'woocommerce-shipping-plugin'),
+                'title' => __('Api Key', 'europarcel'),
                 'type' => 'text',
-                'description' => __('The key required to access the server.', 'woocommerce-shipping-plugin'),
+                'description' => __('The key required to access the server.', 'europarcel'),
                 'desc_tip' => true,
             ),
         );
@@ -61,7 +61,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         if (!$customer_info) {
             $this->form_fields = array_merge($this->form_fields, array(
                 'eawb_customer' => array(
-                    'title' => __('Eroare la conectare', 'woocommerce-shipping-plugin'),
+                    'title' => __('Eroare la conectare', 'europarcel'),
                     'type' => 'title',
             )));
             return;
@@ -75,29 +75,29 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         }
         $this->form_fields = array_merge($this->form_fields, array(
             'customer_info' => array(// Nu va fi salvat, doar afișat
-                'title' => __($customer_info['name'] . ' sunteti conectat la Eawb ', 'woocommerce-shipping-plugin'),
+                'title' => __($customer_info['name'] . ' sunteti conectat la Eawb ', 'europarcel'),
                 'type' => 'title',
             ),
             'default_shipping' => array(
-                'title' => __('Default Pickup Address', 'woocommerce-shipping-plugin'),
+                'title' => __('Default Pickup Address', 'europarcel'),
                 'type' => 'select',
-                'description' => __('Default pickup address', 'woocommerce-shipping-plugin'),
+                'description' => __('Default pickup address', 'europarcel'),
                 'desc_tip' => true,
                 'default' => "",
                 'options' => $customer->getPickUpAdresses(),
             ),
             'default_billing' => array(
-                'title' => __('Default Billing', 'woocommerce-shipping-plugin'),
+                'title' => __('Default Billing', 'europarcel'),
                 'type' => 'select',
-                'description' => __('Default billing to innvoice', 'woocommerce-shipping-plugin'),
+                'description' => __('Default billing to innvoice', 'europarcel'),
                 'desc_tip' => true,
                 'default' => "",
                 'options' => $customer->getCutomerBillingAdresses(),
             ),
             'available_services' => array(
-                'title' => __('Agreate Services', 'woocommerce-shipping-plugin'),
+                'title' => __('Agreate Services', 'europarcel'),
                 'type' => 'multiselect',
-                'description' => __('Select which services are available', 'woocommerce-shipping-plugin'),
+                'description' => __('Select which services are available', 'europarcel'),
                 'desc_tip' => true,
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px;height:450px;',
@@ -105,35 +105,45 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'options' => \EawbShipping\EawbConstants::getAvailableServices()
             ),
             'courier_choice_method' => array(
-                'title' => __('Courier choice method', 'woocommerce-shipping-plugin'),
+                'title' => __('Courier choice method', 'europarcel'),
                 'type' => 'select',
                 'options' => array(
-                    'low_price' => __('First Low price', 'woocommerce-shipping-plugin'),
-                    'carrier_order' => __('First In the order entered', 'woocommerce-shipping-plugin'),
-                    'client_choice' => __('Client Choice', 'woocommerce-shipping-plugin')
+                    'low_price' => __('First Low price', 'europarcel'),
+                    'carrier_order' => __('First In the order entered', 'europarcel'),
+                    'client_choice' => __('Client Choice', 'europarcel')
                 ),
                 'default' => 'low_price',
-                'description' => __('Modul de alegere curier', 'woocommerce-shipping-plugin'),
+                'description' => __('Modul de alegere curier', 'europarcel'),
                 'desc_tip' => true,
+            ),
+            'excluded_locker_classes' => array(
+                'title' => __('Excludes classes for locker', 'europarcel'),
+                'type' => 'multiselect',
+                'class' => 'wc-enhanced-select',
+                'css' => 'width: 450px',
+                'default' => array(),
+                'description' => __('Excludes locker transport for products in classes', 'europarcel'),
+                'desc_tip' => true,
+                'options' => $view_shipping_classes
             ),
             /*
               'default_service' => array(
-              'title' => __('Default Service', 'woocommerce-shipping-plugin'),
+              'title' => __('Default Service', 'europarcel'),
               'type' => 'select',
-              'description' => __('Default selected service', 'woocommerce-shipping-plugin'),
+              'description' => __('Default selected service', 'europarcel'),
               'desc_tip' => true,
               'default' => 'none',
               'options' => array_merge(['none' => ''], \EawbShipping\EawbConstants::getAvailableServices())
               ), */
             'price_type' => array(
-                'title' => __('Tip preț transport', 'woocommerce-shipping-plugin'),
+                'title' => __('Shipping price type', 'europarcel'),
                 'type' => 'select',
                 'options' => array(
                     'fixed' => __('Preț fix'),
                     'calculated' => __('Preț calculat')
                 ),
                 'default' => 'fixed',
-                'description' => __('Modul de calculare pret pentru client fix/calculat prin api', 'woocommerce-shipping-plugin'),
+                'description' => __('Fixed/API customer price calculation method', 'europarcel'),
                 'desc_tip' => true,
             ),
             'fixed_price_group' => array(
@@ -145,26 +155,26 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'class' => 'eawb-price-type-dependent eawb-calculated-price'
             ),
             'free_shipping_amount' => array(
-                'title' => __('Free shiping from min amount', 'woocommerce-shipping-plugin'),
+                'title' => __('Free shiping from min amount', 'europarcel'),
                 'type' => 'number',
                 'default' => 0,
-                'description' => __('Minimum order price for free delivery.', 'woocommerce-shipping-plugin'),
+                'description' => __('Minimum order price for free delivery.', 'europarcel'),
                 'desc_tip' => true,
             ),
             'free_shipping_classes' => array(
-                'title' => __('Free shiping for product classes', 'woocommerce-shipping-plugin'),
+                'title' => __('Free shiping for product classes', 'europarcel'),
                 'type' => 'multiselect',
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px',
                 'default' => array(),
-                'description' => __('Free shiping dor classes.', 'woocommerce-shipping-plugin'),
+                'description' => __('Free shiping dor classes.', 'europarcel'),
                 'desc_tip' => true,
                 'options' => $view_shipping_classes
             ),
             'free_shipping_coupons' => array(
-                'title' => __('Free shiping for coupons', 'woocommerce-shipping-plugin'),
+                'title' => __('Free shiping for coupons', 'europarcel'),
                 'type' => 'checkbox',
-                'label' => __('Free shiping for coupons', 'woocommerce-shipping-plugin'),
+                'label' => __('Free shiping for coupons', 'europarcel'),
                 'default' => 'yes',
             ),
         ));
@@ -254,76 +264,119 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 }
             }
         }
-        if ($settings['free_shipping_classes']) {
-            
-        }
         if ($has_free_shipping) {
             $this->add_rate(array(
-                'id' => $this->id,
+                'id' => $this->id . '_free',
                 'label' => 'Transport gratuit',
                 'cost' => 0,
                 'package' => $package,
+                'meta_data' => [
+                    'carrier_id' => 100,
+                    'service_id' => 100,
+                ]
             ));
             return;
         }
+        $contents = $package['contents'];
+        $products_free_shiping = 0;
+        $allow_locker_shiping = true;
+        foreach ($contents as $product) {
+            if (!$product['data']->needs_shipping()) {
+                continue;
+            }
+            if ($settings['free_shipping_classes']) {
+                $product_shiping_class = $product['data']->get_shipping_class();
+                if (in_array($product_shiping_class, $settings['free_shipping_classes'])) {
+                    $products_free_shiping++;
+                }
+            }
+            if ($settings['excluded_locker_classes']) {
+                $product_shiping_class = $product['data']->get_shipping_class();
+                if (in_array($product_shiping_class, $settings['excluded_locker_classes'])) {
+                    $allow_locker_shiping = false;
+                }
+            }
+        }
+        if (count($contents) == $products_free_shiping) {
+            $this->add_rate(array(
+                'id' => $this->id . '_free',
+                'label' => 'Transport gratuit',
+                'cost' => 0,
+                'package' => $package,
+                'meta_data' => [
+                    'carrier_id' => 100,
+                    'service_id' => 100,
+                ]
+            ));
+        }
+
+
         if ($settings['price_type'] === 'fixed') {
             $this->add_rate(array(
-                'id' => $this->id,
+                'id' => $this->id . '_fixed',
                 'label' => 'Cost Transport',
                 'cost' => $settings['fixed_price'],
                 'package' => $package,
+                'meta_data' => [
+                    'carrier_id' => 100,
+                    'service_id' => 100,
+                ]
             ));
             return;
         }
-        $prices = (new \EawbShipping\EawbCustomer())->getPrices($package);
+        $prices = (new \EawbShipping\EawbCustomer())->getPrices($package, $allow_locker_shiping);
         if ($prices && is_array($prices)) {
             if ($settings['courier_choice_method'] == 'client_choice') {
-
-                    foreach ($prices[0] as $price) { //home to home
-                        $this->add_rate(array(
-                            'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
+                foreach ($prices[0] as $price) { //home to home
+                    $this->add_rate(array(
+                        'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
+                        'label' => __('Shipping Home To Home with ', 'europarcel') . $price['carrier'],
+                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                        'package' => $package,
+                        'meta_data' => [
                             'carrier_id' => $price['carrier_id'],
                             'service_id' => $price['service_id'],
-                            'label' => __('Shipping Home To Home with', 'woocommerce-shipping-plugin') . $price['carrier'],
-                            'cost' => $price['price']['total'] * $settings['price_multiplier'],
-                            'package' => $package,
-                        ));
-                    }
- 
-
-                    foreach ($prices[1] as $price) { //home to locker
-                        $this->add_rate(array(
-                            'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
+                        ]
+                    ));
+                }
+               foreach ($prices[1] as $price) { //home to locker
+                    $this->add_rate(array(
+                        'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
+                        'label' => __('Shipping Home To Locker with ', 'europarcel') . $price['carrier'],
+                        'cost' => $price['price']['total'] * $settings['price_multiplier'],
+                        'package' => $package,
+                        'meta_data' => [
                             'carrier_id' => $price['carrier_id'],
                             'service_id' => $price['service_id'],
-                            'label' => __('Shipping Home To Locker with', 'woocommerce-shipping-plugin') . $price['carrier'],
-                            'cost' => $price['price']['total'] * $settings['price_multiplier'],
-                            'package' => $package,
-                        ));
-                    }
-
+                        ]
+                    ));
+                }
                 return;
             } else {
                 if ($prices[0]) { //home to home
                     $price = $prices[0][0];
                     $this->add_rate(array(
                         'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-                        'carrier_id' => $price['carrier_id'],
-                        'service_id' => $price['service_id'],
-                        'label' => __('Shipping Home To Home with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                        'label' => __('Shipping Home To Home with ', 'europarcel') . $price['carrier'],
                         'cost' => $price['price']['total'] * $settings['price_multiplier'],
                         'package' => $package,
+                        'meta_data' => [
+                            'carrier_id' => $price['carrier_id'],
+                            'service_id' => $price['service_id'],
+                        ]
                     ));
                 }
                 if ($prices[1]) { //home to locker
                     $price = $prices[1][0];
                     $this->add_rate(array(
                         'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-                        'carrier_id' => $price['carrier_id'],
-                        'service_id' => $price['service_id'],
-                        'label' => __('Shipping Home To Locker with', 'woocommerce-shipping-plugin') . $price['carrier'],
+                        'label' => __('Shipping Home To Locker with ', 'europarcel') . $price['carrier'],
                         'cost' => $price['price']['total'] * $settings['price_multiplier'],
                         'package' => $package,
+                        'meta_data' => [
+                            'carrier_id' => $price['carrier_id'],
+                            'service_id' => $price['service_id'],
+                        ]
                     ));
                 }
                 return;
