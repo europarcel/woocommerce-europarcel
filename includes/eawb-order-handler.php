@@ -8,8 +8,8 @@ include_once EAWB_ROOT_PATH . '/lib/eawb-customer.php';
 class EawbOrderHandler {
 
     public function __construct() {
-        add_action('woocommerce_checkout_order_processed', [$this, 'handle_new_order'], 10, 3);
-        add_action('woocommerce_order_status_changed', [$this, 'handle_status_change'], 10, 4);
+        //add_action('woocommerce_checkout_order_processed', [$this, 'handle_new_order'], 10, 3);
+        //add_action('woocommerce_order_status_changed', [$this, 'handle_status_change'], 10, 4);
     }
 
     public function handle_new_order($order_id, $posted_data, $order) {
