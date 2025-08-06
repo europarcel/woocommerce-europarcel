@@ -308,6 +308,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                     'service_id' => 100,
                 ]
             ));
+            return;
         }
 
 
