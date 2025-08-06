@@ -3,7 +3,7 @@
 namespace EawbShipping;
 
 defined('ABSPATH') || exit;
-include_once EAWB_ROOT_PATH . '/lib/eawb-constants.php';
+include_once EAWB_ROOT_PATH . '/lib/europarcel-constants.php';
 
 class EawbRequestData {
 
