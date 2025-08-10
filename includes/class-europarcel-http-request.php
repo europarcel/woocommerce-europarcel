@@ -3,8 +3,11 @@
 namespace EawbShipping;
 defined( 'ABSPATH' ) || exit;
 class EawbHttpRequest {
-    
-    public static function get(string $function,
+    private int $instance_id;
+    public function __construct($instance_id) {
+        $this->instance_id=$instance_id;
+    }
+    public function get(string $function,
             array $data = array(),
             int $timeout = 15) {
         $params = array(
@@ -17,7 +20,7 @@ class EawbHttpRequest {
         return self::handle_api_response($response);
     }
 
-    public static function post(string $function,
+    public function post(string $function,
             array $data = array(),
             int $timeout = 15) {
         $params = array(
@@ -30,7 +33,7 @@ class EawbHttpRequest {
         return self::handle_api_response($response);
     }
 
-    private static function handle_api_response($response) {
+    private function handle_api_response($response) {
         if (is_array($response) && !is_wp_error($response)) {
             $code = wp_remote_retrieve_response_code($response);
             if ($code != 200) {
@@ -48,8 +51,8 @@ class EawbHttpRequest {
         return json_decode(wp_remote_retrieve_body($response), true);
     }
 
-    private static function getHeader() {
-        $setings=get_option('woocommerce_eawb_shipping_settings');
+    private function getHeader() {
+        $setings=get_option('woocommerce_eawb_shipping_'. $this->instance_id.'_settings');
         return [
             'accept' => 'application/json',
             'X-API-Key' => $setings['api_key']

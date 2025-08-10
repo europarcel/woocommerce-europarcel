@@ -1,10 +1,12 @@
 <?php
+
 namespace EawbShipping;
+
 defined('ABSPATH') || exit;
 
 class Eawb_Shipping_Custom_Fields {
-    
-     public static function fixed_price_group($shipping_method) {
+
+    public static function fixed_price_group($shipping_method) {
         ob_start();
         ?>
         <tr valign="top" class="eawb-price-type-dependent eawb-fixed-price">
@@ -50,12 +52,41 @@ class Eawb_Shipping_Custom_Fields {
                        name="<?php echo esc_attr($shipping_method->get_field_key('default_height')); ?>" 
                        value="<?php echo esc_attr($shipping_method->get_option('default_height', '15')); ?>"
                        style="width: 60px;" />
-                
+
                 <span class="description"><?php _e('Price multiplier', 'europarcel'); ?></span>
                 <input type="text" 
                        name="<?php echo esc_attr($shipping_method->get_field_key('price_multiplier')); ?>" 
                        value="<?php echo esc_attr($shipping_method->get_option('price_multiplier', '1.2')); ?>"
                        style="width: 60px;" />
+            </td>
+        </tr>
+        <?php
+        return ob_get_clean();
+    }
+
+    public static function price_type($shipping_method) {
+        ob_start();
+        ?>
+        <tr valign="top">
+            <th scope="row">
+                <label for="<?php echo esc_attr($shipping_method->get_field_id('price_type')); ?>">
+        <?php _e('Tip preț transport', 'europarcel'); ?>
+                </label>
+            </th>
+            <td>
+                <select 
+                    id="<?php echo esc_attr($shipping_method->get_field_id('price_type')); ?>" 
+                    name="<?php echo esc_attr($shipping_method->get_field_name('price_type')); ?>" 
+                    class="eawb-price-type-selector" 
+                    data-instance="<?php echo esc_attr($shipping_method->instance_id); ?>"
+                    >
+                    <option value="fixed" <?php selected($shipping_method->get_option('price_type'), 'fixed'); ?>>
+                        <?php _e('Preț fix', 'europarcel'); ?>
+                    </option>
+                    <option value="calculated" <?php selected($shipping_method->get_option('price_type'), 'calculated'); ?>>
+        <?php _e('Preț calculat', 'europarcel'); ?>
+                    </option>
+                </select>
             </td>
         </tr>
         <?php
