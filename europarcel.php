@@ -1,18 +1,23 @@
 <?php
 /*
-Plugin Name: Eawb Shipping
-Plugin URI: https://eawb.ro/
-Description: Metodă personalizată de transport pentru WooCommerce
+Plugin Name: EuroParcel WooCommerce Integration
+Plugin URI: https://europarcel.com/
+Description: Connect your WooCommerce store with EuroParcel shipping platform
 Version: 1.0.0
-Author: Europarcel
-Author URI: https://eawb.ro/
-License: GPL-3.0+ pe naiba
+Author: EuroParcel
+Author URI: https://europarcel.com/
+License: GPL-2.0+
 Text Domain: europarcel
 Domain Path: /languages
+WC requires at least: 5.0
+WC tested up to: 8.9
 */
 
 defined('ABSPATH') || exit;
-define ('EAWB_API_URL','https://api.europarcel.com/api/'); 
+
+// Plugin constants
+define('EUROPARCEL_VERSION', '1.0.0');
+define('EAWB_API_URL', 'https://api.europarcel.com/api/'); 
 define('EAWB_ROOT_PATH', dirname(__FILE__));
 
 
@@ -24,10 +29,10 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 add_action('woocommerce_shipping_init', 'eawb_shipping_init');
 
 function eawb_shipping_init() {
-    //require_once plugin_dir_path(__FILE__) . 'includes/eawb-order-handler.php';
+    //require_once plugin_dir_path(__FILE__) . 'includes/class-europarcel-order-handler.php';
     //new \EawbShipping\EawbOrderHandler();
     if (!class_exists('WC_Eawb_Shipping')) {
-        require_once plugin_dir_path(__FILE__) . 'includes/eawb-shipping.php';
+        require_once plugin_dir_path(__FILE__) . 'includes/class-europarcel-shipping.php';
     }
 }
 
