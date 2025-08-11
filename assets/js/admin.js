@@ -5,27 +5,27 @@ jQuery(document).ready(function ($) {
         var $default = $('select[name="woocommerce_eawb_shipping_default_service"]');
 
         $default.find('option').each(function () {
-            if ($(this).val() && !available.includes($(this).val()) && $(this).val()!=='none') {
+            if ($(this).val() && !available.includes($(this).val()) && $(this).val() !== 'none') {
                 $(this).prop('disabled', true);
             } else {
                 $(this).prop('disabled', false);
             }
         });
     }).trigger('change');
-    
 
-        function toggleFields() {
-            const priceType = $('#woocommerce_eawb_shipping_price_type').val();
-            $('.eawb-price-type-dependent').closest('tr').hide();
-            
-            if (priceType === 'fixed') {
-                $('.eawb-fixed-price').closest('tr').show();
-            } else {
-                $('.eawb-calculated-price').closest('tr').show();
-            }
+
+    function toggleFields() {
+        const priceType = $('.eawb-price-type-selector').val();
+        $('.eawb-price-type-dependent').closest('tr').hide();
+
+        if (priceType === 'fixed') {
+            $('.eawb-fixed-price').closest('tr').show();
+        } else {
+            $('.eawb-calculated-price').closest('tr').show();
         }
+    }
 
-        // Ascultă evenimente
-        $('#woocommerce_eawb_shipping_price_type').on('change', toggleFields);
-        toggleFields(); 
+    // Ascultă evenimente
+    $('.eawb-price-type-selector').on('change', toggleFields);
+    toggleFields();
 });

@@ -8,10 +8,14 @@ require_once EAWB_ROOT_PATH . '/lib/europarcel-request-data.php';
 require_once EAWB_ROOT_PATH . '/includes/class-europarcel-http-request.php';
 
 class EawbCustomer {
-
+    private int $instance_id;
+    public function __construct($instance_id) {
+        $this->instance_id=$instance_id;
+    }
     public function getCustomerInfo() {
         try {
-            $response = \EawbShipping\EawbHttpRequest::get('public/account/profile');
+            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+            $response = $http_request->get('public/account/profile');
         } catch (\Exception $ex) {
             return null;
         }
@@ -27,7 +31,8 @@ class EawbCustomer {
                 'page' => 1,
                 'per_page' => 200
             ];
-            $response = \EawbShipping\EawbHttpRequest::get('public/addresses/billing', $data);
+            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+            $response = $http_request->get('public/addresses/billing', $data);
             if (is_array($response) && isset($response['list'])) {
                 $ret[0] = "";
                 foreach ($response['list'] as $adress) {
@@ -52,7 +57,8 @@ class EawbCustomer {
                 'page' => 1,
                 'per_page' => 200
             ];
-            $response = \EawbShipping\EawbHttpRequest::get('public/addresses/shipping', $data);
+            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+            $response = $http_request->get('public/addresses/shipping', $data);
             if (is_array($response) && isset($response['list'])) {
                 $ret[0] = "";
                 foreach ($response['list'] as $adress) {
@@ -72,8 +78,8 @@ class EawbCustomer {
     }
 
     public function getPrices($package, $allow_locker) {
-        $data = new \EawbShipping\EawbRequestData($allow_locker);
-        $settings = get_option('woocommerce_eawb_shipping_settings');
+        $data = new \EawbShipping\EawbRequestData($this->instance_id,$allow_locker);
+        $settings = get_option('woocommerce_eawb_shipping_'.$this->instance_id.'_settings');
         if ($settings['enabled'] != 'yes' || !$settings['eawb_customer']) {
             return false;
         }
@@ -94,7 +100,8 @@ class EawbCustomer {
         ];
         $data->setDeliveryAddress($delivery_address);
         try {
-            $response = \EawbShipping\EawbHttpRequest::post('public/orders/prices', $data->getData());
+            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+            $response = $http_request->post('public/orders/prices', $data->getData());
         } catch (\Exception $ex) {
             return false;
         }
@@ -113,16 +120,16 @@ class EawbCustomer {
                 }
             }
         }
-        if ($settings['courier_choice_method'] == 'low_price') {
+        //if ($settings['courier_choice_method'] == 'low_price') {
             usort($available_services_hth, array($this, "sort_by_price"));
             usort($available_services_htl, array($this, "sort_by_price"));
-        }
+        //}
         return [$available_services_hth, $available_services_htl];
     }
 
     public function postOrder($order,$carrier_id,$service_id) {
        
-        $settings = get_option('woocommerce_eawb_shipping_settings');
+        get_option('woocommerce_eawb_shipping_'.$this->instance_id.'_settings');
         if ($settings['enabled'] != 'yes' || !$settings['eawb_customer']) {
             return false;
         }
@@ -148,7 +155,8 @@ class EawbCustomer {
         ];
         $data->setDeliveryAddress($delivery_address);
         try {
-            $response = \EawbShipping\EawbHttpRequest::post('public/orders', $data->getData());
+            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+            $response = $http_request->post('public/orders', $data->getData());
         } catch (\Exception $ex) {
             return false;
         }

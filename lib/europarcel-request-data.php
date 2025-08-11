@@ -6,7 +6,7 @@ defined('ABSPATH') || exit;
 include_once EAWB_ROOT_PATH . '/lib/europarcel-constants.php';
 
 class EawbRequestData {
-
+    private int $instance_id;
     private $request_data = [
         'carrier_id' => 0,
         'service_id' => 0,
@@ -36,10 +36,10 @@ class EawbRequestData {
             'parcels' => [
                 [
                     'size' => [
-                        'weight' => 0,
-                        'width' => 0,
-                        'height' => 0,
-                        'length' => 0
+                        'weight' => 1,
+                        'width' => 15,
+                        'height' => 15,
+                        'length' => 15
                     ],
                     'sequence_no' => 1
                 ]
@@ -62,11 +62,13 @@ class EawbRequestData {
         ],
     ];
 
-    public function __construct($allow_locker=false) {
-        $setings = get_option('woocommerce_eawb_shipping_settings');
-        if (!$setings || $setings['enabled'] != 'yes' || !$setings['default_shipping'] || !$setings['default_billing'] || !$setings['available_services'] || !$setings['default_weight'] || !$setings['default_length'] || !$setings['default_width'] || !$setings['default_height']) {
-            throw new \Exception();
-        }
+    public function __construct(int $instance_id,$allow_locker=false) {
+        $this->instance_id=$instance_id;
+        $setings = get_option('woocommerce_eawb_shipping_'.$instance_id.'_settings');
+        //if (!$setings || $setings['enabled'] != 'yes' || !$setings['default_shipping'] || !$setings['default_billing'] || !$setings['available_services'] || !$setings['default_weight'] || !$setings['default_length'] || !$setings['default_width'] || !$setings['default_height']) {
+            //throw new \Exception();
+        //    return;
+        //}
 
         $services_config = \EawbShipping\EawbConstants::getSettingsServices($setings['available_services']);
         if (count($services_config) == 1) {
@@ -75,9 +77,9 @@ class EawbRequestData {
         } else {
             $carriers = count(array_unique(array_column($services_config, 'carrier_id')));
             $services = count(array_unique(array_column($services_config, 'service_id')));
-            $this->request_data['carrier_id'] = $carriers == 1 ? intval($services_config[0]['carrier_id']) : 0;
+            $this->request_data['carrier_id'] = ($carriers == 1) ? intval($services_config[0]['carrier_id']) : 0;
             if ($allow_locker) {
-                $this->request_data['service_id'] = $services == 1 ? intval($services_config[0]['service_id']) : 0;
+                $this->request_data['service_id'] = ($services == 1) ? intval($services_config[0]['service_id']) : 0;
             } else {
                 $this->request_data['service_id'] = 1;
             }
@@ -85,14 +87,14 @@ class EawbRequestData {
         $this->request_data['billing_to']['billing_address_id'] = intval($setings['default_billing']);
         $this->request_data['address_from']['address_id'] = intval($setings['default_shipping']);
         $this->request_data['content']['parcels_count'] = 1;
-        $this->request_data['content']['total_weight'] = floatval($setings['default_weight']);
+        $this->request_data['content']['total_weight'] = 1;
         $this->request_data['content']['parcels'] = [
             [
                 'size' => [
-                    'weight' => floatval($setings['default_weight']),
-                    'width' => floatval($setings['default_width']),
-                    'height' => floatval($setings['default_height']),
-                    'length' => floatval($setings['default_length'])
+                    'weight' => 1,
+                    'width' => 15,
+                    'height' => 15,
+                    'length' => 15
                 ],
                 'sequence_no' => 1
             ]
