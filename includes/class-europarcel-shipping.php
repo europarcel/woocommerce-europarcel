@@ -304,8 +304,8 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         if ($allow_locker_shiping && $prices && !empty($prices[1])) {
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
-                    'id' => $this->id . '_free_h2l',
-                    'label' => 'Transport gratuit la locker' . $this->settings['title'],
+                    'id' => $this->id . '_free_locker_' . $this->instance_id,
+                    'label' => 'Transport gratuit la locker cu ' . $this->settings['title'],
                     'cost' => 0,
                     'package' => $package,
                     'meta_data' => [
@@ -314,9 +314,9 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                         'fixed_location_id' => 0
                     ]
                 ));
-            } else  {
+            } else {
                 $this->add_rate(array(
-                    'id' => $this->id . '_fixed_h2l',
+                    'id' => $this->id . '_fixed_locker_' . $this->instance_id,
                     'label' => 'Cost Transport la locker cu ' . $this->settings['title'],
                     'cost' => $settings['fixed_price_h2l'],
                     'package' => $package,
