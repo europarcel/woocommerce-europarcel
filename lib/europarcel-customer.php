@@ -166,26 +166,19 @@ class EawbCustomer {
     }
 
     public function get_lockers($params = []) {
-        $transient_key = 'eawb_lockers_' . $this->instance_id . '_' . md5(json_encode($params));
-        $lockers = get_transient($transient_key);
-
-        if (false === $lockers) {
-            $data = [
-                'carier_id' => '3,6',
-                'locality_name' => 'Medias',
-                'county_name' => 'Sibiu'
-            ];
-            try {
-                $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
-                $response = $http_request->get('/locations/fixedlocations', $data);
-            } catch (\Exception $ex) {
-                return false;
-            }
-            $lockers = json_decode(wp_remote_retrieve_body($response), true);
-            set_transient($transient_key, $lockers, HOUR_IN_SECONDS * 2); // Cache 2 ore
+        $data = [
+            'country_code' => 'RO',
+            'carrier_id' => '3',
+            'locality_id' => '13891'
+        ];
+        
+        try {
+            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+            $lockers = $http_request->get('public/locations/fixedlocations', $data);
+            return $lockers;
+        } catch (\Exception $ex) {
+            return false;
         }
-
-        return $lockers;
     }
 
     private function sort_by_price($fp, $lp) {

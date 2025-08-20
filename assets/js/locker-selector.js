@@ -1,19 +1,31 @@
-(function (wp) {
-    var registerPlugin = wp.plugins.registerPlugin;
-    var PluginArea = wp.components.PluginArea;
-    var createElement = wp.element.createElement;
-    var useEffect = wp.element.useEffect;
-    var useState = wp.element.useState;
-    var $ = jQuery;
+(function ($) {
+    'use strict';
 
-    function LockerSelector() {
-        const [lockers, setLockers] = useState([]);
-
-        useEffect(() => {
-            const addLockerButton = () => {
-                const shippingOptions = document.querySelectorAll('.wc-block-components-radio-control__option-layout');
-                shippingOptions.forEach(option => {
-                    if (option.textContent.toLowerCase().includes('locker') && !option.querySelector('.select-locker-btn')) {
+    function initializeLockerSelector() {
+        const addLockerButton = () => {
+                // Handle WooCommerce Blocks checkout
+                const blockShippingOptions = document.querySelectorAll('.wc-block-components-radio-control__option-layout');
+                blockShippingOptions.forEach(option => {
+                    if ((option.textContent.toLowerCase().includes('locker') || option.textContent.toLowerCase().includes('la locker')) && !option.querySelector('.select-locker-btn')) {
+                        const button = document.createElement('button');
+                        button.textContent = 'Selectare locker';
+                        button.className = 'button select-locker-btn';
+                        button.style.marginTop = '10px';
+                        button.style.backgroundColor = '#ebe9eb';
+                        button.style.color = '#515151';
+                        button.style.padding = '5px 10px';
+                        button.style.border = '1px solid #d3ced2';
+                        button.style.borderRadius = '3px';
+                        button.style.cursor = 'pointer';
+                        button.onclick = handleLockerSelection;
+                        option.appendChild(button);
+                    }
+                });
+                
+                // Handle Classic WooCommerce checkout
+                const classicShippingOptions = document.querySelectorAll('#shipping_method li');
+                classicShippingOptions.forEach(option => {
+                    if ((option.textContent.toLowerCase().includes('locker') || option.textContent.toLowerCase().includes('la locker')) && !option.querySelector('.select-locker-btn')) {
                         const button = document.createElement('button');
                         button.textContent = 'Selectare locker';
                         button.className = 'button select-locker-btn';
@@ -29,65 +41,123 @@
                     }
                 });
             };
-
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'childList') {
-                        addLockerButton();
+        
+        function handleLockerSelection() {
+            const instanceId = getSelectedShippingInstanceId();
+            showLoadingState();
+            
+            Promise.all([
+                fetchLockers(instanceId),
+                fetchLockerServices(instanceId)
+            ])
+            .then(([lockersResult, servicesResult]) => {
+                hideLoadingState();
+                
+                if (lockersResult.success && servicesResult.success) {
+                    window.EuroparcelModal.showWithData({
+                        lockers: lockersResult.data,
+                        services: servicesResult.data,
+                        instanceId: instanceId
+                    });
+                } else {
+                    alert('Nu sunt lockere disponibile.');
+                }
+            })
+            .catch(() => {
+                hideLoadingState();
+                alert('Eroare la încărcarea lockerelor!');
+            });
+        }
+        
+        function getSelectedShippingInstanceId() {
+            let selectedMethod = document.querySelector('input[name^="shipping_method"]:checked') || 
+                               document.querySelector('.wc-block-components-radio-control__input:checked');
+            
+            if (selectedMethod) {
+                const methodValue = selectedMethod.value || selectedMethod.id;
+                const parts = methodValue.split(':');
+                if (parts.length > 1) return parts[1];
+                
+                const underscoreParts = methodValue.split('_');
+                if (underscoreParts.length > 1) return underscoreParts[underscoreParts.length - 1];
+            }
+            
+            return '1';
+        }
+        
+        function fetchLockers(instanceId) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: EuroparcelLockerData.ajaxUrl,
+                    type: 'POST',
+                    data: {
+                        action: 'eawb_get_lockers',
+                        security: EuroparcelLockerData.nonce,
+                        instance_id: instanceId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        resolve(response);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        reject({
+                            xhr: xhr,
+                            textStatus: textStatus,
+                            errorThrown: errorThrown
+                        });
                     }
                 });
             });
-
-            observer.observe(document.body, {childList: true, subtree: true});
-
-            addLockerButton();
-
-            return () => observer.disconnect();
-        }, []);
+        }
         
-        function handleLockerSelection() {
-            $.ajax({
-                url: EuroparcelLockerData.ajaxUrl,
-                //timeout: 30000,
-                type: 'POST',
-                data: {
-                    action: 'eawb_get_lockers',
-                    security: EuroparcelLockerData.nonce,
-                },
-                dataType: 'json',
-                success: function (response) {
-                    console.log('AJAX success. Response:', response);
-                    if (Array.isArray(response)) {
-                        const lockerOptions = response.map(locker => `${locker.id}: ${locker.name}`).join('\n');
-                        const selectedLockerId = prompt(`Selectați un locker:\n${lockerOptions}`);
-                        if (selectedLockerId) {
-                            var hiddenInput = document.getElementById('selected_locker');
-                            if (!hiddenInput) {
-                                hiddenInput = document.createElement('input');
-                                hiddenInput.type = 'hidden';
-                                hiddenInput.id = 'selected_locker';
-                                hiddenInput.name = 'selected_locker';
-                                document.querySelector('form[name="checkout"]').appendChild(hiddenInput);
-                            }
-                            hiddenInput.value = selectedLockerId;
-                            alert("Locker selectat: " + selectedLockerId);
-                        }
-                    } else {
-                        console.error('Răspunsul nu este un array valid:', response);
+        function fetchLockerServices(instanceId) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: EuroparcelLockerData.ajaxUrl,
+                    type: 'POST',
+                    data: {
+                        action: 'eawb_get_locker_services',
+                        security: EuroparcelLockerData.nonce,
+                        instance_id: instanceId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        resolve(response);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        reject({
+                            xhr: xhr,
+                            textStatus: textStatus,
+                            errorThrown: errorThrown
+                        });
                     }
-                },
-                error: function (xhr) {
-                    console.error('Error:', xhr.responseText);
-                    alert('Eroare la încărcarea lockerelor!');
-                }
+                });
+            });
+        }
+        
+        function showLoadingState() {
+            document.querySelectorAll('.select-locker-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.textContent = 'Se încarcă...';
+            });
+        }
+        
+        function hideLoadingState() {
+            document.querySelectorAll('.select-locker-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.textContent = 'Selectare locker';
             });
         }
 
-        return null; // Nu renderizăm nimic direct, totul se face prin manipularea DOM-ului
+        new MutationObserver(() => addLockerButton()).observe(document.body, {childList: true, subtree: true});
+        
+        addLockerButton();
+        
+        $(document.body).on('updated_checkout updated_shipping_method', () => {
+            setTimeout(addLockerButton, 100);
+        });
     }
 
-    registerPlugin('europarcel-plugin', {
-        render: LockerSelector,
-        scope: 'woocommerce-checkout',
-    });
-})(window.wp);
+    $(document).ready(initializeLockerSelector);
+
+})(jQuery);
