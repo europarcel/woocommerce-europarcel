@@ -8,10 +8,13 @@ require_once EAWB_ROOT_PATH . '/lib/europarcel-request-data.php';
 require_once EAWB_ROOT_PATH . '/includes/class-europarcel-http-request.php';
 
 class EawbCustomer {
+
     private int $instance_id;
+
     public function __construct($instance_id) {
-        $this->instance_id=$instance_id;
+        $this->instance_id = $instance_id;
     }
+
     public function getCustomerInfo() {
         try {
             $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
@@ -78,8 +81,8 @@ class EawbCustomer {
     }
 
     public function getPrices($package, $allow_locker) {
-        $data = new \EawbShipping\EawbRequestData($this->instance_id,$allow_locker);
-        $settings = get_option('woocommerce_eawb_shipping_'.$this->instance_id.'_settings');
+        $data = new \EawbShipping\EawbRequestData($this->instance_id, $allow_locker);
+        $settings = get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
         if ($settings['enabled'] != 'yes' || !$settings['eawb_customer']) {
             return false;
         }
@@ -121,19 +124,19 @@ class EawbCustomer {
             }
         }
         //if ($settings['courier_choice_method'] == 'low_price') {
-            usort($available_services_hth, array($this, "sort_by_price"));
-            usort($available_services_htl, array($this, "sort_by_price"));
+        usort($available_services_hth, array($this, "sort_by_price"));
+        usort($available_services_htl, array($this, "sort_by_price"));
         //}
         return [$available_services_hth, $available_services_htl];
     }
 
-    public function postOrder($order,$carrier_id,$service_id) {
-       
-        get_option('woocommerce_eawb_shipping_'.$this->instance_id.'_settings');
+    public function postOrder($order, $carrier_id, $service_id) {
+
+        get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
         if ($settings['enabled'] != 'yes' || !$settings['eawb_customer']) {
             return false;
         }
-        $address_to=$order->get_address('shipping');
+        $address_to = $order->get_address('shipping');
 
         if (!is_array($address_to) || $address_to['city']) {
             return false;
@@ -144,7 +147,7 @@ class EawbCustomer {
         $delivery_address = [
             'email' => 'de_facut@eawb.ro',
             'phone' => $address_to['phone'],
-            'contact' => $address_to['last_name'].' '.$address_to['first_name'],
+            'contact' => $address_to['last_name'] . ' ' . $address_to['first_name'],
             'company' => $address_to['company'],
             'country_code' => $address_to['country'],
             'county_name' => WC()->countries->get_states($address_to['country'])[$address_to['state']],
@@ -160,6 +163,29 @@ class EawbCustomer {
         } catch (\Exception $ex) {
             return false;
         }
+    }
+
+    public function get_lockers($params = []) {
+        $transient_key = 'eawb_lockers_' . $this->instance_id . '_' . md5(json_encode($params));
+        $lockers = get_transient($transient_key);
+
+        if (false === $lockers) {
+            $data = [
+                'carier_id' => '3,6',
+                'locality_name' => 'Medias',
+                'county_name' => 'Sibiu'
+            ];
+            try {
+                $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
+                $response = $http_request->get('/locations/fixedlocations', $data);
+            } catch (\Exception $ex) {
+                return false;
+            }
+            $lockers = json_decode(wp_remote_retrieve_body($response), true);
+            set_transient($transient_key, $lockers, HOUR_IN_SECONDS * 2); // Cache 2 ore
+        }
+
+        return $lockers;
     }
 
     private function sort_by_price($fp, $lp) {
