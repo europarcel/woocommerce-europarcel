@@ -55,23 +55,8 @@ function render_europarcel_locker_block($attributes) {
     ';
 }
 //require_once EAWB_ROOT_PATH . '/includes/class-europarcel-ajax.php';
-add_action('wp_ajax_eawb_get_lockers', 'get_lockers');
-add_action('wp_ajax_nopriv_eawb_get_lockers', 'get_lockers');
+// AJAX handlers moved to EuroparcelCheckout class
 add_action('woocommerce_shipping_init', 'eawb_shipping_init');
-
-function get_lockers() {
-    check_ajax_referer('europarcel_locker_nonce', 'security');
-    // Logica pentru a obține lista de lockere
-    $lockers = array(
-        array('id' => 1, 'name' => 'Locker 1'),
-        array('id' => 2, 'name' => 'Locker 2'),
-        array('id' => 3, 'name' => 'Locker 3'),
-    );
-
-    wp_send_json($lockers);
-    //echo json_encode($lockers,true);
-    die();
-}
 
 function eawb_shipping_init() {
     if (!class_exists('WC_Eawb_Shipping')) {
@@ -84,7 +69,6 @@ function eawb_shipping_init() {
 
 function add_eawb_shipping($methods) {
     $methods['eawb_shipping'] = 'WC_Eawb_Shipping';
-    init_chekout();
     error_log('[EAWB] Registered methods: ' . print_r($methods, true));
     return $methods;
 }
@@ -96,11 +80,11 @@ add_action('admin_enqueue_scripts', function () {
     }
 });
 
-function init_chekout() {
-    if (is_checkout() || has_block('woocommerce/checkout')) {
-        require_once EAWB_ROOT_PATH . '/includes/class-europarcel-checkout.php';
-        new EuroparcelCheckout();
-        
-    }
+function init_europarcel_checkout() {
+    require_once EAWB_ROOT_PATH . '/includes/class-europarcel-checkout.php';
+    new EuroparcelCheckout();
 }
+
+// Initialize checkout early to ensure AJAX handlers are registered
+add_action('init', 'init_europarcel_checkout');
 
