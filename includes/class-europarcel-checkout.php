@@ -57,7 +57,11 @@ class EuroparcelCheckout {
             return;
         }
 
-        $instance_id = isset($_POST['instance_id']) ? intval($_POST['instance_id']) : 1;
+         if (isset($_POST['instance_id']) || !$_POST['instance_id'] )  {
+             $instance_id = $_POST['instance_id'];
+         } else {
+             wp_send_json_error('No lockers found');
+         }
         
         try {
             $customer = new \EawbShipping\EawbCustomer($instance_id);

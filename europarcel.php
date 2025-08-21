@@ -25,35 +25,6 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
     return;
 }
 
-// Înregistrează block-ul personalizat - CORECT
-add_action('init', 'register_europarcel_blocks');
-
-function register_europarcel_blocks() {
-    // Verifică dacă func                                                                                                                                                                                                          ția există (doar dacă WooCommerce Blocks este activ)
-    if (function_exists('register_block_type')) {
-        register_block_type('europarcel-plugin/locker-selector', [
-            'render_callback' => 'render_europarcel_locker_block',
-            'attributes' => [
-                'lockerId' => [
-                    'type' => 'string',
-                    'default' => ''
-                ]
-            ]
-        ]);
-    }
-}
-
-function render_europarcel_locker_block($attributes) {
-    $locker_id = $attributes['lockerId'] ?? '';
-    
-    return '
-    <div class="europarcel-locker-block">
-        <h4>Selectare Locker EuroParcel</h4>
-        <button class="select-locker-btn">Alege locker</button>
-        <input type="hidden" id="eawb_selected_locker" name="eawb_locker_id" value="' . esc_attr($locker_id) . '">
-    </div>
-    ';
-}
 //require_once EAWB_ROOT_PATH . '/includes/class-europarcel-ajax.php';
 // AJAX handlers moved to EuroparcelCheckout class
 add_action('woocommerce_shipping_init', 'eawb_shipping_init');

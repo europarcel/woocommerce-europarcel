@@ -93,7 +93,10 @@
                     data: {
                         action: 'eawb_get_lockers',
                         security: EuroparcelLockerData.nonce,
-                        instance_id: instanceId
+                        instance_id: instanceId,
+                        country: $('#shipping-country').find(":selected").val(),
+                        state: $('#shipping-state').find(":selected").text(),
+                        city: $('#shipping-city').val()
                     },
                     dataType: 'json',
                     success: function(response) {
