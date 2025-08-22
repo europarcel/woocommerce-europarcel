@@ -190,7 +190,7 @@ class EawbCustomer {
         }
         return ($fp['price']['total'] < $lp['price']['total']) ? -1 : 1;
     }
-    private function get_locker_carriers() {
+    public function get_locker_carriers() {
         $settings = get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
             
             if (!$settings || !isset($settings['available_services'])) {
