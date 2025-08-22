@@ -259,8 +259,6 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         if (count($contents) == $products_free_shiping_to_locker) {
             $has_free_shipping_to_locker = true;
         }
-        $prices = (new \EawbShipping\EawbCustomer($this->instance_id))->getPrices($package, $allow_locker_shiping);
-
         if ($settings['free_shipping_amount_to_home'] > 0) {
             $package_amount = WC()->cart->cart_contents_total +
                     WC()->cart->tax_total;
@@ -276,7 +274,9 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 $has_free_shipping_to_locker = true;
             }
         }
-        if ($prices && !empty($prices[0])) {
+        
+        // Add home-to-home shipping option
+        {
             if ($has_free_shipping_to_home) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_h2h',
@@ -301,7 +301,9 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 ));
             }
         }
-        if ($allow_locker_shiping && $prices && !empty($prices[1])) {
+        
+        // Add locker shipping option
+        if ($allow_locker_shiping) {
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_locker_' . $this->instance_id,
@@ -311,7 +313,8 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                     'meta_data' => [
                         'carrier_id' => 0,
                         'service_id' => 2,
-                        'fixed_location_id' => 0
+                        'fixed_location_id' => 0,
+                        'is_locker' => true
                     ]
                 ));
             } else {
@@ -324,6 +327,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                         'carrier_id' => 0,
                         'service_id' => 2,
                         'fixed_location_id' => 0,
+                        'is_locker' => true
                     ]
                 ));
             }
