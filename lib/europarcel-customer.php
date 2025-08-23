@@ -10,9 +10,11 @@ require_once EAWB_ROOT_PATH . '/includes/class-europarcel-http-request.php';
 class EawbCustomer {
 
     private int $instance_id;
+    public $settings;
 
     public function __construct($instance_id) {
         $this->instance_id = $instance_id;
+        $this->settings = get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
     }
 
     public function getCustomerInfo() {
@@ -82,18 +84,17 @@ class EawbCustomer {
 
     public function getPrices($package, $allow_locker) {
         $data = new \EawbShipping\EawbRequestData($this->instance_id, $allow_locker);
-        $settings = get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
-        if ($settings['enabled'] != 'yes' || !$settings['eawb_customer']) {
+        if ($this->settings['enabled'] != 'yes' || !$this->settings['eawb_customer']) {
             return false;
         }
         if (!$package['destination']['city']) {
             return false;
         }
         $delivery_address = [
-            'email' => $settings['eawb_customer']['email'],
-            'phone' => $settings['eawb_customer']['phone'],
-            'contact' => $settings['eawb_customer']['name'],
-            'company' => isset($settings['eawb_customer']['company']) ? $settings['eawb_customer']['company'] : $settings['eawb_customer']['name'],
+            'email' => $this->settings['eawb_customer']['email'],
+            'phone' => $this->settings['eawb_customer']['phone'],
+            'contact' => $this->settings['eawb_customer']['name'],
+            'company' => isset($this->settings['eawb_customer']['company']) ? $this->settings['eawb_customer']['company'] : $this->settings['eawb_customer']['name'],
             'country_code' => $package['destination']['country'],
             'county_name' => WC()->countries->get_states($package['destination']['country'])[$package['destination']['state']],
             'locality_name' => $package['destination']['city'],
@@ -109,7 +110,7 @@ class EawbCustomer {
             return false;
         }
         if (is_array($response) && isset($response['data'])) {
-            $services_config = \EawbShipping\EawbConstants::getSettingsServices($settings['available_services']);
+            $services_config = \EawbShipping\EawbConstants::getSettingsServices($this->settings['available_services']);
             $available_services_hth = []; // home to home
             $available_services_htl = []; // home to locker
             foreach ($services_config as $serv_conf) {
@@ -132,8 +133,8 @@ class EawbCustomer {
 
     public function postOrder($order, $carrier_id, $service_id) {
 
-        get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
-        if ($settings['enabled'] != 'yes' || !$settings['eawb_customer']) {
+
+        if ($this->settings['enabled'] != 'yes' || $this->settings['eawb_customer']) {
             return false;
         }
         $address_to = $order->get_address('shipping');
@@ -167,7 +168,7 @@ class EawbCustomer {
     }
 
     public function get_lockers() {
-        $cariers_ids=$this->get_locker_carriers();
+        $cariers_ids = $this->get_locker_carriers();
         $data = [
             'country_code' => $_POST['country'],
             'carrier_id' => implode(",", $cariers_ids),
@@ -190,21 +191,35 @@ class EawbCustomer {
         }
         return ($fp['price']['total'] < $lp['price']['total']) ? -1 : 1;
     }
+
     public function get_locker_carriers() {
-        $settings = get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
-            
-            if (!$settings || !isset($settings['available_services'])) {
-                return [];
-            }
-            
-            $all_services = \EawbShipping\EawbConstants::getSettingsServices($settings['available_services']);
-            $locker_services = array_filter($all_services, function($service) {
-                return $service['service_id'] == 2;
-            });
-            
-            if (empty($locker_services)) {
-                return [];
-            }
-            return array_column($locker_services,'carrier_id');
+        if (!$this->settings || !isset($this->settings['available_services'])) {
+            return [];
+        }
+
+        $all_services = \EawbShipping\EawbConstants::getSettingsServices($this->settings['available_services']);
+        $locker_services = array_filter($all_services, function ($service) {
+            return $service['service_id'] == 2;
+        });
+
+        if (empty($locker_services)) {
+            return [];
+        }
+        return array_column($locker_services, 'carrier_id');
+    }
+
+    public function get_home_carriers() {
+        if (!$this->settings || !isset($this->settings['available_services'])) {
+            return false;
+        }
+        $all_services = \EawbShipping\EawbConstants::getSettingsServices($this->settings['available_services']);
+        $services = array_filter($all_services, function ($service) {
+            return $service['service_id'] == 1;
+        });
+        if (empty($services)) {
+            return false;
+        }
+        
+        return array_column($services, 'carrier_id');
     }
 }
