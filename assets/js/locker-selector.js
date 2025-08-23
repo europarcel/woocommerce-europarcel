@@ -347,6 +347,7 @@
                 address: locker.address,
                 carrier_name: locker.carrier_name
             });
+            
         }
         
         // Carrier logo mapping based on requirements
@@ -384,7 +385,7 @@
             }
             
             const carrierLogo = getCarrierLogo(locker.carrier_id);
-            const logoUrl = europarcel_ajax.plugin_url + 'assets/images/carriers-logo/' + carrierLogo;
+            const logoUrl = europarcel_ajax.plugin_url + '/assets/images/carriers-logo/' + carrierLogo;
             
             infoDiv.innerHTML = `
                 <div style="display: flex; align-items: flex-start; gap: 12px;">

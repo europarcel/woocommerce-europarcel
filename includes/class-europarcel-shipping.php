@@ -220,8 +220,8 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 return;
             }
         }
-        $settings = get_option('woocommerce_' . $this->id . '_settings');
-        if (!$settings) {
+        $customer = new \EawbShipping\EawbCustomer($this->instance_id);
+        if (!$customer->settings) {
             return false;
         }
         $contents = $package['contents'];
@@ -235,20 +235,20 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 continue;
             }
             $product_shiping_class = $product['data']->get_shipping_class();
-            if ($settings['free_shipping_classes_to_home']) {
+            if ($customer->settings['free_shipping_classes_to_home']) {
                 $product_shiping_class = $product['data']->get_shipping_class();
-                if (in_array($product_shiping_class, $settings['free_shipping_classes_to_home'])) {
+                if (in_array($product_shiping_class, $customer->settings['free_shipping_classes_to_home'])) {
                     $products_free_shiping_to_home++;
                 }
             }
-            if ($settings['free_shipping_classes_to_locker']) {
+            if ($customer->settings['free_shipping_classes_to_locker']) {
                 $product_shiping_class = $product['data']->get_shipping_class();
-                if (in_array($product_shiping_class, $settings['free_shipping_classes_to_locker'])) {
+                if (in_array($product_shiping_class, $customer->settings['free_shipping_classes_to_locker'])) {
                     $products_free_shiping_to_locker++;
                 }
             }
-            if ($settings['excluded_locker_classes']) {
-                if (in_array($product_shiping_class, $settings['excluded_locker_classes'])) {
+            if ($customer->settings['excluded_locker_classes']) {
+                if (in_array($product_shiping_class, $customer->settings['excluded_locker_classes'])) {
                     $allow_locker_shiping = false;
                 }
             }
@@ -259,24 +259,23 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         if (count($contents) == $products_free_shiping_to_locker) {
             $has_free_shipping_to_locker = true;
         }
-        if ($settings['free_shipping_amount_to_home'] > 0) {
+        if ($customer->settings['free_shipping_amount_to_home'] > 0) {
             $package_amount = WC()->cart->cart_contents_total +
                     WC()->cart->tax_total;
-            if ($package_amount > $settings['free_shipping_amount_to_home']) {
+            if ($package_amount > $customer->settings['free_shipping_amount_to_home']) {
                 $has_free_shipping_to_home = true;
             }
         }
 
-        if ($settings['free_shipping_amount_to_locker'] > 0) {
+        if ($customer->settings['free_shipping_amount_to_locker'] > 0) {
             $package_amount = WC()->cart->cart_contents_total +
                     WC()->cart->tax_total;
-            if ($package_amount > $settings['free_shipping_amount_to_locker']) {
+            if ($package_amount > $customer->settings['free_shipping_amount_to_locker']) {
                 $has_free_shipping_to_locker = true;
             }
         }
-        
-        // Add home-to-home shipping option
-        {
+
+        if (!empty($customer->get_home_carriers())) {
             if ($has_free_shipping_to_home) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_h2h',
@@ -292,7 +291,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 $this->add_rate(array(
                     'id' => $this->id . '_fixed_h2h',
                     'label' => 'Cost Transport la adresa cu ' . $this->settings['title'],
-                    'cost' => $settings['fixed_price_h2h'],
+                    'cost' => $customer->settings['fixed_price_h2h'],
                     'package' => $package,
                     'meta_data' => [
                         'carrier_id' => 0,
@@ -301,9 +300,9 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 ));
             }
         }
-        
+
         // Add locker shipping option
-        if ($allow_locker_shiping) {
+        if ($allow_locker_shiping && !empty($customer->get_locker_carriers())) {
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_locker_' . $this->instance_id,
@@ -321,7 +320,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 $this->add_rate(array(
                     'id' => $this->id . '_fixed_locker_' . $this->instance_id,
                     'label' => 'Cost Transport la locker cu ' . $this->settings['title'],
-                    'cost' => $settings['fixed_price_h2l'],
+                    'cost' => $customer->settings['fixed_price_h2l'],
                     'package' => $package,
                     'meta_data' => [
                         'carrier_id' => 0,

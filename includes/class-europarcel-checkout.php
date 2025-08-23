@@ -14,7 +14,7 @@ class EuroparcelCheckout {
         add_action('wp_ajax_nopriv_get_locker_carriers', [$this, 'ajax_get_locker_carriers']);
         
         // Filter shipping rate labels to show selected locker info
-        add_filter('woocommerce_cart_shipping_method_full_label', [$this, 'modify_locker_shipping_label'], 10, 2);
+        //add_filter('woocommerce_cart_shipping_method_full_label', [$this, 'modify_locker_shipping_label'], 10, 2);
     }
 
     public function maybe_display_locker_in_block() {
@@ -82,7 +82,7 @@ class EuroparcelCheckout {
             ]);
         }
     }
-
+/*
     public function modify_locker_shipping_label($label, $method) {
         // Only modify locker shipping methods
         if (!isset($method->get_meta_data()['is_locker']) || !$method->get_meta_data()['is_locker']) {
@@ -128,5 +128,5 @@ class EuroparcelCheckout {
         return $carrier_logos[$carrier_id] ?? 'default-carrier-logo.png';
     }
 
-    
+    */
 }
