@@ -25,6 +25,13 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
     return;
 }
 
+// Declare compatibility with WooCommerce High-Performance Order Storage (HPOS)
+add_action('before_woocommerce_init', function() {
+    if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
+
 //require_once EAWB_ROOT_PATH . '/includes/class-europarcel-ajax.php';
 // AJAX handlers moved to EuroparcelCheckout class
 add_action('woocommerce_shipping_init', 'eawb_shipping_init');
