@@ -303,6 +303,15 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
 
         // Add locker shipping option
         if ($allow_locker_shiping && !empty($customer->get_locker_carriers())) {
+            $locker_info = WC()->session->get('locker_info');
+            $meta_data = [
+                'service_id' => 2,
+                'is_locker' => true,
+            ];
+            if ($locker_info) {
+                $meta_data['fixed_location_id'] = $locker_info['locker_id'];
+                $meta_data['carier_id'] = $locker_info['carrier_id'];
+            }
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_locker_' . $this->instance_id,
@@ -322,12 +331,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                     'label' => 'Cost Transport la locker cu ' . $this->settings['title'],
                     'cost' => $customer->settings['fixed_price_h2l'],
                     'package' => $package,
-                    'meta_data' => [
-                        'carrier_id' => 0,
-                        'service_id' => 2,
-                        'fixed_location_id' => 0,
-                        'is_locker' => true
-                    ]
+                    'meta_data' => $meta_data
                 ));
             }
         }
