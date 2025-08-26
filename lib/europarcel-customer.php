@@ -3,9 +3,9 @@
 namespace EawbShipping;
 
 defined('ABSPATH') || exit;
-include_once EAWB_ROOT_PATH . '/lib/europarcel-constants.php';
-require_once EAWB_ROOT_PATH . '/lib/europarcel-request-data.php';
-require_once EAWB_ROOT_PATH . '/includes/class-europarcel-http-request.php';
+include_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-constants.php';
+require_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-request-data.php';
+require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-http-request.php';
 
 class EawbCustomer {
 

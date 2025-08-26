@@ -8,7 +8,7 @@ class EawbHttpRequest {
         $this->instance_id=$instance_id;
     }
     public function get(string $function, array $data = array(), int $timeout = 15) {
-        $url = EAWB_API_URL . $function;
+        $url = EUROPARCEL_API_URL . $function;
         if (!empty($data)) {
             $url .= '?' . http_build_query($data);
         }
@@ -28,7 +28,7 @@ class EawbHttpRequest {
             'headers' => self::getHeader(),
             'timeout' => $timeout
         );
-        $url = EAWB_API_URL . $function;
+        $url = EUROPARCEL_API_URL . $function;
         $response = wp_remote_post($url, $params);
         return self::handle_api_response($response);
     }
