@@ -20,7 +20,7 @@
  * Author URI:        https://eawb.ro/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       eawb
+ * Text Domain:       europarcel
  * Domain Path:       /languages
  * WC requires at least: 5.0
  * WC tested up to:      8.9
@@ -79,17 +79,17 @@ add_action('before_woocommerce_init', function() {
  * 
  * @since    1.0.0
  */
-add_action('woocommerce_shipping_init', 'eawb_shipping_init');
+add_action('woocommerce_shipping_init', 'europarcel_shipping_init');
 
 /**
  * Load the shipping method class
  * 
  * @since    1.0.0
  */
-function eawb_shipping_init() {
-    if (!class_exists('WC_Eawb_Shipping')) {
+function europarcel_shipping_init() {
+    if (!class_exists('WC_Europarcel_Shipping')) {
         require_once plugin_dir_path(__FILE__) . 'includes/class-europarcel-shipping.php';
-        add_filter('woocommerce_shipping_methods', 'add_eawb_shipping');
+        add_filter('woocommerce_shipping_methods', 'add_europarcel_shipping');
     }
 }
 
@@ -100,8 +100,8 @@ function eawb_shipping_init() {
  * @param    array    $methods    Existing shipping methods
  * @return   array                Updated shipping methods
  */
-function add_eawb_shipping($methods) {
-    $methods['eawb_shipping'] = 'WC_Eawb_Shipping';
+function add_europarcel_shipping($methods) {
+    $methods['europarcel_shipping'] = 'WC_Europarcel_Shipping';
     error_log('[EAWB] Registered methods: ' . print_r($methods, true));
     return $methods;
 }
@@ -113,8 +113,8 @@ function add_eawb_shipping($methods) {
  */
 add_action('admin_enqueue_scripts', function () {
     if (is_admin() && isset($_GET['page']) && $_GET['page'] == 'wc-settings') {
-        wp_enqueue_style('eawb-admin', plugins_url('assets/css/admin.css', __FILE__));
-        wp_enqueue_script('eawb-admin', plugins_url('assets/js/admin.js', __FILE__), array('jquery', 'select2'), '1.0', true);
+        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/admin.css', __FILE__));
+        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/admin.js', __FILE__), array('jquery', 'select2'), '1.0', true);
     }
 });
 

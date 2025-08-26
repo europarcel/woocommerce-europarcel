@@ -1,6 +1,6 @@
 <?php
-namespace EawbShipping;
+namespace EuroparcelShipping;
 defined('ABSPATH') || exit;
-class EawbApiPrices {
+class EuroparcelApiPrices {
     
 }

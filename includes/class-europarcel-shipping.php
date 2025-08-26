@@ -5,18 +5,18 @@ require_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-customer.php';
 require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-custom-fields.php';
 include_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-constants.php';
 
-class WC_Eawb_Shipping extends WC_Shipping_Method {
+class WC_Europarcel_Shipping extends WC_Shipping_Method {
 
     public function __construct($instance_id = 0) {
         $this->instance_id = absint($instance_id);
-        $this->id = 'eawb_shipping';
+        $this->id = 'europarcel_shipping';
         if ($this->instance_id) {
             $this->id .= '_' . $this->instance_id;
         }
-        $this->method_title = __('Eawb Shipping', 'europarcel');
+        $this->method_title = __('Europarcel Shipping', 'europarcel');
         $this->method_description = __('O metoda noua pentru a chema curierii', 'europarcel');
         $this->supports = array('shipping-zones', 'instance-settings');
-        //$this->plugin_id = 'woocommerce_eawb_shipping_';
+        //$this->plugin_id = 'woocommerce_europarcel_shipping_';
         $this->init();
 
         $this->enabled = $this->get_option('enabled', 'yes');
@@ -28,7 +28,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         if (!$this->instance_id) {
             return;
         }
-        $this->settings = get_option('woocommerce_eawb_shipping_' . $this->instance_id . '_settings');
+        $this->settings = get_option('woocommerce_europarcel_shipping_' . $this->instance_id . '_settings');
         $this->init_form_fields();
         //add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
     }
@@ -62,17 +62,17 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         if (!isset($this->settings['api_key']) || empty($this->settings['api_key'])) {
             return;
         }
-        $customer = new \EawbShipping\EawbCustomer($this->instance_id);
+        $customer = new \EuroparcelShipping\EuroparcelCustomer($this->instance_id);
         $customer_info = $customer->getCustomerInfo();
         if (!$customer_info) {
             $this->form_fields = array_merge($this->form_fields, array(
-                'eawb_customer' => array(
+                'europarcel_customer' => array(
                     'title' => __('Eroare la conectare', 'europarcel'),
                     'type' => 'title',
             )));
             return;
         } else {
-            $this->update_option('eawb_customer', $customer_info);
+            $this->update_option('europarcel_customer', $customer_info);
         }
         $shipping_classes = get_terms(array('taxonomy' => 'product_shipping_class', 'hide_empty' => false));
         $view_shipping_classes = [];
@@ -81,7 +81,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
         }
         $this->form_fields = array_merge($this->form_fields, array(
             'customer_info' => array(
-                'title' => __($customer_info['name'] . ' sunteti conectat la Eawb ', 'europarcel'),
+                'title' => __($customer_info['name'] . ' sunteti conectat la eAWB ', 'europarcel'),
                 'type' => 'title',
             ),
             'default_shipping' => array(
@@ -108,7 +108,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px;height:450px;',
                 'default' => array(),
-                'options' => \EawbShipping\EawbConstants::getAvailableServices()
+                'options' => \EuroparcelShipping\EuroparcelConstants::getAvailableServices()
             ),
             'excluded_locker_classes' => array(
                 'title' => __('Excludes classes for locker', 'europarcel'),
@@ -220,7 +220,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                 return;
             }
         }
-        $customer = new \EawbShipping\EawbCustomer($this->instance_id);
+        $customer = new \EuroparcelShipping\EuroparcelCustomer($this->instance_id);
         if (!$customer->settings) {
             return false;
         }
@@ -307,23 +307,16 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
             $meta_data = [
                 'service_id' => 2,
                 'is_locker' => true,
+                'fixed_location_id' => $locker_info ? $locker_info['locker_id'] : 0,
+                'carrier_id' => $locker_info ? $locker_info['carrier_id'] : 0,
             ];
-            if ($locker_info) {
-                $meta_data['fixed_location_id'] = $locker_info['locker_id'];
-                $meta_data['carier_id'] = $locker_info['carrier_id'];
-            }
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_locker_' . $this->instance_id,
                     'label' => 'Transport gratuit la locker cu ' . $this->settings['title'],
                     'cost' => 0,
                     'package' => $package,
-                    'meta_data' => [
-                        'carrier_id' => 0,
-                        'service_id' => 2,
-                        'fixed_location_id' => 0,
-                        'is_locker' => true
-                    ]
+                    'meta_data' => $meta_data
                 ));
             } else {
                 $this->add_rate(array(
