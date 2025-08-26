@@ -131,42 +131,6 @@ class EawbCustomer {
         return [$available_services_hth, $available_services_htl];
     }
 
-    public function postOrder($order, $carrier_id, $service_id) {
-
-
-        if ($this->settings['enabled'] != 'yes' || $this->settings['eawb_customer']) {
-            return false;
-        }
-        $address_to = $order->get_address('shipping');
-
-        if (!is_array($address_to) || $address_to['city']) {
-            return false;
-        }
-        $data = new \EawbShipping\EawbRequestData();
-        $data->setCarrierId($carrier_id);
-        $data->setServiceId($service_id);
-        $delivery_address = [
-            'email' => 'de_facut@eawb.ro',
-            'phone' => $address_to['phone'],
-            'contact' => $address_to['last_name'] . ' ' . $address_to['first_name'],
-            'company' => $address_to['company'],
-            'country_code' => $address_to['country'],
-            'county_name' => WC()->countries->get_states($address_to['country'])[$address_to['state']],
-            'locality_name' => $address_to['city'],
-            'street_name' => $address_to['address_1'],
-            'street_number' => '',
-            'street_details' => $address_to['address_2']
-        ];
-        $data->setDeliveryAddress($delivery_address);
-        try {
-            $http_request = new \EawbShipping\EawbHttpRequest($this->instance_id);
-            $response = $http_request->post('public/orders', $data->getData());
-            return $response;
-        } catch (\Exception $ex) {
-            return false;
-        }
-    }
-
     public function get_lockers() {
         $cariers_ids = $this->get_locker_carriers();
         $data = [

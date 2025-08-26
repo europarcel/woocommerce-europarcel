@@ -347,7 +347,24 @@
                 address: locker.address,
                 carrier_name: locker.carrier_name
             });
-            
+            $.ajax({
+                    url: europarcel_ajax.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'update_locker_shipping',
+                        security: europarcel_ajax.nonce,
+                        instance_id: lockerInstanceField.value,
+                        locker_id: locker.id,
+                        carrier_id: locker.carrier_id,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('Failed to set locker data:', xhr.responseText);
+                    }
+                });
         }
         
         // Carrier logo mapping based on requirements
