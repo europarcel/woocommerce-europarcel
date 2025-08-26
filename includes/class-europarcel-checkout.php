@@ -13,6 +13,10 @@ class EuroparcelCheckout {
         add_action('wp_ajax_get_locker_carriers', [$this, 'ajax_get_locker_carriers']);
         add_action('wp_ajax_nopriv_get_locker_carriers', [$this, 'ajax_get_locker_carriers']);
         
+        // Add update locker shipping endpoint (if needed in the future)
+        // add_action('wp_ajax_update_locker_shipping', [$this, 'ajax_update_locker_shipping']);
+        // add_action('wp_ajax_nopriv_update_locker_shipping', [$this, 'ajax_update_locker_shipping']);
+        
         // Filter shipping rate labels to show selected locker info
         //add_filter('woocommerce_cart_shipping_method_full_label', [$this, 'modify_locker_shipping_label'], 10, 2);
     }
