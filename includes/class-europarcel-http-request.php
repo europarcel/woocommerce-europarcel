@@ -1,8 +1,8 @@
 <?php
 
-namespace EawbShipping;
+namespace EuroparcelShipping;
 defined( 'ABSPATH' ) || exit;
-class EawbHttpRequest {
+class EuroparcelHttpRequest {
     private int $instance_id;
     public function __construct($instance_id) {
         $this->instance_id=$instance_id;
@@ -63,7 +63,7 @@ class EawbHttpRequest {
     }
 
     private function getHeader() {
-        $settings = get_option('woocommerce_eawb_shipping_'. $this->instance_id.'_settings');
+        $settings = get_option('woocommerce_europarcel_shipping_'. $this->instance_id.'_settings');
         return [
             'accept' => 'application/json',
             'X-API-Key' => isset($settings['api_key']) ? $settings['api_key'] : ''

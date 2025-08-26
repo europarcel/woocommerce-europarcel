@@ -1,11 +1,11 @@
 <?php
 
-namespace EawbShipping;
+namespace EuroparcelShipping;
 
 defined('ABSPATH') || exit;
 include_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-constants.php';
 
-class EawbRequestData {
+class EuroparcelRequestData {
     private int $instance_id;
     private $request_data = [
         'carrier_id' => 0,
@@ -64,13 +64,13 @@ class EawbRequestData {
 
     public function __construct(int $instance_id,$allow_locker=false) {
         $this->instance_id=$instance_id;
-        $setings = get_option('woocommerce_eawb_shipping_'.$instance_id.'_settings');
+        $setings = get_option('woocommerce_europarcel_shipping_'.$instance_id.'_settings');
         //if (!$setings || $setings['enabled'] != 'yes' || !$setings['default_shipping'] || !$setings['default_billing'] || !$setings['available_services'] || !$setings['default_weight'] || !$setings['default_length'] || !$setings['default_width'] || !$setings['default_height']) {
             //throw new \Exception();
         //    return;
         //}
 
-        $services_config = \EawbShipping\EawbConstants::getSettingsServices($setings['available_services']);
+        $services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($setings['available_services']);
         if (count($services_config) == 1) {
             $this->request_data['carrier_id'] = intval($services_config[0]['carrier_id']);
             $this->request_data['service_id'] = intval($services_config[0]['service_id']);
@@ -106,7 +106,7 @@ class EawbRequestData {
     }
 
     public function setServiceId($service_id) {
-        $this->request_data['carier_id'] = $service_id;
+        $this->request_data['carrier_id'] = $service_id;
     }
 
     public function setDeliveryAddress($delivery_address) { //set request address_to

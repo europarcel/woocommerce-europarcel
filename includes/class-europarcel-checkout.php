@@ -36,26 +36,26 @@ class EuroparcelCheckout {
     }
 /*
     public function save_locker_to_order($order) {
-        if (!empty($_POST['eawb_locker_id'])) {
+        if (!empty($_POST['europarcel_locker_id'])) {
             // Save basic locker information
-            $order->update_meta_data('_eawb_locker_id', sanitize_text_field($_POST['eawb_locker_id']));
-            $order->update_meta_data('_eawb_locker_instance', sanitize_text_field($_POST['eawb_locker_instance']));
+            $order->update_meta_data('_europarcel_locker_id', sanitize_text_field($_POST['europarcel_locker_id']));
+            $order->update_meta_data('_europarcel_locker_instance', sanitize_text_field($_POST['europarcel_locker_instance']));
 
             // Save carrier ID (required for order processing)
-            if (!empty($_POST['eawb_carrier_id'])) {
-                $order->update_meta_data('_eawb_carrier_id', sanitize_text_field($_POST['eawb_carrier_id']));
+            if (!empty($_POST['europarcel_carrier_id'])) {
+                $order->update_meta_data('_europarcel_carrier_id', sanitize_text_field($_POST['europarcel_carrier_id']));
             }
 
             // Save complete locker data for display purposes
-            if (!empty($_POST['eawb_locker_data'])) {
-                $locker_data = json_decode(stripslashes($_POST['eawb_locker_data']), true);
+            if (!empty($_POST['europarcel_locker_data'])) {
+                $locker_data = json_decode(stripslashes($_POST['europarcel_locker_data']), true);
                 if (is_array($locker_data)) {
-                    $order->update_meta_data('_eawb_locker_name', sanitize_text_field($locker_data['name']));
-                    $order->update_meta_data('_eawb_locker_address', sanitize_text_field($locker_data['address']));
-                    $order->update_meta_data('_eawb_carrier_name', sanitize_text_field($locker_data['carrier_name']));
+                    $order->update_meta_data('_europarcel_locker_name', sanitize_text_field($locker_data['name']));
+                    $order->update_meta_data('_europarcel_locker_address', sanitize_text_field($locker_data['address']));
+                    $order->update_meta_data('_europarcel_carrier_name', sanitize_text_field($locker_data['carrier_name']));
 
                     // Also save the complete data as JSON for future use
-                    $order->update_meta_data('_eawb_locker_data', wp_json_encode($locker_data));
+                    $order->update_meta_data('_europarcel_locker_data', wp_json_encode($locker_data));
                 }
             }
         }
@@ -73,7 +73,7 @@ class EuroparcelCheckout {
             $instance_id = isset($_POST['instance_id']) ? intval($_POST['instance_id']) : 1;
 
             // Create customer instance and get locker carriers
-            $customer = new \EawbShipping\EawbCustomer($instance_id);
+            $customer = new \EuroparcelShipping\EuroparcelCustomer($instance_id);
             $locker_carriers = $customer->get_locker_carriers();
 
             wp_send_json_success([
@@ -92,7 +92,7 @@ class EuroparcelCheckout {
             wp_send_json_error(['message' => 'Security check failed']);
             return;
         }
-        
+
         if (isset($_POST['locker_id']) && isset($_POST['carrier_id']) && isset($_POST['instance_id'])) {
             $locker_info = array(
                 'locker_id' => sanitize_text_field($_POST['locker_id']),
@@ -126,7 +126,7 @@ class EuroparcelCheckout {
             foreach ($shipping_packages as $package_key => $package) {
                 foreach ($package['rates'] as $rate_id => $rate) {
                     // Verifică dacă este metoda de transport dorită
-                    if ($rate->method_id === 'eawb_shipping_'.$locker_info['instance_id'] && str_contains($rate->id,'locker')) {
+                    if ($rate->method_id === 'europarcel_shipping_'.$locker_info['instance_id'] && str_contains($rate->id,'locker')) {
                         // Adaugă sau actualizează meta data pentru rată
                         $rate->add_meta_data('locker_id', $locker_info['locker_id']);
                         $rate->add_meta_data('carrier_id', $locker_info['carrier_id']);
@@ -152,8 +152,8 @@ class EuroparcelCheckout {
       $locker_data = null;
 
       // Try to get from POST data (during checkout process)
-      if (!empty($_POST['eawb_locker_data'])) {
-      $locker_data = json_decode(stripslashes($_POST['eawb_locker_data']), true);
+      if (!empty($_POST['europarcel_locker_data'])) {
+      $locker_data = json_decode(stripslashes($_POST['europarcel_locker_data']), true);
       }
 
       // If we have locker data, enhance the label

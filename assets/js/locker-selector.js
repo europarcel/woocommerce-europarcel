@@ -2,26 +2,91 @@
     'use strict';
 
     function initializeLockerSelector() {
+        // Store reference to currently clicked button for multiple instances support
+        let currentClickedButton = null;
+        
+        // Track which buttons have selected lockers (by instance ID)
+        let selectedLockerInstances = new Set();
+        
+        // Get WordPress-agnostic button styles
+        function getButtonStyles(isModify = false, preserveDisplay = false) {
+            const styles = {
+                marginTop: '10px',
+                padding: '8px 16px',
+                border: '1px solid #0073aa',
+                borderRadius: '3px',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: '500',
+                textDecoration: 'none',
+                lineHeight: '1.4',
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+                verticalAlign: 'top',
+                backgroundColor: isModify ? '#f7f7f7' : '#0073aa',
+                color: isModify ? '#0073aa' : '#ffffff',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                userSelect: 'none'
+            };
+            
+            // Only set display if not preserving current display state
+            if (!preserveDisplay) {
+                styles.display = 'inline-block';
+            }
+            
+            return styles;
+        }
+        
+        // Apply styles to button element
+        function applyButtonStyles(button, styles) {
+            Object.assign(button.style, styles);
+            
+            // Add hover effects
+            button.onmouseenter = function() {
+                if (!this.disabled) {
+                    const isModify = this.textContent.includes('Modifică');
+                    this.style.backgroundColor = isModify ? '#0073aa' : '#005a87';
+                    this.style.color = '#ffffff';
+                    this.style.transform = 'translateY(-1px)';
+                    this.style.boxShadow = '0 2px 5px rgba(0,0,0,0.15)';
+                }
+            };
+            
+            button.onmouseleave = function() {
+                if (!this.disabled) {
+                    const isModify = this.textContent.includes('Modifică');
+                    this.style.backgroundColor = isModify ? '#f7f7f7' : '#0073aa';
+                    this.style.color = isModify ? '#0073aa' : '#ffffff';
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                }
+            };
+        }
+        
+        // Update button text and style based on state
+        function updateButtonState(button, hasSelectedLocker, preserveDisplay = false) {
+            const newText = hasSelectedLocker ? 'Modifică locker' : 'Selectare locker';
+            button.textContent = newText;
+            applyButtonStyles(button, getButtonStyles(hasSelectedLocker, preserveDisplay));
+        }
+        
         const addLockerButton = () => {
                 // Handle WooCommerce Blocks checkout
                 const blockShippingOptions = document.querySelectorAll('.wc-block-components-radio-control__option-layout');
                 blockShippingOptions.forEach((option, index) => {
                     if ((option.textContent.toLowerCase().includes('locker') || option.textContent.toLowerCase().includes('la locker')) && !option.querySelector('.select-locker-btn')) {
                         const button = document.createElement('button');
-                        button.textContent = 'Selectare locker';
                         button.className = 'button select-locker-btn';
                         button.type = 'button'; // CRUCIAL: Prevent form submission
-                        button.style.marginTop = '10px';
-                        button.style.backgroundColor = '#ebe9eb';
-                        button.style.color = '#515151';
-                        button.style.padding = '5px 10px';
-                        button.style.border = '1px solid #d3ced2';
-                        button.style.borderRadius = '3px';
-                        button.style.cursor = 'pointer';
                         button.style.display = 'none'; // Hidden by default
+                        
+                        // Initialize button with proper state (preserve hidden display)
+                        updateButtonState(button, false, true);
                         button.onclick = function(event) {
                             event.preventDefault();
                             event.stopPropagation();
+                            currentClickedButton = this; // Store reference to clicked button
                             handleLockerSelection();
                         };
                         option.appendChild(button);
@@ -33,20 +98,16 @@
                 classicShippingOptions.forEach((option, index) => {
                     if ((option.textContent.toLowerCase().includes('locker') || option.textContent.toLowerCase().includes('la locker')) && !option.querySelector('.select-locker-btn')) {
                         const button = document.createElement('button');
-                        button.textContent = 'Selectare locker';
                         button.className = 'button select-locker-btn';
                         button.type = 'button'; // CRUCIAL: Prevent form submission
-                        button.style.marginTop = '10px';
-                        button.style.backgroundColor = '#ebe9eb';
-                        button.style.color = '#515151';
-                        button.style.padding = '5px 10px';
-                        button.style.border = '1px solid #d3ced2';
-                        button.style.borderRadius = '3px';
-                        button.style.cursor = 'pointer';
                         button.style.display = 'none'; // Hidden by default
+                        
+                        // Initialize button with proper state (preserve hidden display)
+                        updateButtonState(button, false, true);
                         button.onclick = function(event) {
                             event.preventDefault();
                             event.stopPropagation();
+                            currentClickedButton = this; // Store reference to clicked button
                             handleLockerSelection();
                         };
                         option.appendChild(button);
@@ -296,13 +357,21 @@
             document.querySelectorAll('.select-locker-btn').forEach(btn => {
                 btn.disabled = true;
                 btn.textContent = 'Se încarcă...';
+                btn.style.cursor = 'wait';
+                btn.style.opacity = '0.7';
             });
         }
         
         function hideLoadingState() {
             document.querySelectorAll('.select-locker-btn').forEach(btn => {
                 btn.disabled = false;
-                btn.textContent = 'Selectare locker';
+                btn.style.cursor = 'pointer';
+                btn.style.opacity = '1';
+                
+                // Restore correct button text based on whether locker is selected
+                const instanceId = getSelectedShippingInstanceId();
+                const hasSelectedLocker = selectedLockerInstances.has(instanceId);
+                updateButtonState(btn, hasSelectedLocker, true);
             });
         }
         
@@ -353,6 +422,9 @@
                 // Show success message
                 showLockerSelectedInfo(locker);
                 
+                // Clear the clicked button reference
+                currentClickedButton = null;
+                
                 // Trigger checkout update to refresh shipping methods with locker info
                 if (typeof jQuery !== 'undefined') {
                     jQuery('body').trigger('update_checkout');
@@ -362,40 +434,40 @@
         
         function updateWooCommerceFields(locker) {
             // Update hidden fields that WooCommerce will save to order
-            let lockerIdField = document.getElementById('eawb_locker_id');
-            let lockerInstanceField = document.getElementById('eawb_locker_instance');
-            let carrierIdField = document.getElementById('eawb_carrier_id');
-            let lockerDataField = document.getElementById('eawb_locker_data');
+            let lockerIdField = document.getElementById('europarcel_locker_id');
+            let lockerInstanceField = document.getElementById('europarcel_locker_instance');
+            let carrierIdField = document.getElementById('europarcel_carrier_id');
+            let lockerDataField = document.getElementById('europarcel_locker_data');
             
             if (!lockerIdField) {
                 lockerIdField = document.createElement('input');
                 lockerIdField.type = 'hidden';
-                lockerIdField.id = 'eawb_locker_id';
-                lockerIdField.name = 'eawb_locker_id';
+                lockerIdField.id = 'europarcel_locker_id';
+                lockerIdField.name = 'europarcel_locker_id';
                 document.body.appendChild(lockerIdField);
             }
             
             if (!lockerInstanceField) {
                 lockerInstanceField = document.createElement('input');
                 lockerInstanceField.type = 'hidden';
-                lockerInstanceField.id = 'eawb_locker_instance';
-                lockerInstanceField.name = 'eawb_locker_instance';
+                lockerInstanceField.id = 'europarcel_locker_instance';
+                lockerInstanceField.name = 'europarcel_locker_instance';
                 document.body.appendChild(lockerInstanceField);
             }
             
             if (!carrierIdField) {
                 carrierIdField = document.createElement('input');
                 carrierIdField.type = 'hidden';
-                carrierIdField.id = 'eawb_carrier_id';
-                carrierIdField.name = 'eawb_carrier_id';
+                carrierIdField.id = 'europarcel_carrier_id';
+                carrierIdField.name = 'europarcel_carrier_id';
                 document.body.appendChild(carrierIdField);
             }
             
             if (!lockerDataField) {
                 lockerDataField = document.createElement('input');
                 lockerDataField.type = 'hidden';
-                lockerDataField.id = 'eawb_locker_data';
-                lockerDataField.name = 'eawb_locker_data';
+                lockerDataField.id = 'europarcel_locker_data';
+                lockerDataField.name = 'europarcel_locker_data';
                 document.body.appendChild(lockerDataField);
             }
             
@@ -443,11 +515,33 @@
         }
         
         function showLockerSelectedInfo(locker) {
-            // Create or update info display
-            let infoDiv = document.getElementById('selected-locker-info');
+            // Get the instance ID to create unique info div
+            const instanceId = getSelectedShippingInstanceId();
+            const infoDivId = `selected-locker-info-${instanceId}`;
+            
+            // Track that this instance has a selected locker
+            selectedLockerInstances.add(instanceId);
+            
+            // Remove any existing info divs for other instances
+            document.querySelectorAll('[id^="selected-locker-info-"]').forEach(div => {
+                if (div.id !== infoDivId) {
+                    div.remove();
+                    // Also remove the instance from tracking
+                    const divInstanceId = div.id.replace('selected-locker-info-', '');
+                    selectedLockerInstances.delete(divInstanceId);
+                }
+            });
+            
+            // Update the clicked button to show "Modifică locker"
+            if (currentClickedButton) {
+                updateButtonState(currentClickedButton, true);
+            }
+            
+            // Create or update info display for this specific instance
+            let infoDiv = document.getElementById(infoDivId);
             if (!infoDiv) {
                 infoDiv = document.createElement('div');
-                infoDiv.id = 'selected-locker-info';
+                infoDiv.id = infoDivId;
                 infoDiv.style.marginTop = '10px';
                 infoDiv.style.padding = '15px';
                 infoDiv.style.background = '#d1ecf1';
@@ -456,8 +550,8 @@
                 infoDiv.style.fontSize = '14px';
                 infoDiv.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
                 
-                // Add after the locker button
-                const button = document.querySelector('.select-locker-btn');
+                // Add after the correct locker button (the one that was clicked)
+                const button = currentClickedButton || document.querySelector('.select-locker-btn');
                 if (button && button.parentNode) {
                     button.parentNode.appendChild(infoDiv);
                 }
@@ -561,10 +655,16 @@
             
             // Remove any previous locker selection if not locker method
             if (!isLockerMethod) {
-                const lockerDisplay = document.querySelector('.eawb-selected-locker, #selected-locker-info');
-                if (lockerDisplay) {
-                    lockerDisplay.remove();
-                }
+                const lockerDisplays = document.querySelectorAll('.europarcel-selected-locker, [id^="selected-locker-info-"]');
+                lockerDisplays.forEach(display => {
+                    display.remove();
+                });
+                // Clear selected locker instances tracking
+                selectedLockerInstances.clear();
+                // Reset all buttons to initial state
+                buttons.forEach(btn => {
+                    updateButtonState(btn, false, true);
+                });
             }
         }
         
@@ -593,7 +693,15 @@
         
         new MutationObserver(() => {
             addLockerButton();
-            setTimeout(handleShippingMethodChange, 100);
+            setTimeout(() => {
+                handleShippingMethodChange();
+                // Update button states for newly added buttons
+                document.querySelectorAll('.select-locker-btn').forEach(btn => {
+                    const instanceId = getSelectedShippingInstanceId();
+                    const hasSelectedLocker = selectedLockerInstances.has(instanceId);
+                    updateButtonState(btn, hasSelectedLocker, true);
+                });
+            }, 100);
         }).observe(document.body, {childList: true, subtree: true});
         
         addLockerButton();
@@ -602,6 +710,12 @@
             setTimeout(() => {
                 addLockerButton();
                 handleShippingMethodChange();
+                // Update button states after checkout updates
+                document.querySelectorAll('.select-locker-btn').forEach(btn => {
+                    const instanceId = getSelectedShippingInstanceId();
+                    const hasSelectedLocker = selectedLockerInstances.has(instanceId);
+                    updateButtonState(btn, hasSelectedLocker, true);
+                });
             }, 100);
         });
         

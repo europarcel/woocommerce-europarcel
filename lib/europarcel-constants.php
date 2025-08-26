@@ -1,8 +1,8 @@
 <?php
-namespace EawbShipping;
+namespace EuroparcelShipping;
 defined('ABSPATH') || exit;
 
-class EawbConstants {
+class EuroparcelConstants {
 
     public static function getAvailableServices() {
         return [

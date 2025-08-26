@@ -1,15 +1,15 @@
 <?php
 
-namespace EawbShipping;
+namespace EuroparcelShipping;
 
 defined('ABSPATH') || exit;
 
-class Eawb_Shipping_Custom_Fields {
+class Europarcel_Shipping_Custom_Fields {
 
     public static function fixed_price_group($shipping_method) {
         ob_start();
         ?>
-        <tr valign="top" class="eawb-price-type-dependent eawb-fixed-price">
+        <tr valign="top" class="europarcel-price-type-dependent europarcel-fixed-price">
             <th scope="row"><?php _e('Fixed price', 'europarcel'); ?></th>
             <td>
                 <input type="text" 
@@ -29,7 +29,7 @@ class Eawb_Shipping_Custom_Fields {
     public static function calculated_price_group($shipping_method) {
         ob_start();
         ?>
-        <tr valign="top" class="eawb-price-type-dependent eawb-calculated-price">
+        <tr valign="top" class="europarcel-price-type-dependent europarcel-calculated-price">
             <th scope="row"><?php _e('Calculation parameters', 'europarcel'); ?></th>
             <td>
                 <span class="description" style="margin-right: 15px;"><?php _e('Weight (kg)', 'europarcel'); ?></span>
@@ -77,7 +77,7 @@ class Eawb_Shipping_Custom_Fields {
                 <select 
                     id="<?php echo esc_attr($shipping_method->get_field_id('price_type')); ?>" 
                     name="<?php echo esc_attr($shipping_method->get_field_name('price_type')); ?>" 
-                    class="eawb-price-type-selector" 
+                    class="europarcel-price-type-selector" 
                     data-instance="<?php echo esc_attr($shipping_method->instance_id); ?>"
                     >
                     <option value="fixed" <?php selected($shipping_method->get_option('price_type'), 'fixed'); ?>>
