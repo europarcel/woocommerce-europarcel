@@ -87,6 +87,12 @@ class EuroparcelCheckout {
     }
 
     public function wp_ajax_update_locker_shipping() {
+        // Verify nonce for security
+        if (!wp_verify_nonce($_POST['security'], 'europarcel_locker_nonce')) {
+            wp_send_json_error(['message' => 'Security check failed']);
+            return;
+        }
+        
         if (isset($_POST['locker_id']) && isset($_POST['carrier_id']) && isset($_POST['instance_id'])) {
             $locker_info = array(
                 'locker_id' => sanitize_text_field($_POST['locker_id']),

@@ -310,7 +310,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
             ];
             if ($locker_info) {
                 $meta_data['fixed_location_id'] = $locker_info['locker_id'];
-                $meta_data['carier_id'] = $locker_info['carrier_id'];
+                $meta_data['carrier_id'] = $locker_info['carrier_id'];
             }
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
@@ -318,12 +318,7 @@ class WC_Eawb_Shipping extends WC_Shipping_Method {
                     'label' => 'Transport gratuit la locker cu ' . $this->settings['title'],
                     'cost' => 0,
                     'package' => $package,
-                    'meta_data' => [
-                        'carrier_id' => 0,
-                        'service_id' => 2,
-                        'fixed_location_id' => 0,
-                        'is_locker' => true
-                    ]
+                    'meta_data' => $meta_data
                 ));
             } else {
                 $this->add_rate(array(
