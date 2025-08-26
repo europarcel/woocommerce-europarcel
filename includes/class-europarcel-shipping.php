@@ -1,9 +1,9 @@
 <?php
 
 defined('ABSPATH') || exit;
-require_once EAWB_ROOT_PATH . '/lib/europarcel-customer.php';
-require_once EAWB_ROOT_PATH . '/includes/class-europarcel-custom-fields.php';
-include_once EAWB_ROOT_PATH . '/lib/europarcel-constants.php';
+require_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-customer.php';
+require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-custom-fields.php';
+include_once EUROPARCEL_ROOT_PATH . '/lib/europarcel-constants.php';
 
 class WC_Eawb_Shipping extends WC_Shipping_Method {
 

@@ -150,7 +150,10 @@
         }
         
         function showLockerModal(iframeUrl) {
-            // Create modal HTML
+            // Check if we're on mobile
+            const isMobile = window.innerWidth <= 768;
+            
+            // Create modal HTML with mobile-optimized styling
             const modalHtml = `
                 <div id="europarcel-iframe-modal" style="
                     position: fixed;
@@ -159,36 +162,42 @@
                     width: 100%;
                     height: 100%;
                     background: rgba(0, 0, 0, 0.5);
-                    z-index: 999999;
+                    z-index: 2147483647;
                     display: flex;
-                    align-items: center;
+                    align-items: ${isMobile ? 'flex-start' : 'center'};
                     justify-content: center;
-                    padding: 20px;
+                    padding: ${isMobile ? '0' : '20px'};
                 ">
                     <div style="
                         background: white;
                         width: 100%;
-                        max-width: 1200px;
-                        height: 90%;
-                        border-radius: 8px;
+                        max-width: ${isMobile ? '100%' : '1200px'};
+                        height: ${isMobile ? '100%' : '90%'};
+                        border-radius: ${isMobile ? '0' : '8px'};
                         overflow: hidden;
                         position: relative;
+                        ${isMobile ? 'margin: 0;' : ''}
                     ">
                         <button id="close-locker-modal" style="
                             position: absolute;
-                            top: 10px;
-                            right: 10px;
+                            top: ${isMobile ? '15px' : '10px'};
+                            right: ${isMobile ? '15px' : '10px'};
                             z-index: 10;
-                            background: rgba(0, 0, 0, 0.5);
+                            background: rgba(0, 0, 0, 0.7);
                             color: white;
                             border: none;
                             border-radius: 50%;
-                            width: 30px;
-                            height: 30px;
+                            width: ${isMobile ? '35px' : '30px'};
+                            height: ${isMobile ? '35px' : '30px'};
                             cursor: pointer;
-                            font-size: 18px;
+                            font-size: ${isMobile ? '20px' : '18px'};
                             line-height: 1;
-                        ">&times;</button>
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                            transition: all 0.2s ease;
+                        "
+                        onmouseover="this.style.background='rgba(0,0,0,0.9)'; this.style.transform='scale(1.1)';"
+                        onmouseout="this.style.background='rgba(0,0,0,0.7)'; this.style.transform='scale(1)';"
+                        >&times;</button>
                         <iframe 
                             src="${iframeUrl}" 
                             style="width: 100%; height: 100%; border: none;"
@@ -202,29 +211,82 @@
             // Add modal to page
             document.body.insertAdjacentHTML('beforeend', modalHtml);
             
-            // Prevent body scrolling
+            // Prevent body scrolling and add mobile-specific adjustments
+            const originalBodyOverflow = document.body.style.overflow;
+            const originalBodyHeight = document.body.style.height;
+            const originalHtmlOverflow = document.documentElement.style.overflow;
+            
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            
+            // On mobile, also prevent iOS Safari bouncing
+            if (isMobile) {
+                document.body.style.height = '100%';
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+            }
+            
+            // Store original styles for restoration
+            const modal = document.getElementById('europarcel-iframe-modal');
+            modal.dataset.originalBodyOverflow = originalBodyOverflow;
+            modal.dataset.originalBodyHeight = originalBodyHeight;
+            modal.dataset.originalHtmlOverflow = originalHtmlOverflow;
             
             // Add close handler
             document.getElementById('close-locker-modal').onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 closeLockerModal();
             };
             
-            // Close on backdrop click
-            document.getElementById('europarcel-iframe-modal').onclick = function(e) {
-                if (e.target === this) {
+            // Close on backdrop click (but not on mobile to prevent accidental closes)
+            if (!isMobile) {
+                modal.onclick = function(e) {
+                    if (e.target === this) {
+                        closeLockerModal();
+                    }
+                };
+            }
+            
+            // Prevent modal content clicks from closing modal
+            modal.querySelector('div').onclick = function(e) {
+                e.stopPropagation();
+            };
+            
+            // Add ESC key handler for closing modal
+            const escapeHandler = function(e) {
+                if (e.key === 'Escape' || e.keyCode === 27) {
                     closeLockerModal();
                 }
             };
+            document.addEventListener('keydown', escapeHandler);
             
+            // Store escape handler for cleanup
+            modal.escapeHandler = escapeHandler;
 
         }
         
         function closeLockerModal() {
             const modal = document.getElementById('europarcel-iframe-modal');
             if (modal) {
+                // Clean up escape key handler
+                if (modal.escapeHandler) {
+                    document.removeEventListener('keydown', modal.escapeHandler);
+                }
+                
+                // Restore original styles
+                const originalBodyOverflow = modal.dataset.originalBodyOverflow || '';
+                const originalBodyHeight = modal.dataset.originalBodyHeight || '';
+                const originalHtmlOverflow = modal.dataset.originalHtmlOverflow || '';
+                
+                document.body.style.overflow = originalBodyOverflow;
+                document.body.style.height = originalBodyHeight;
+                document.body.style.position = '';
+                document.body.style.width = '';
+                document.documentElement.style.overflow = originalHtmlOverflow;
+                
+                // Remove modal
                 modal.remove();
-                document.body.style.overflow = '';
             }
         }
         
