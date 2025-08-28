@@ -16,7 +16,6 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
         $this->method_title = __('Europarcel Shipping', 'europarcel');
         $this->method_description = __('O metoda noua pentru a chema curierii', 'europarcel');
         $this->supports = array('shipping-zones', 'instance-settings');
-        //$this->plugin_id = 'woocommerce_europarcel_shipping_';
         $this->init();
 
         $this->enabled = $this->get_option('enabled', 'yes');
@@ -24,13 +23,11 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
     }
 
     public function init() {
-        //$this->init_settings();
         if (!$this->instance_id) {
             return;
         }
         $this->settings = get_option('woocommerce_europarcel_shipping_' . $this->instance_id . '_settings');
         $this->init_form_fields();
-        //add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
     }
 
     public function init_form_fields() {
@@ -302,14 +299,30 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
         }
 
         // Add locker shipping option
-        if ($allow_locker_shiping && !empty($customer->get_locker_carriers())) {
+        $customer_lockers_cariers = $customer->get_locker_carriers();
+        if ($allow_locker_shiping && !empty($customer_lockers_cariers)) {
             $locker_info = WC()->session->get('locker_info');
+            $user_id = get_current_user_id();
+            if ($user_id) {
+                $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
+                foreach ($user_lockers as $carrier_id => $locker_id) {
+                    if (in_array($carrier_id,$customer_lockers_cariers)) {
+                        $locker_info = [
+                            'locker_id' => $locker_id,
+                            'carrier_id' => $carrier_id,
+                            'instance_id' => $this->instance_id,
+                        ];
+                        break;
+                    }
+                }
+            }
             $meta_data = [
                 'service_id' => 2,
                 'is_locker' => true,
                 'fixed_location_id' => $locker_info ? $locker_info['locker_id'] : 0,
                 'carrier_id' => $locker_info ? $locker_info['carrier_id'] : 0,
             ];
+
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_locker_' . $this->instance_id,
@@ -328,67 +341,5 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 ));
             }
         }
-        return;
-        /*
-          if ($prices && is_array($prices)) {
-          if ($settings['courier_choice_method'] == 'client_choice') {
-          foreach ($prices[0] as $price) { //home to home
-          $this->add_rate(array(
-          'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-          'label' => __('Shipping Home To Home with ', 'europarcel') . $price['carrier'],
-          'cost' => $price['price']['total'] * $settings['price_multiplier'],
-          'package' => $package,
-          'meta_data' => [
-          'carrier_id' => $price['carrier_id'],
-          'service_id' => $price['service_id'],
-          ]
-          ));
-          }
-          foreach ($prices[1] as $price) { //home to locker
-          $this->add_rate(array(
-          'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-          'label' => __('Shipping Home To Locker with ', 'europarcel') . $price['carrier'],
-          'cost' => $price['price']['total'] * $settings['price_multiplier'],
-          'package' => $package,
-          'meta_data' => [
-          'carrier_id' => $price['carrier_id'],
-          'service_id' => $price['service_id'],
-          ]
-          ));
-          }
-          return;
-          } else {
-          if ($prices[0]) { //home to home
-          $price = $prices[0][0];
-          $this->add_rate(array(
-          'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-          'label' => __('Shipping Home To Home with ', 'europarcel') . $price['carrier'],
-          'cost' => $price['price']['total'] * $settings['price_multiplier'],
-          'package' => $package,
-          'meta_data' => [
-          'carrier_id' => $price['carrier_id'],
-          'service_id' => $price['service_id'],
-          ]
-          ));
-          }
-          if ($prices[1]) { //home to locker
-          $price = $prices[1][0];
-          $this->add_rate(array(
-          'id' => $this->id . '_' . $price['carrier_id'] . '_' . $price['service_id'],
-          'label' => __('Shipping Home To Locker with ', 'europarcel') . $price['carrier'],
-          'cost' => $price['price']['total'] * $settings['price_multiplier'],
-          'package' => $package,
-          'meta_data' => [
-          'carrier_id' => $price['carrier_id'],
-          'service_id' => $price['service_id'],
-          ]
-          ));
-          }
-          return;
-          }
-          }
-          return false;
-         * 
-         */
     }
 }
