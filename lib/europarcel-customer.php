@@ -124,29 +124,11 @@ class EuroparcelCustomer {
                 }
             }
         }
-        //if ($settings['courier_choice_method'] == 'low_price') {
-        usort($available_services_hth, array($this, "sort_by_price"));
-        usort($available_services_htl, array($this, "sort_by_price"));
-        //}
-        return [$available_services_hth, $available_services_htl];
-    }
-
-    public function get_lockers() {
-        $carriers_ids = $this->get_locker_carriers();
-        $data = [
-            'country_code' => $_POST['country'],
-            'carrier_id' => implode(",", $carriers_ids),
-            'locality_name' => $_POST['city'],
-            'county_name' => $_POST['state']
-        ];
-
-        try {
-            $http_request = new \EuroparcelShipping\EuroparcelHttpRequest($this->instance_id);
-            $lockers = $http_request->get('public/locations/fixedlocations', $data);
-            return $lockers;
-        } catch (\Exception $ex) {
-            return false;
+        if ($settings['courier_choice_method'] == 'low_price') {
+            usort($available_services_hth, array($this, "sort_by_price"));
+            usort($available_services_htl, array($this, "sort_by_price"));
         }
+        return [$available_services_hth, $available_services_htl];
     }
 
     private function sort_by_price($fp, $lp) {
@@ -183,7 +165,7 @@ class EuroparcelCustomer {
         if (empty($services)) {
             return false;
         }
-        
+
         return array_column($services, 'carrier_id');
     }
 }

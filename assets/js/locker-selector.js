@@ -433,6 +433,7 @@
         });
         
         function updateWooCommerceFields(locker) {
+            /*
             // Update hidden fields that WooCommerce will save to order
             let lockerIdField = document.getElementById('europarcel_locker_id');
             let lockerInstanceField = document.getElementById('europarcel_locker_instance');
@@ -481,15 +482,20 @@
                 address: locker.address,
                 carrier_name: locker.carrier_name
             });
+             * */
+
             $.ajax({
                     url: europarcel_ajax.ajax_url,
                     type: 'POST',
                     data: {
                         action: 'update_locker_shipping',
                         security: europarcel_ajax.nonce,
-                        instance_id: lockerInstanceField.value,
+                        instance_id: getSelectedShippingInstanceId(),
                         locker_id: locker.id,
                         carrier_id: locker.carrier_id,
+                        carrier_name: locker.carrier_name,
+                        locker_name: locker.name,
+                        locker_address: locker.address
                     },
                     dataType: 'json',
                     success: function(response) {
@@ -581,6 +587,62 @@
             `;
         }
 
+        // Check for saved locker data for current instance
+        function checkAndDisplaySavedLocker() {
+            const instanceId = getSelectedShippingInstanceId();
+            
+            // Check if we have saved locker data
+            if (europarcel_ajax.user_lockers && typeof europarcel_ajax.user_lockers === 'object') {
+                // Look for saved locker data for any carrier that matches this instance
+                for (const carrierId in europarcel_ajax.user_lockers) {
+                    const savedLocker = europarcel_ajax.user_lockers[carrierId];
+                    
+                    // Check if this saved locker matches the current instance
+                    if (savedLocker.instance_id === instanceId) {
+                        // Transform saved data to match the format expected by showLockerSelectedInfo
+                        const lockerData = {
+                            id: savedLocker.locker_id,
+                            carrier_id: savedLocker.carrier_id,
+                            carrier_name: savedLocker.carrier_name,
+                            name: savedLocker.locker_name,
+                            address: savedLocker.locker_address
+                        };
+                        
+                        // Mark this instance as having a selected locker
+                        selectedLockerInstances.add(instanceId);
+                        
+                        // Update button state to show "Modifică locker"
+                        document.querySelectorAll('.select-locker-btn').forEach(btn => {
+                            const parentOption = btn.closest('.wc-block-components-radio-control__option-layout, li, label');
+                            if (parentOption) {
+                                let radioInput = parentOption.querySelector(
+                                    'input[type="radio"], .wc-block-components-radio-control__input, input.wc-block-components-radio-control__input'
+                                );
+                                
+                                if (!radioInput) {
+                                    const parentContainer = parentOption.closest('.wc-block-components-radio-control__option, .wc-block-components-radio-control');
+                                    if (parentContainer) {
+                                        radioInput = parentContainer.querySelector(
+                                            'input[type="radio"], .wc-block-components-radio-control__input'
+                                        );
+                                    }
+                                }
+                                
+                                if (radioInput && radioInput.checked) {
+                                    currentClickedButton = btn;
+                                    updateButtonState(btn, true);
+                                }
+                            }
+                        });
+                        
+                        // Show the saved locker info
+                        showLockerSelectedInfo(lockerData);
+                        break; // Found matching locker, no need to continue
+                    }
+                }
+            }
+        }
+
         // Handle shipping method changes to show/hide buttons
         function handleShippingMethodChange() {
             // Find all possible selected shipping methods
@@ -665,6 +727,9 @@
                 buttons.forEach(btn => {
                     updateButtonState(btn, false, true);
                 });
+            } else {
+                // If locker method is selected, check for saved locker data
+                setTimeout(checkAndDisplaySavedLocker, 100);
             }
         }
         
@@ -720,7 +785,11 @@
         });
         
         // Check initial state
-        setTimeout(handleShippingMethodChange, 500);
+        setTimeout(() => {
+            handleShippingMethodChange();
+            // Also check for saved locker data on initial load
+            checkAndDisplaySavedLocker();
+        }, 500);
     }
 
     $(document).ready(initializeLockerSelector);
