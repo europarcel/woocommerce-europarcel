@@ -31,7 +31,7 @@ class EuroparcelCheckout {
         wp_localize_script('europarcel-locker-selector', 'europarcel_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('europarcel_locker_nonce'),
-            'user_lockers' =>$user_lockers,
+            'user_lockers' => $user_lockers,
             'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php')
         ]);
     }
@@ -71,16 +71,19 @@ class EuroparcelCheckout {
                 'locker_id' => sanitize_text_field($_POST['locker_id']),
                 'carrier_id' => sanitize_text_field($_POST['carrier_id']),
                 'instance_id' => sanitize_text_field($_POST['instance_id']),
+                'carrier_name' => sanitize_text_field($_POST['carrier_name']),
+                'locker_name' => sanitize_text_field($_POST['locker_name']),
+                'locker_address' => sanitize_text_field($_POST['locker_address'])
             );
             WC()->session->set('locker_info', $locker_info);
             $user_id = get_current_user_id();
             if ($user_id) {
                 $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
                 if ($user_lockers && $locker_info['carrier_id']) {
-                    $user_lockers[$locker_info['carrier_id']] = $locker_info['locker_id'];
+                    $user_lockers[$locker_info['carrier_id']] = $locker_info;
                     update_user_meta($user_id, '_europarcel_carrier_lockers', $user_lockers);
                 } else {
-                    update_user_meta($user_id, '_europarcel_carrier_lockers', [$locker_info['carrier_id'] => $locker_info['locker_id']]);
+                    update_user_meta($user_id, '_europarcel_carrier_lockers', [$locker_info['carrier_id'] => $locker_info]);
                 }
             }
             wp_send_json_success('Locker actualizat cu succes');
