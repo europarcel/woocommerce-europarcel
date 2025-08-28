@@ -493,6 +493,9 @@
                         instance_id: getSelectedShippingInstanceId(),
                         locker_id: locker.id,
                         carrier_id: locker.carrier_id,
+                        carrier_name: locker.carier_name,
+                        locker_name: locker.name,
+                        locker_address: locker.address
                     },
                     dataType: 'json',
                     success: function(response) {
