@@ -433,6 +433,7 @@
         });
         
         function updateWooCommerceFields(locker) {
+            /*
             // Update hidden fields that WooCommerce will save to order
             let lockerIdField = document.getElementById('europarcel_locker_id');
             let lockerInstanceField = document.getElementById('europarcel_locker_instance');
@@ -481,13 +482,15 @@
                 address: locker.address,
                 carrier_name: locker.carrier_name
             });
+             * */
+
             $.ajax({
                     url: europarcel_ajax.ajax_url,
                     type: 'POST',
                     data: {
                         action: 'update_locker_shipping',
                         security: europarcel_ajax.nonce,
-                        instance_id: lockerInstanceField.value,
+                        instance_id: getSelectedShippingInstanceId(),
                         locker_id: locker.id,
                         carrier_id: locker.carrier_id,
                     },
