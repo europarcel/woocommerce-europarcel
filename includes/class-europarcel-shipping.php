@@ -117,11 +117,25 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 'desc_tip' => true,
                 'options' => $view_shipping_classes
             ),
+            'title_for_h2h' => array(
+                'title' => __('Payment method displayed for delivery to address', 'europarcel'),
+                'type' => 'text',
+                'default' => 'Transport la adresa prin Europarcel',
+                'description' => __('Payment method displayed for delivery to address', 'europarcel'),
+                'desc_tip' => true,
+            ),
             'fixed_price_h2h' => array(
                 'title' => __('Fixed price for shipping to home', 'europarcel'),
                 'type' => 'number',
                 'default' => 15,
                 'description' => __('Fixed price for shipping to home', 'europarcel'),
+                'desc_tip' => true,
+            ),
+            'title_for_h2l' => array(
+                'title' => __('Payment method displayed for delivery to locker', 'europarcel'),
+                'type' => 'text',
+                'default' => 'Transport la lockerul ales prin Europarcel',
+                'description' => __('Payment method displayed for delivery to locker', 'europarcel'),
                 'desc_tip' => true,
             ),
             'fixed_price_h2l' => array(
@@ -271,12 +285,12 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 $has_free_shipping_to_locker = true;
             }
         }
-
+        $label = $customer->settings['title_for_h2h'];
         if (!empty($customer->get_home_carriers())) {
             if ($has_free_shipping_to_home) {
                 $this->add_rate(array(
                     'id' => $this->id . '_free_h2h',
-                    'label' => 'Transport gratuit la adresa',
+                    'label' => $label,
                     'cost' => 0,
                     'package' => $package,
                     'meta_data' => [
@@ -287,7 +301,7 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
             } else {
                 $this->add_rate(array(
                     'id' => $this->id . '_fixed_h2h',
-                    'label' => 'Cost Transport la adresa cu ' . $this->settings['title'],
+                    'label' => $label,
                     'cost' => $customer->settings['fixed_price_h2h'],
                     'package' => $package,
                     'meta_data' => [
@@ -305,17 +319,19 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
             $user_id = get_current_user_id();
             if ($user_id) {
                 $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
-                foreach ($user_lockers as $carrier_id => $locker) {
-                    if (in_array($carrier_id, $customer_lockers_cariers)) {
-                        $locker_info = [
-                            'locker_id' => $locker['locker_id'],
-                            'carrier_id' => $locker['carrier_id'],
-                            'instance_id' => $this->instance_id,
-                            'carrier_name' => $locker['carrier_name'],
-                            'locker_name' => $locker['locker_name'],
-                            'locker_address' => $locker['locker_address']
-                        ];
-                        break;
+                if (is_array($user_lockers)) {
+                    foreach ($user_lockers as $carrier_id => $locker) {
+                        if (in_array($carrier_id, $customer_lockers_cariers) && is_array($locker)) {
+                            $locker_info = [
+                                'locker_id' => $locker['locker_id'],
+                                'carrier_id' => $locker['carrier_id'],
+                                'instance_id' => $this->instance_id,
+                                'carrier_name' => $locker['carrier_name'],
+                                'locker_name' => $locker['locker_name'],
+                                'locker_address' => $locker['locker_address']
+                            ];
+                            break;
+                        }
                     }
                 }
             }
@@ -325,11 +341,12 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 'fixed_location_id' => $locker_info ? $locker_info['locker_id'] : 0,
                 'carrier_id' => $locker_info ? $locker_info['carrier_id'] : 0,
             ];
-
+            $label = $customer->settings['title_for_h2l'];
             if ($has_free_shipping_to_locker) {
+
                 $this->add_rate(array(
                     'id' => $this->id . '_free_locker_' . $this->instance_id,
-                    'label' => 'Transport gratuit la locker cu ' . $this->settings['title'],
+                    'label' => $label,
                     'cost' => 0,
                     'package' => $package,
                     'meta_data' => $meta_data
@@ -337,7 +354,7 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
             } else {
                 $this->add_rate(array(
                     'id' => $this->id . '_fixed_locker_' . $this->instance_id,
-                    'label' => 'Cost Transport la locker cu ' . $this->settings['title'],
+                    'label' => $label,
                     'cost' => $customer->settings['fixed_price_h2l'],
                     'package' => $package,
                     'meta_data' => $meta_data
