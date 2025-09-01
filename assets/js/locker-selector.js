@@ -583,6 +583,7 @@
                     if (savedLocker && 
                         savedLocker.locker_id && 
                         savedLocker.carrier_id && 
+                        savedLocker.carrier_name &&
                         savedLocker.locker_name && 
                         savedLocker.locker_address &&
                         parseInt(savedLocker.carrier_id) === parseInt(carrierId)) {
