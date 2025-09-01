@@ -25,11 +25,13 @@ class EuroparcelCheckout {
         //if current clent is logged in and have saved lockers get from user meta
         $user_lockers = null;
         $instances_lockers = [];
+        $order_lockers = [];
         if ($user_id) {
             $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
-            $order_lockers = [];
-            foreach ($user_lockers as $key => $locker) {
-                $order_lockers[] = $key;
+            if (is_array($user_lockers)) {
+                foreach ($user_lockers as $key => $locker) {
+                    $order_lockers[] = $key;
+                }
             }
         }
         $shipping_methods = WC()->shipping()->get_shipping_methods();
@@ -106,8 +108,10 @@ class EuroparcelCheckout {
                 }
             }
             $order_lockers = [];
-            foreach ($user_lockers as $key => $locker) {
-                $order_lockers[] = $key;
+            if (is_array($user_lockers)) {
+                foreach ($user_lockers as $key => $locker) {
+                    $order_lockers[] = $key;
+                }
             }
             wp_send_json_success(['user_locker' => $user_lockers, 'order_lockers' => $order_lockers]);
         } else {

@@ -132,16 +132,18 @@
                 // Get instance ID
                 const instanceId = getSelectedShippingInstanceId();
 
-                // Fetch locker carriers via AJAX
-                const carrierIds = europarcel_ajax.instances_lockers[instanceId];
-                /*
-                 if (!carrierIds || carrierIds.length === 0) {
-                 alert('Nu există curieri configurați pentru livrare în locker.');
-                 hideLoadingState();
-                 return;
-                 }
-                 */
-                // Create iframe URL with location parameters and fetched carrier IDs
+                // Get locker carriers for the instance
+                const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId] 
+                    ? europarcel_ajax.instances_lockers[instanceId] 
+                    : [];
+
+                if (!carrierIds || carrierIds.length === 0) {
+                    alert('Nu există curieri configurați pentru livrare în locker.');
+                    hideLoadingState();
+                    return;
+                }
+
+                // Create iframe URL with location parameters and carrier IDs
                 const iframeUrl = `https://maps.europarcel.com/?country_code=RO&county_name=${encodeURIComponent(county)}&locality_name=${encodeURIComponent(city)}&carrier_id=${carrierIds.join(',')}`;
 
                 showLockerModal(iframeUrl);
@@ -376,33 +378,6 @@
                 updateButtonState(btn, hasSelectedLocker, true);
             });
         }
-        /*
-         async function fetchLockerCarriers(instanceId) {
-         try {
-         const formData = new FormData();
-         formData.append('action', 'get_locker_carriers');
-         formData.append('instance_id', instanceId);
-         formData.append('nonce', europarcel_ajax.nonce);
-         
-         const response = await fetch(europarcel_ajax.ajax_url, {
-         method: 'POST',
-         body: formData
-         });
-         
-         const data = await response.json();
-         
-         if (data.success) {
-         return data.data.carriers;
-         } else {
-         console.error('Failed to fetch locker carriers:', data.data.message);
-         return [];
-         }
-         } catch (error) {
-         console.error('Error fetching locker carriers:', error);
-         return [];
-         }
-         }
-         */
 
 
         // Listen for locker selection from iframe
@@ -599,7 +574,7 @@
                 // Look for saved locker data for any carrier that matches this instance
                 
                 for (const carrierId of order_lockers) {
-                    if (!instances_lockers[instanceId].includes(carrierId)) {
+                    if (!instances_lockers[instanceId] || !instances_lockers[instanceId].includes(carrierId)) {
                         continue;
                     }
                     const savedLocker = user_lockers[carrierId];
