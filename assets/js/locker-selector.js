@@ -579,8 +579,13 @@
                     }
                     const savedLocker = user_lockers[carrierId];
 
-                    //Check if this saved locker matches the suported metod
-                    if (true) {
+                    // Check if this saved locker matches the supported method and has valid data
+                    if (savedLocker && 
+                        savedLocker.locker_id && 
+                        savedLocker.carrier_id && 
+                        savedLocker.locker_name && 
+                        savedLocker.locker_address &&
+                        parseInt(savedLocker.carrier_id) === parseInt(carrierId)) {
                         // Transform saved data to match the format expected by showLockerSelectedInfo
                         const lockerData = {
                             id: savedLocker.locker_id,
