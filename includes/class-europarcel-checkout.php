@@ -24,14 +24,34 @@ class EuroparcelCheckout {
         $user_id = get_current_user_id();
         //if current clent is logged in and have saved lockers get from user meta
         $user_lockers = null;
+        $instances_lockers = [];
+        $order_lockers = [];
         if ($user_id) {
             $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
+            if (is_array($user_lockers)) {
+                foreach ($user_lockers as $key => $locker) {
+                    $order_lockers[] = $key;
+                }
+            }
+        }
+        $shipping_methods = WC()->shipping()->get_shipping_methods();
+        foreach ($shipping_methods as $method) {
+            $settings = $method->settings;
+            if (get_class($method) == 'WC_Europarcel_Shipping' && isset($settings['available_services'])) {
+                $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
+                $locker_services = array_filter($method_services, function ($service) {
+                    return $service['service_id'] == 2;
+                });
+                $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
+            }
         }
         // Localize script with AJAX parameters
         wp_localize_script('europarcel-locker-selector', 'europarcel_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('europarcel_locker_nonce'),
             'user_lockers' => $user_lockers,
+            'order_lockers' => $order_lockers,
+            'instances_lockers' => $instances_lockers,
             'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php')
         ]);
     }
@@ -80,13 +100,20 @@ class EuroparcelCheckout {
             if ($user_id) {
                 $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
                 if ($user_lockers && $locker_info['carrier_id']) {
-                    $user_lockers[$locker_info['carrier_id']] = $locker_info;
+                    $user_lockers = [$locker_info['carrier_id'] => $locker_info] + $user_lockers;
                     update_user_meta($user_id, '_europarcel_carrier_lockers', $user_lockers);
                 } else {
                     update_user_meta($user_id, '_europarcel_carrier_lockers', [$locker_info['carrier_id'] => $locker_info]);
+                    $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
                 }
             }
-            wp_send_json_success('Locker actualizat cu succes');
+            $order_lockers = [];
+            if (is_array($user_lockers)) {
+                foreach ($user_lockers as $key => $locker) {
+                    $order_lockers[] = $key;
+                }
+            }
+            wp_send_json_success(['user_locker' => $user_lockers, 'order_lockers' => $order_lockers]);
         } else {
             wp_send_json_error('Date lipsă');
         }
