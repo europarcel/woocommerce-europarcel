@@ -8,6 +8,20 @@
         let instances_lockers = europarcel_ajax.instances_lockers;
         let user_lockers = europarcel_ajax.user_lockers;
         let order_lockers = europarcel_ajax.order_lockers;
+        
+        // Debounce function to limit how often a function can be called
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
         // Get WordPress-agnostic button styles
         function getButtonStyles(isModify = false, preserveDisplay = false) {
             const styles = {
@@ -74,8 +88,21 @@
         const addLockerButton = () => {
             // Handle WooCommerce Blocks checkout
             const blockShippingOptions = document.querySelectorAll('.wc-block-components-radio-control__option-layout');
+
             blockShippingOptions.forEach((option, index) => {
-                if ((option.textContent.toLowerCase().includes('locker') || option.textContent.toLowerCase().includes('la locker')) && !option.querySelector('.select-locker-btn')) {
+                const optionId = option.id || '';
+                const optionClasses = option.className || '';
+                const radioInput = option.querySelector('input[type="radio"]');
+                const radioId = radioInput ? radioInput.id : '';
+
+                if ((option.textContent.toLowerCase().includes('locker') ||
+                        optionId.toLowerCase().includes('locker') ||
+                        optionClasses.toLowerCase().includes('locker') ||
+                        (radioId && radioId.toLowerCase().includes('locker')) ||
+                        option.querySelector('[id*="locker"]') ||
+                        option.querySelector('[class*="locker"]') ||
+                        option.querySelector('[data-locker]')) &&
+                        !option.querySelector('.select-locker-btn')) {
                     const button = document.createElement('button');
                     button.className = 'button select-locker-btn';
                     button.type = 'button'; // CRUCIAL: Prevent form submission
@@ -96,7 +123,19 @@
             // Handle Classic WooCommerce checkout
             const classicShippingOptions = document.querySelectorAll('#shipping_method li, .woocommerce-shipping-methods li, ul.shipping_method li');
             classicShippingOptions.forEach((option, index) => {
-                if ((option.textContent.toLowerCase().includes('locker') || option.textContent.toLowerCase().includes('la locker')) && !option.querySelector('.select-locker-btn')) {
+                const optionId = option.id || '';
+                const optionClasses = option.className || '';
+                const radioInput = option.querySelector('input[type="radio"]');
+                const radioId = radioInput ? radioInput.id : '';
+
+                if ((option.textContent.toLowerCase().includes('locker') ||
+                        optionId.toLowerCase().includes('locker') ||
+                        optionClasses.toLowerCase().includes('locker') ||
+                        (radioId && radioId.toLowerCase().includes('locker')) ||
+                        option.querySelector('[id*="locker"]') ||
+                        option.querySelector('[class*="locker"]') ||
+                        option.querySelector('[data-locker]')) &&
+                        !option.querySelector('.select-locker-btn')) {
                     const button = document.createElement('button');
                     button.className = 'button select-locker-btn';
                     button.type = 'button'; // CRUCIAL: Prevent form submission
@@ -133,9 +172,9 @@
                 const instanceId = getSelectedShippingInstanceId();
 
                 // Get locker carriers for the instance
-                const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId] 
-                    ? europarcel_ajax.instances_lockers[instanceId] 
-                    : [];
+                const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
+                        ? europarcel_ajax.instances_lockers[instanceId]
+                        : [];
 
                 if (!carrierIds || carrierIds.length === 0) {
                     alert('Nu există curieri configurați pentru livrare în locker.');
@@ -410,57 +449,6 @@
         });
 
         function updateWooCommerceFields(locker) {
-            /*
-             // Update hidden fields that WooCommerce will save to order
-             let lockerIdField = document.getElementById('europarcel_locker_id');
-             let lockerInstanceField = document.getElementById('europarcel_locker_instance');
-             let carrierIdField = document.getElementById('europarcel_carrier_id');
-             let lockerDataField = document.getElementById('europarcel_locker_data');
-             
-             if (!lockerIdField) {
-             lockerIdField = document.createElement('input');
-             lockerIdField.type = 'hidden';
-             lockerIdField.id = 'europarcel_locker_id';
-             lockerIdField.name = 'europarcel_locker_id';
-             document.body.appendChild(lockerIdField);
-             }
-             
-             if (!lockerInstanceField) {
-             lockerInstanceField = document.createElement('input');
-             lockerInstanceField.type = 'hidden';
-             lockerInstanceField.id = 'europarcel_locker_instance';
-             lockerInstanceField.name = 'europarcel_locker_instance';
-             document.body.appendChild(lockerInstanceField);
-             }
-             
-             if (!carrierIdField) {
-             carrierIdField = document.createElement('input');
-             carrierIdField.type = 'hidden';
-             carrierIdField.id = 'europarcel_carrier_id';
-             carrierIdField.name = 'europarcel_carrier_id';
-             document.body.appendChild(carrierIdField);
-             }
-             
-             if (!lockerDataField) {
-             lockerDataField = document.createElement('input');
-             lockerDataField.type = 'hidden';
-             lockerDataField.id = 'europarcel_locker_data';
-             lockerDataField.name = 'europarcel_locker_data';
-             document.body.appendChild(lockerDataField);
-             }
-             
-             lockerIdField.value = locker.id;
-             lockerInstanceField.value = getSelectedShippingInstanceId();
-             carrierIdField.value = locker.carrier_id;
-             lockerDataField.value = JSON.stringify({
-             id: locker.id,
-             carrier_id: locker.carrier_id,
-             name: locker.name,
-             address: locker.address,
-             carrier_name: locker.carrier_name
-             });
-             * */
-
             $.ajax({
                 url: europarcel_ajax.ajax_url,
                 type: 'POST',
@@ -476,8 +464,8 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    user_lockers=response['data']['user_locker'];
-                    order_lockers=response['data']['order_lockers'];
+                    user_lockers = response['data']['user_locker'];
+                    order_lockers = response['data']['order_lockers'];
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error('Failed to set locker data:', xhr.responseText);
@@ -572,7 +560,7 @@
             // Check if we have saved locker data
             if (user_lockers && typeof user_lockers === 'object') {
                 // Look for saved locker data for any carrier that matches this instance
-                
+
                 for (const carrierId of order_lockers) {
                     if (!instances_lockers[instanceId] || !instances_lockers[instanceId].includes(carrierId)) {
                         continue;
@@ -580,13 +568,13 @@
                     const savedLocker = user_lockers[carrierId];
 
                     // Check if this saved locker matches the supported method and has valid data
-                    if (savedLocker && 
-                        savedLocker.locker_id && 
-                        savedLocker.carrier_id && 
-                        savedLocker.carrier_name &&
-                        savedLocker.locker_name && 
-                        savedLocker.locker_address &&
-                        parseInt(savedLocker.carrier_id) === parseInt(carrierId)) {
+                    if (savedLocker &&
+                            savedLocker.locker_id &&
+                            savedLocker.carrier_id &&
+                            savedLocker.carrier_name &&
+                            savedLocker.locker_name &&
+                            savedLocker.locker_address &&
+                            parseInt(savedLocker.carrier_id) === parseInt(carrierId)) {
                         // Transform saved data to match the format expected by showLockerSelectedInfo
                         const lockerData = {
                             id: savedLocker.locker_id,
@@ -743,23 +731,49 @@
                 setTimeout(handleShippingMethodChange, 50);
             }
         });
-        /*
-         new MutationObserver(() => {
-         addLockerButton();
-         setTimeout(() => {
-         handleShippingMethodChange();
-         // Update button states for newly added buttons
-         document.querySelectorAll('.select-locker-btn').forEach(btn => {
-         const instanceId = getSelectedShippingInstanceId();
-         const hasSelectedLocker = selectedLockerInstances.has(instanceId);
-         updateButtonState(btn, hasSelectedLocker, true);
-         });
-         }, 100);
-         }).observe(document.body, {childList: true, subtree: true});
-         */
+
+        // NEW: Listen for changes in address fields (city and county)
+        function setupAddressChangeListeners() {
+            // Get all relevant address fields
+            const addressFields = [
+                '#shipping_city', '#billing_city', '#calc_shipping_city',
+                '#shipping_state', '#billing_state', '#calc_shipping_state',
+                '.wc-block-components-address-form input[id*="city"]',
+                '.wc-block-components-address-form select[id*="state"]',
+                'input[name*="city"]', 'select[name*="state"]'
+            ].join(',');
+            
+            // Debounced version of the handler to prevent excessive calls
+            const debouncedHandler = debounce(function() {
+                addLockerButton();
+                handleShippingMethodChange();
+            }, 300);
+            
+            // Set up event listeners for address field changes
+            $(document).on('input change', addressFields, debouncedHandler);
+            
+            // Also set up a MutationObserver for dynamic form changes
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                        debouncedHandler();
+                    }
+                });
+            });
+            
+            // Observe the body for changes
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        // Initialize the address change listeners
+        setupAddressChangeListeners();
+
         addLockerButton();
 
-        $(document.body).on('updated_checkout updated_shipping_method', () => {
+        $(document.body).on('updtated_shipping updated_checkout updated_shipping_method', () => {
             setTimeout(() => {
                 addLockerButton();
                 handleShippingMethodChange();
