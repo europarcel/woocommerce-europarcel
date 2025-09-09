@@ -18,29 +18,19 @@
  * @since      1.0.0
  * @package    Europarcel
  * @subpackage Europarcel/includes
- * @author     Europarcel <support@europarcel.com>
+ * @author     EuroParcel <cs@europarcel.com>
  */
 class Europarcel_Deactivator {
 
 	/**
-	 * Short Description. (use period)
+	 * Plugin deactivation handler
 	 *
-	 * Long Description.
+	 * Handles any cleanup tasks required when the plugin is deactivated.
 	 *
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		// Add any deactivation tasks here
-		// Examples:
-		// - Clear scheduled cron jobs
-		// - Clean up temporary data
-		// - Clear caches
-		
-		// Clear any scheduled hooks if you add them in the future
-		// wp_clear_scheduled_hook('europarcel_daily_sync');
-		
-		// Flush rewrite rules
-		flush_rewrite_rules();
+		// Nothing to do on deactivation
 	}
 
 }

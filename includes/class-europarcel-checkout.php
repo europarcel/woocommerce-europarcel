@@ -1,31 +1,119 @@
 <?php
 
-require_once dirname(__DIR__) . '/lib/europarcel-customer.php';
-require_once dirname(__DIR__) . '/lib/europarcel-constants.php';
+/**
+ * EuroParcel Checkout Handler
+ *
+ * Handles checkout functionality for both WooCommerce Classic and Blocks
+ * checkout types. Manages locker selection, AJAX handlers, and script
+ * enqueuing for the checkout process.
+ *
+ * @link       https://eawb.ro
+ * @since      1.0.0
+ *
+ * @package    Europarcel
+ * @subpackage Europarcel/includes
+ */
 
+require_once dirname(__DIR__) . '/includes/class-europarcel-customer.php';
+require_once dirname(__DIR__) . '/includes/class-europarcel-constants.php';
+
+/**
+ * EuroParcel Checkout Class
+ *
+ * Manages checkout integration for both Classic and Blocks checkout.
+ * Handles smart initialization, script enqueuing, and AJAX functionality
+ * for locker selection and shipping updates.
+ *
+ * @since      1.0.0
+ * @package    Europarcel
+ * @subpackage Europarcel/includes
+ * @author     EuroParcel <cs@europarcel.com>
+ */
 class EuroparcelCheckout {
 
-    public function __construct() {
-        //add js 
-        add_action('wp_footer', [$this, 'add_locker_in_block']);
-        //set ajax for checkout
-        add_action('wp_ajax_get_locker_carriers', [$this, 'ajax_get_locker_carriers']);
-        add_action('wp_ajax_nopriv_get_locker_carriers', [$this, 'ajax_get_locker_carriers']);
-        // Add update locker shipping endpoint
-        add_action('wp_ajax_update_locker_shipping', [$this, 'wp_ajax_update_locker_shipping']);
-        add_action('wp_ajax_nopriv_update_locker_shipping', [$this, 'wp_ajax_update_locker_shipping']);
-    }
+	/**
+	 * Whether the current checkout is blocks-based
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      bool    $is_blocks_checkout    True if blocks checkout detected
+	 */
+	private $is_blocks_checkout = false;
 
-    public function add_locker_in_block() {
-        if (!is_checkout() && !has_block('woocommerce/checkout')) {
-            return;
-        }
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '2.1', true);
+	/**
+	 * Initialize the checkout handler
+	 *
+	 * Constructor kept minimal - actual initialization happens
+	 * via smart_init method to detect checkout type first.
+	 *
+	 * @since    1.0.0
+	 */
+	public function __construct() {
+		// Constructor kept minimal - initialization happens via smart_init
+	}
+
+	/**
+	 * Smart initialization - detects checkout type
+	 *
+	 * Automatically detects whether the current checkout is Classic
+	 * or Blocks-based and initializes the appropriate functionality.
+	 *
+	 * @since    1.0.0
+	 */
+	public function smart_init() {
+		if (!is_checkout()) {
+			return;
+		}
+
+		$this->is_blocks_checkout = has_block('woocommerce/checkout');
+
+		if ($this->is_blocks_checkout) {
+			$this->init_blocks_checkout();
+		} else {
+			$this->init_classic_checkout();
+		}
+	}
+
+	/**
+	 * Initialize blocks checkout
+	 *
+	 * Enqueues scripts and localizes data for WooCommerce Blocks checkout.
+	 *
+	 * @since    1.0.0
+	 */
+	private function init_blocks_checkout() {
+		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
+        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.1', true);
+		$this->localize_script_data();
+	}
+
+	/**
+	 * Initialize classic checkout
+	 *
+	 * Enqueues scripts and localizes data for WooCommerce Classic checkout.
+	 *
+	 * @since    1.0.0
+	 */
+	private function init_classic_checkout() {
+		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
+        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.1', true);
+		$this->localize_script_data();
+	}
+
+	/**
+	 * Prepare and localize script data
+	 *
+	 * Prepares AJAX data including user lockers, available carriers,
+	 * and checkout type information for JavaScript usage.
+	 *
+	 * @since    1.0.0
+	 */
+	private function localize_script_data() {
         $user_id = get_current_user_id();
-        //if current clent is logged in and have saved lockers get from user meta
         $user_lockers = null;
         $instances_lockers = [];
         $order_lockers = [];
+        
         if ($user_id) {
             $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
             if (is_array($user_lockers)) {
@@ -34,6 +122,7 @@ class EuroparcelCheckout {
                 }
             }
         }
+        
         $shipping_methods = WC()->shipping()->get_shipping_methods();
         foreach ($shipping_methods as $method) {
             $settings = $method->settings;
@@ -45,18 +134,30 @@ class EuroparcelCheckout {
                 $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
             }
         }
+        
         // Localize script with AJAX parameters
-        wp_localize_script('europarcel-locker-selector', 'europarcel_ajax', [
+        $script_data = [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('europarcel_locker_nonce'),
             'user_lockers' => $user_lockers,
             'order_lockers' => $order_lockers,
             'instances_lockers' => $instances_lockers,
-            'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php')
-        ]);
+            'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php'),
+            'checkout_type' => $this->is_blocks_checkout ? 'blocks' : 'classic'
+        ];
+        
+        wp_localize_script('europarcel-locker-selector', 'europarcel_ajax', $script_data);
     }
 
-    public function ajax_get_locker_carriers() {
+	/**
+	 * AJAX handler for getting locker carriers
+	 *
+	 * Retrieves available locker carriers for a shipping instance.
+	 * Validates nonce and returns carrier data via JSON response.
+	 *
+	 * @since    1.0.0
+	 */
+	public function ajax_get_locker_carriers() {
         try {
             // Verify nonce for security
             if (!wp_verify_nonce($_POST['nonce'], 'europarcel_locker_nonce')) {
@@ -79,7 +180,15 @@ class EuroparcelCheckout {
         }
     }
 
-    public function wp_ajax_update_locker_shipping() {
+	/**
+	 * AJAX handler for updating locker shipping
+	 *
+	 * Updates the selected locker information in session and user meta.
+	 * Validates nonce and sanitizes all input data.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wp_ajax_update_locker_shipping() {
         // Verify nonce for security
         if (!wp_verify_nonce($_POST['security'], 'europarcel_locker_nonce')) {
             wp_send_json_error(['message' => 'Security check failed']);
@@ -119,4 +228,73 @@ class EuroparcelCheckout {
         }
         wp_die();
     }
+
+	/**
+	 * Display locker selection button for classic checkout
+	 *
+	 * Called by woocommerce_review_order_after_shipping hook to display
+	 * the locker selection button in classic checkout when applicable.
+	 *
+	 * @since    1.0.0
+	 */
+	public function classic_checkout_button() {
+        if (!is_checkout()) {
+            return;
+        }
+
+        $shipping_methods = WC()->session->get('chosen_shipping_methods');
+        
+        if (!is_array($shipping_methods) || empty($shipping_methods[0])) {
+            return;
+        }
+
+        $shipping_method = explode(':', $shipping_methods[0]);
+        
+        // Check if it's a europarcel shipping method
+        if (empty($shipping_method[0]) || $shipping_method[0] !== 'europarcel_shipping') {
+            return;
+        }
+
+        // Get the instance ID to check if it has locker services
+        $instance_id = isset($shipping_method[1]) ? $shipping_method[1] : '1';
+        
+        // Check if this instance has locker services enabled
+        $shipping_method_obj = WC()->shipping()->get_shipping_methods();
+        if (!isset($shipping_method_obj['europarcel_shipping'])) {
+            return;
+        }
+
+        $method = $shipping_method_obj['europarcel_shipping'];
+        $method_instance = new $method($instance_id);
+        
+        if (!method_exists($method_instance, 'get_option')) {
+            return;
+        }
+
+        $available_services = $method_instance->get_option('available_services');
+        if (!$available_services) {
+            return;
+        }
+
+        // Check if locker service is enabled (service_id = 2)
+        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
+        $locker_services = array_filter($method_services, function ($service) {
+            return $service['service_id'] == 2; // Locker service
+        });
+
+        // Only show if this shipping method has locker carriers
+        if (empty($locker_services)) {
+            return;
+        }
+
+        // 🎯 Output button
+        echo '<tr class="europarcel-locker-selection">';
+        echo '<th></th>';
+        echo '<td>';
+        echo '<button type="button" class="button alt wp-element-button" onclick="openLockerSelector()" style="width: 100%">' . __('Selectare locker', 'europarcel') . '</button>';
+        echo '<div class="europarcel-location-details" id="europarcel-location-details" style="display: none;"></div>';
+        echo '</td>';
+        echo '</tr>';
+    }
+
 }
