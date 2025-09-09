@@ -1,5 +1,5 @@
 === EuroParcel WooCommerce Integration ===
-Contributors: europarcel
+Contributors: europarcelteam
 Tags: woocommerce, shipping, europarcel, courier, romania, locker
 Requires at least: 5.0
 Tested up to: 6.4

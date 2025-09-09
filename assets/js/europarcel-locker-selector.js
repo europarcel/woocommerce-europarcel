@@ -15,19 +15,82 @@
 	const checkoutType = europarcel_ajax.checkout_type || 'blocks';
 
 	/**
+	 * Helper function to get WooCommerce county/state
+	 */
+	window.getWooCommerceCounty = function() {
+		const stateSelectors = [
+			'#shipping_state',
+			'#billing_state',
+			'#calc_shipping_state',
+			'.wc-block-components-address-form select[id*="state"]',
+			'select[name*="state"]'
+		];
+
+		for (const selector of stateSelectors) {
+			const element = document.querySelector(selector);
+			if (element && element.value) {
+				return element.value;
+			}
+		}
+		return null;
+	};
+
+	/**
+	 * Helper function to get WooCommerce city
+	 */
+	window.getWooCommerceCity = function() {
+		const citySelectors = [
+			'#shipping_city',
+			'#billing_city',
+			'#calc_shipping_city',
+			'.wc-block-components-address-form input[id*="city"]',
+			'input[name*="city"]'
+		];
+
+		for (const selector of citySelectors) {
+			const element = document.querySelector(selector);
+			if (element && element.value) {
+				return element.value;
+			}
+		}
+		return null;
+	};
+
+	/**
+	 * Helper function to get selected shipping instance ID
+	 */
+	window.getSelectedShippingInstanceId = function() {
+		let selectedMethod = document.querySelector('input[name^="shipping_method"]:checked') ||
+			document.querySelector('.wc-block-components-radio-control__input:checked');
+
+		if (selectedMethod) {
+			const methodValue = selectedMethod.value || selectedMethod.id;
+			const parts = methodValue.split(':');
+			if (parts.length > 1)
+				return parts[1];
+
+			const underscoreParts = methodValue.split('_');
+			if (underscoreParts.length > 1)
+				return underscoreParts[underscoreParts.length - 1];
+		}
+
+		return '1';
+	};
+
+	/**
 	 * Handle locker selection for classic checkout button
 	 * Called from PHP onclick handler
 	 */
 	window.openLockerSelector = function() {
-		const county = getWooCommerceCounty();
-		const city = getWooCommerceCity();
+		const county = window.getWooCommerceCounty();
+		const city = window.getWooCommerceCity();
 
 		if (!county || !city) {
 			alert('Te rugăm să completezi județul și orașul de livrare.');
 			return;
 		}
 
-		const instanceId = getSelectedShippingInstanceId();
+		const instanceId = window.getSelectedShippingInstanceId();
 		const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
 			? europarcel_ajax.instances_lockers[instanceId]
 			: [];
@@ -116,8 +179,8 @@
             showLoadingState();
 
             try {
-                const county = getWooCommerceCounty();
-                const city = getWooCommerceCity();
+                const county = window.getWooCommerceCounty();
+                const city = window.getWooCommerceCity();
 
                 if (!county || !city) {
                     alert('Te rugăm să completezi județul și orașul de livrare.');
@@ -125,7 +188,7 @@
                     return;
                 }
 
-                const instanceId = getSelectedShippingInstanceId();
+                const instanceId = window.getSelectedShippingInstanceId();
                 const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
                         ? europarcel_ajax.instances_lockers[instanceId]
                         : [];
@@ -148,60 +211,6 @@
                 hideLoadingState();
                 alert('Eroare la încărcarea lockerelor!');
             }
-        }
-
-        function getSelectedShippingInstanceId() {
-            let selectedMethod = document.querySelector('input[name^="shipping_method"]:checked') ||
-                    document.querySelector('.wc-block-components-radio-control__input:checked');
-
-            if (selectedMethod) {
-                const methodValue = selectedMethod.value || selectedMethod.id;
-                const parts = methodValue.split(':');
-                if (parts.length > 1)
-                    return parts[1];
-
-                const underscoreParts = methodValue.split('_');
-                if (underscoreParts.length > 1)
-                    return underscoreParts[underscoreParts.length - 1];
-            }
-
-            return '1';
-        }
-
-        function getWooCommerceCounty() {
-            const stateSelectors = [
-                '#shipping_state',
-                '#billing_state',
-                '#calc_shipping_state',
-                '.wc-block-components-address-form select[id*="state"]',
-                'select[name*="state"]'
-            ];
-
-            for (const selector of stateSelectors) {
-                const element = document.querySelector(selector);
-                if (element && element.value) {
-                    return element.value;
-                }
-            }
-            return null;
-        }
-
-        function getWooCommerceCity() {
-            const citySelectors = [
-                '#shipping_city',
-                '#billing_city',
-                '#calc_shipping_city',
-                '.wc-block-components-address-form input[id*="city"]',
-                'input[name*="city"]'
-            ];
-
-            for (const selector of citySelectors) {
-                const element = document.querySelector(selector);
-                if (element && element.value) {
-                    return element.value;
-                }
-            }
-            return null;
         }
 
 
@@ -235,7 +244,7 @@
                 document.querySelectorAll('.select-locker-btn').forEach(btn => {
                     btn.disabled = false;
                     btn.style.opacity = '1';
-                    const instanceId = getSelectedShippingInstanceId();
+                    const instanceId = window.getSelectedShippingInstanceId();
                     const hasSelectedLocker = user_lockers && Object.keys(user_lockers).length > 0;
                     updateButtonText(btn, hasSelectedLocker);
                 });
@@ -316,7 +325,7 @@
                 data: {
                     action: 'update_locker_shipping',
                     security: europarcel_ajax.nonce,
-                    instance_id: getSelectedShippingInstanceId(),
+                    instance_id: window.getSelectedShippingInstanceId(),
                     locker_id: locker.id,
                     carrier_id: locker.carrier_id,
                     carrier_name: locker.carrier_name,
@@ -367,10 +376,10 @@
             }
         }
 
-        // Direct event handling like woot does
+        // Handle shipping method changes
         $(document).on("change", "input[type=radio]", function() {
             if ((this.name && this.name.includes('shipping')) || 
-                (this.value && (this.value.includes('shipping') || this.value.includes('europarcel') || this.value.includes('woot'))) ||
+                (this.value && (this.value.includes('shipping') || this.value.includes('europarcel'))) ||
                 this.name === 'radio-control-0') {
                 handleShippingMethodChange();
             }
