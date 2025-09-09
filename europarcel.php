@@ -102,7 +102,6 @@ function europarcel_shipping_init() {
  */
 function add_europarcel_shipping($methods) {
     $methods['europarcel_shipping'] = 'WC_Europarcel_Shipping';
-    error_log('[EAWB] Registered methods: ' . print_r($methods, true));
     return $methods;
 }
 
@@ -112,24 +111,22 @@ function add_europarcel_shipping($methods) {
  * @since    1.0.0
  */
 add_action('admin_enqueue_scripts', function () {
-    if (is_admin() && isset($_GET['page']) && $_GET['page'] == 'wc-settings') {
-        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/admin.css', __FILE__));
-        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/admin.js', __FILE__), array('jquery', 'select2'), '1.0', true);
+    if (is_admin() && isset($_GET['page']) && 'wc-settings' === sanitize_text_field($_GET['page'])) {
+        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/europarcel-admin.css', __FILE__));
+        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/europarcel-admin.js', __FILE__), array('jquery', 'select2'), '1.0', true);
     }
 });
 
 /**
- * Initialize the checkout functionality
+ * Initialize the main plugin class
  * 
  * @since    1.0.0
  */
-function init_europarcel_checkout() {
-    require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-checkout.php';
-    new EuroparcelCheckout();
+function run_europarcel() {
+    require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-main.php';
+    $plugin = new Europarcel_Main();
+    $plugin->run();
 }
 
-/**
- * Initialize checkout early to ensure AJAX handlers are registered
- */
-add_action('init', 'init_europarcel_checkout');
+run_europarcel();
 
