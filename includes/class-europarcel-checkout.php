@@ -83,7 +83,7 @@ class EuroparcelCheckout {
 	 */
 	private function init_blocks_checkout() {
 		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.1', true);
+        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.2', true);
 		$this->localize_script_data();
 	}
 
@@ -96,7 +96,7 @@ class EuroparcelCheckout {
 	 */
 	private function init_classic_checkout() {
 		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.1', true);
+        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.2', true);
 		$this->localize_script_data();
 	}
 
@@ -251,33 +251,31 @@ class EuroparcelCheckout {
         $shipping_method = explode(':', $shipping_methods[0]);
         
         // Check if it's a europarcel shipping method
-        if (empty($shipping_method[0]) || $shipping_method[0] !== 'europarcel_shipping') {
+        // Handle both 'europarcel_shipping' and 'europarcel_shipping_X' formats
+        if (empty($shipping_method[0]) || strpos($shipping_method[0], 'europarcel_shipping') !== 0) {
             return;
         }
 
-        // Get the instance ID to check if it has locker services
-        $instance_id = isset($shipping_method[1]) ? $shipping_method[1] : '1';
+        // Get the instance ID - could be from session format or embedded in method ID
+        $instance_id = '1'; // default
+        if (isset($shipping_method[1])) {
+            // From session format: europarcel_shipping:1
+            $instance_id = $shipping_method[1];
+        } else {
+            // From embedded format: europarcel_shipping_1
+            $parts = explode('_', $shipping_method[0]);
+            if (count($parts) >= 3 && is_numeric(end($parts))) {
+                $instance_id = end($parts);
+            }
+        }
         
-        // Check if this instance has locker services enabled
-        $shipping_method_obj = WC()->shipping()->get_shipping_methods();
-        if (!isset($shipping_method_obj['europarcel_shipping'])) {
+        // Check if this specific instance has locker services enabled
+        $settings = get_option('woocommerce_europarcel_shipping_' . $instance_id . '_settings', []);
+        if (empty($settings['available_services'])) {
             return;
         }
 
-        $method = $shipping_method_obj['europarcel_shipping'];
-        $method_instance = new $method($instance_id);
-        
-        if (!method_exists($method_instance, 'get_option')) {
-            return;
-        }
-
-        $available_services = $method_instance->get_option('available_services');
-        if (!$available_services) {
-            return;
-        }
-
-        // Check if locker service is enabled (service_id = 2)
-        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
+        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
         $locker_services = array_filter($method_services, function ($service) {
             return $service['service_id'] == 2; // Locker service
         });
