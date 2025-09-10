@@ -83,7 +83,7 @@ class EuroparcelCheckout {
 	 */
 	private function init_blocks_checkout() {
 		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.2', true);
+        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.8', true);
 		$this->localize_script_data();
 	}
 
@@ -96,7 +96,7 @@ class EuroparcelCheckout {
 	 */
 	private function init_classic_checkout() {
 		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.2', true);
+        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.8', true);
 		$this->localize_script_data();
 	}
 
@@ -123,15 +123,31 @@ class EuroparcelCheckout {
             }
         }
         
-        $shipping_methods = WC()->shipping()->get_shipping_methods();
-        foreach ($shipping_methods as $method) {
-            $settings = $method->settings;
-            if (get_class($method) == 'WC_Europarcel_Shipping' && isset($settings['available_services'])) {
-                $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
-                $locker_services = array_filter($method_services, function ($service) {
-                    return $service['service_id'] == 2;
-                });
-                $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
+        // Get all shipping method instances from shipping zones
+        $shipping_zones = WC_Shipping_Zones::get_zones();
+        $shipping_zones[] = new WC_Shipping_Zone(0); // Add default/worldwide zone
+        
+        foreach ($shipping_zones as $zone_data) {
+            if (is_array($zone_data)) {
+                $zone = new WC_Shipping_Zone($zone_data['id']);
+            } else {
+                $zone = $zone_data;
+            }
+            
+            $shipping_methods = $zone->get_shipping_methods();
+            foreach ($shipping_methods as $method) {
+                if (strpos($method->id, 'europarcel_shipping') === 0 && $method->enabled === 'yes') {
+                    $settings = get_option('woocommerce_europarcel_shipping_' . $method->instance_id . '_settings', []);
+                    if (isset($settings['available_services'])) {
+                        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
+                        $locker_services = array_filter($method_services, function ($service) {
+                            return $service['service_id'] == 2;
+                        });
+                        if (!empty($locker_services)) {
+                            $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
+                        }
+                    }
+                }
             }
         }
         
