@@ -1,5 +1,5 @@
 === EuroParcel WooCommerce Integration ===
-Contributors: europarcelteam
+Contributors: europarcelcom
 Tags: woocommerce, shipping, europarcel, courier, romania, locker
 Requires at least: 5.0
 Tested up to: 6.4
@@ -66,6 +66,24 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 2. Shipping method setup in WooCommerce
 3. Customer checkout with locker selection
 4. Interactive locker map interface
+
+== External Services ==
+
+This plugin connects to EuroParcel's external API services to provide shipping functionality:
+
+**EuroParcel API**
+- Service URL: https://api.europarcel.com/
+- Purpose: Calculate shipping rates, retrieve courier services, and manage shipping requests
+- Data sent: Order details (weight, dimensions, destination address), customer information
+- Privacy Policy: https://www.eawb.ro/politica-confidentialitate
+- Terms of Service: https://www.eawb.ro/termeni-conditii-eawb
+- Required: Yes, API key from your EuroParcel account is required for the plugin to function
+
+**EuroParcel Maps Service**
+- Service URL: https://maps.europarcel.com/
+- Purpose: Display interactive map for locker selection
+- Data sent: Customer location (county/city) for filtering nearby lockers
+- Required: Yes, for locker delivery functionality
 
 == Changelog ==
 

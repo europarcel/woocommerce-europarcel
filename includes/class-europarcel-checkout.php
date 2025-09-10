@@ -177,7 +177,7 @@ class EuroparcelCheckout {
         try {
             // Verify nonce for security
             if (!wp_verify_nonce($_POST['nonce'], 'europarcel_locker_nonce')) {
-                wp_send_json_error(['message' => 'Security check failed']);
+                wp_send_json_error(['message' => 'Security check failed. Please refresh the page and try again.']);
                 return;
             }
             // Get instance ID from the request
@@ -190,9 +190,8 @@ class EuroparcelCheckout {
                 'carriers' => $locker_carriers
             ]);
         } catch (\Exception $e) {
-            wp_send_json_error([
-                'message' => 'Failed to get locker carriers: ' . $e->getMessage()
-            ]);
+            // Silently handle error - return empty carriers array
+            wp_send_json_success(['carriers' => []]);
         }
     }
 
@@ -207,7 +206,7 @@ class EuroparcelCheckout {
 	public function wp_ajax_update_locker_shipping() {
         // Verify nonce for security
         if (!wp_verify_nonce($_POST['security'], 'europarcel_locker_nonce')) {
-            wp_send_json_error(['message' => 'Security check failed']);
+            wp_send_json_error(['message' => 'Security check failed. Please refresh the page and try again.']);
             return;
         }
 
@@ -240,7 +239,8 @@ class EuroparcelCheckout {
             }
             wp_send_json_success(['user_locker' => $user_lockers, 'order_lockers' => $order_lockers]);
         } else {
-            wp_send_json_error('Date lipsă');
+            // Silently handle missing data
+            wp_send_json_success(['user_locker' => [], 'order_lockers' => []]);
         }
         wp_die();
     }
