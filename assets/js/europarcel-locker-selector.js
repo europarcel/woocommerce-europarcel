@@ -85,11 +85,6 @@
 		const county = window.getWooCommerceCounty();
 		const city = window.getWooCommerceCity();
 
-		if (!county || !city) {
-			alert('Te rugăm să completezi județul și orașul de livrare.');
-			return;
-		}
-
 		const instanceId = window.getSelectedShippingInstanceId();
 		const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
 			? europarcel_ajax.instances_lockers[instanceId]
@@ -100,7 +95,13 @@
 			return;
 		}
 
-		const iframeUrl = `https://maps.europarcel.com/?country_code=RO&county_name=${encodeURIComponent(county)}&locality_name=${encodeURIComponent(city)}&carrier_id=${carrierIds.join(',')}`;
+		let iframeUrl = `https://maps.europarcel.com/?country_code=RO&carrier_id=${carrierIds.join(',')}`;
+		if (county) {
+			iframeUrl += `&county_name=${encodeURIComponent(county)}`;
+		}
+		if (city) {
+			iframeUrl += `&locality_name=${encodeURIComponent(city)}`;
+		}
 
 		if (window.EuroparcelModal) {
 			window.EuroparcelModal.show(iframeUrl);
@@ -182,12 +183,6 @@
                 const county = window.getWooCommerceCounty();
                 const city = window.getWooCommerceCity();
 
-                if (!county || !city) {
-                    alert('Te rugăm să completezi județul și orașul de livrare.');
-                    hideLoadingState();
-                    return;
-                }
-
                 const instanceId = window.getSelectedShippingInstanceId();
                 const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
                         ? europarcel_ajax.instances_lockers[instanceId]
@@ -199,7 +194,13 @@
                     return;
                 }
 
-                const iframeUrl = `https://maps.europarcel.com/?country_code=RO&county_name=${encodeURIComponent(county)}&locality_name=${encodeURIComponent(city)}&carrier_id=${carrierIds.join(',')}`;
+                let iframeUrl = `https://maps.europarcel.com/?country_code=RO&carrier_id=${carrierIds.join(',')}`;
+                if (county) {
+                    iframeUrl += `&county_name=${encodeURIComponent(county)}`;
+                }
+                if (city) {
+                    iframeUrl += `&locality_name=${encodeURIComponent(city)}`;
+                }
                 
                 // Use the new modal object
                 if (window.EuroparcelModal) {
@@ -209,7 +210,7 @@
 
             } catch (error) {
                 hideLoadingState();
-                alert('Eroare la încărcarea lockerelor!');
+                // Silently handle error
             }
         }
 
