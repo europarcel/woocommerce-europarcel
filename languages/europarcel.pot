@@ -95,91 +95,91 @@ msgstr ""
 msgid "Select the shipping services that will be available to your customers during checkout"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:172
+#: includes/class-europarcel-shipping.php:249
 msgid "Excluded Shipping Classes for Lockers"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:179
+#: includes/class-europarcel-shipping.php:254
 msgid "Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:184
+#: includes/class-europarcel-shipping.php:175
 msgid "Home Delivery Settings"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:186
+#: includes/class-europarcel-shipping.php:177
 msgid "Configure address delivery options and pricing"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:189
+#: includes/class-europarcel-shipping.php:181
 msgid "Home Delivery Display Name"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:192
+#: includes/class-europarcel-shipping.php:184
 msgid "The shipping method name shown to customers at checkout for home delivery"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:196
+#: includes/class-europarcel-shipping.php:188
 msgid "Home Delivery Fixed Price"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:199
+#: includes/class-europarcel-shipping.php:191
 msgid "Set the fixed shipping cost for address deliveries"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:203
+#: includes/class-europarcel-shipping.php:195
 msgid "Free Home Delivery Minimum Order Amount"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:206
+#: includes/class-europarcel-shipping.php:198
 msgid "Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:210
+#: includes/class-europarcel-shipping.php:202
 msgid "Free Home Delivery Shipping Classes"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:216
+#: includes/class-europarcel-shipping.php:207
 msgid "Select shipping classes that will always have free home delivery regardless of order amount"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:221
+#: includes/class-europarcel-shipping.php:212
 msgid "Locker Delivery Settings"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:223
+#: includes/class-europarcel-shipping.php:214
 msgid "Configure locker delivery options and pricing"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:226
+#: includes/class-europarcel-shipping.php:218
 msgid "Locker Delivery Display Name"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:229
+#: includes/class-europarcel-shipping.php:221
 msgid "The shipping method name shown to customers at checkout for locker delivery"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:233
+#: includes/class-europarcel-shipping.php:225
 msgid "Locker Delivery Fixed Price"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:236
+#: includes/class-europarcel-shipping.php:228
 msgid "Set the fixed shipping cost for locker deliveries"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:240
+#: includes/class-europarcel-shipping.php:232
 msgid "Free Locker Delivery Minimum Order Amount"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:243
+#: includes/class-europarcel-shipping.php:235
 msgid "Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:247
+#: includes/class-europarcel-shipping.php:239
 msgid "Free Locker Delivery Shipping Classes"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:253
+#: includes/class-europarcel-shipping.php:244
 msgid "Select shipping classes that will always have free locker delivery regardless of order amount"
 msgstr ""
 

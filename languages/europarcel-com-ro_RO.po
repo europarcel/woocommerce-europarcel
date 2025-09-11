@@ -93,7 +93,7 @@ msgstr "Servicii de transport disponibile"
 msgid "Select the shipping services that will be available to your customers during checkout"
 msgstr "Selectează serviciile de transport care vor fi disponibile clienților la finalizarea comenzii"
 
-#: includes/class-europarcel-shipping.php:172
+#: includes/class-europarcel-shipping.php:249
 msgid "Excluded Shipping Classes for Lockers"
 msgstr "Clase de expediere excluse pentru lockere"
 
@@ -101,83 +101,83 @@ msgstr "Clase de expediere excluse pentru lockere"
 msgid "Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)"
 msgstr "Selectează clasele de expediere care nu ar trebui să aibă opțiuni de livrare în locker (ex: produse mari sau neadecvate pentru lockere)"
 
-#: includes/class-europarcel-shipping.php:184
+#: includes/class-europarcel-shipping.php:175
 msgid "Home Delivery Settings"
 msgstr "Setări livrare la adresă"
 
-#: includes/class-europarcel-shipping.php:186
+#: includes/class-europarcel-shipping.php:177
 msgid "Configure address delivery options and pricing"
 msgstr "Configurează opțiunile și prețurile pentru livrarea la adresă"
 
-#: includes/class-europarcel-shipping.php:189
+#: includes/class-europarcel-shipping.php:181
 msgid "Home Delivery Display Name"
 msgstr "Numele afișat pentru livrarea la adresă"
 
-#: includes/class-europarcel-shipping.php:192
+#: includes/class-europarcel-shipping.php:184
 msgid "The shipping method name shown to customers at checkout for home delivery"
 msgstr "Numele metodei de transport afișat clienților la checkout pentru livrarea la adresă"
 
-#: includes/class-europarcel-shipping.php:196
+#: includes/class-europarcel-shipping.php:188
 msgid "Home Delivery Fixed Price"
 msgstr "Preț fix livrare la adresă"
 
-#: includes/class-europarcel-shipping.php:199
+#: includes/class-europarcel-shipping.php:191
 msgid "Set the fixed shipping cost for address deliveries"
 msgstr "Setează costul fix de transport pentru livrările la adresă"
 
-#: includes/class-europarcel-shipping.php:203
+#: includes/class-europarcel-shipping.php:195
 msgid "Free Home Delivery Minimum Order Amount"
 msgstr "Suma minimă pentru livrare gratuită la adresă"
 
-#: includes/class-europarcel-shipping.php:206
+#: includes/class-europarcel-shipping.php:198
 msgid "Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)"
 msgstr "Suma minimă de comandă pentru livrare gratuită la adresă (lasă gol pentru a dezactiva livrarea gratuită)"
 
-#: includes/class-europarcel-shipping.php:210
+#: includes/class-europarcel-shipping.php:202
 msgid "Free Home Delivery Shipping Classes"
 msgstr "Clase de expediere cu livrare gratuită la adresă"
 
-#: includes/class-europarcel-shipping.php:216
+#: includes/class-europarcel-shipping.php:207
 msgid "Select shipping classes that will always have free home delivery regardless of order amount"
 msgstr "Selectează clasele de expediere care vor avea întotdeauna livrare gratuită la adresă, indiferent de suma comenzii"
 
-#: includes/class-europarcel-shipping.php:221
+#: includes/class-europarcel-shipping.php:212
 msgid "Locker Delivery Settings"
 msgstr "Setări livrare în locker"
 
-#: includes/class-europarcel-shipping.php:223
+#: includes/class-europarcel-shipping.php:214
 msgid "Configure locker delivery options and pricing"
 msgstr "Configurează opțiunile și prețurile pentru livrarea în locker"
 
-#: includes/class-europarcel-shipping.php:226
+#: includes/class-europarcel-shipping.php:218
 msgid "Locker Delivery Display Name"
 msgstr "Numele afișat pentru livrarea în locker"
 
-#: includes/class-europarcel-shipping.php:229
+#: includes/class-europarcel-shipping.php:221
 msgid "The shipping method name shown to customers at checkout for locker delivery"
 msgstr "Numele metodei de transport afișat clienților la checkout pentru livrarea în locker"
 
-#: includes/class-europarcel-shipping.php:233
+#: includes/class-europarcel-shipping.php:225
 msgid "Locker Delivery Fixed Price"
 msgstr "Preț fix livrare în locker"
 
-#: includes/class-europarcel-shipping.php:236
+#: includes/class-europarcel-shipping.php:228
 msgid "Set the fixed shipping cost for locker deliveries"
 msgstr "Setează costul fix de transport pentru livrările în locker"
 
-#: includes/class-europarcel-shipping.php:240
+#: includes/class-europarcel-shipping.php:232
 msgid "Free Locker Delivery Minimum Order Amount"
 msgstr "Suma minimă pentru livrare gratuită în locker"
 
-#: includes/class-europarcel-shipping.php:243
+#: includes/class-europarcel-shipping.php:235
 msgid "Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)"
 msgstr "Suma minimă de comandă pentru livrare gratuită în locker (lasă gol pentru a dezactiva livrarea gratuită)"
 
-#: includes/class-europarcel-shipping.php:247
+#: includes/class-europarcel-shipping.php:239
 msgid "Free Locker Delivery Shipping Classes"
 msgstr "Clase de expediere cu livrare gratuită în locker"
 
-#: includes/class-europarcel-shipping.php:253
+#: includes/class-europarcel-shipping.php:244
 msgid "Select shipping classes that will always have free locker delivery regardless of order amount"
 msgstr "Selectează clasele de expediere care vor avea întotdeauna livrare gratuită în locker, indiferent de suma comenzii"
 
