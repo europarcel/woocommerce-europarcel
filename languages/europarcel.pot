@@ -184,7 +184,7 @@ msgid "Select shipping classes that will always have free locker delivery regard
 msgstr ""
 
 # Customer-facing strings (Frontend)
-#: includes/class-europarcel-checkout.php:308
+#: includes/class-europarcel-checkout.php:316
 msgid "Select Locker"
 msgstr ""
 

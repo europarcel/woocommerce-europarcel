@@ -97,7 +97,7 @@ msgstr "Selectează serviciile de transport care vor fi disponibile clienților 
 msgid "Excluded Shipping Classes for Lockers"
 msgstr "Clase de expediere excluse pentru lockere"
 
-#: includes/class-europarcel-shipping.php:179
+#: includes/class-europarcel-shipping.php:254
 msgid "Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)"
 msgstr "Selectează clasele de expediere care nu ar trebui să aibă opțiuni de livrare în locker (ex: produse mari sau neadecvate pentru lockere)"
 
@@ -182,7 +182,7 @@ msgid "Select shipping classes that will always have free locker delivery regard
 msgstr "Selectează clasele de expediere care vor avea întotdeauna livrare gratuită în locker, indiferent de suma comenzii"
 
 # Customer-facing strings (Frontend)
-#: includes/class-europarcel-checkout.php:308
+#: includes/class-europarcel-checkout.php:316
 msgid "Select Locker"
 msgstr "Selectare locker"
 
