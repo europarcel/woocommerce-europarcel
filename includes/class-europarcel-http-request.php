@@ -120,11 +120,11 @@ class EuroparcelHttpRequest {
 	 */
 	private function handle_api_response($response) {
 		if (is_wp_error($response)) {
-			throw new \Exception('HTTP request failed: ' . $response->get_error_message());
+			throw new \Exception(__('HTTP request failed: ', 'europarcel') . $response->get_error_message());
 		}
 
 		if (!is_array($response)) {
-			throw new \Exception('Invalid response format');
+			throw new \Exception(__('Invalid response format', 'europarcel'));
 		}
 
 		$code = wp_remote_retrieve_response_code($response);
@@ -133,15 +133,15 @@ class EuroparcelHttpRequest {
 		if ($code != 200) {
 			$error_data = json_decode($body, true);
 			if ($error_data && isset($error_data['message'])) {
-				throw new \Exception('API Error (' . $code . '): ' . $error_data['message']);
+				throw new \Exception(__('API Error', 'europarcel') . ' (' . $code . '): ' . $error_data['message']);
 			} else {
-				throw new \Exception('API Error: HTTP ' . $code);
+				throw new \Exception(__('API Error: HTTP', 'europarcel') . ' ' . $code);
 			}
 		}
 
 		$decoded = json_decode($body, true);
 		if (json_last_error() !== JSON_ERROR_NONE) {
-			throw new \Exception('Invalid JSON response: ' . json_last_error_msg());
+			throw new \Exception(__('Invalid JSON response: ', 'europarcel') . json_last_error_msg());
 		}
 
 		return $decoded;

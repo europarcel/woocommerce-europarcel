@@ -159,7 +159,15 @@ class EuroparcelCheckout {
             'order_lockers' => $order_lockers,
             'instances_lockers' => $instances_lockers,
             'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php'),
-            'checkout_type' => $this->is_blocks_checkout ? 'blocks' : 'classic'
+            'checkout_type' => $this->is_blocks_checkout ? 'blocks' : 'classic',
+            'i18n' => [
+                'select_locker' => __('Select Locker', 'europarcel'),
+                'modify_locker' => __('Modify Locker', 'europarcel'),
+                'loading' => __('Loading...', 'europarcel'),
+                'no_carriers_configured' => __('No couriers configured for locker delivery.', 'europarcel'),
+                'locker_selected' => __('✓ Locker selected -', 'europarcel'),
+                'locker_selection_title' => __('Delivery locker selection', 'europarcel')
+            ]
         ];
         
         wp_localize_script('europarcel-locker-selector', 'europarcel_ajax', $script_data);
@@ -177,7 +185,7 @@ class EuroparcelCheckout {
         try {
             // Verify nonce for security
             if (!wp_verify_nonce($_POST['nonce'], 'europarcel_locker_nonce')) {
-                wp_send_json_error(['message' => 'Security check failed. Please refresh the page and try again.']);
+                wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel')]);
                 return;
             }
             // Get instance ID from the request
@@ -206,7 +214,7 @@ class EuroparcelCheckout {
 	public function wp_ajax_update_locker_shipping() {
         // Verify nonce for security
         if (!wp_verify_nonce($_POST['security'], 'europarcel_locker_nonce')) {
-            wp_send_json_error(['message' => 'Security check failed. Please refresh the page and try again.']);
+            wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel')]);
             return;
         }
 
@@ -305,7 +313,7 @@ class EuroparcelCheckout {
         echo '<tr class="europarcel-locker-selection">';
         echo '<th></th>';
         echo '<td>';
-        echo '<button type="button" class="button alt wp-element-button" onclick="openLockerSelector()" style="width: 100%">' . __('Selectare locker', 'europarcel') . '</button>';
+        echo '<button type="button" class="button alt wp-element-button" onclick="openLockerSelector()" style="width: 100%">' . __('Select Locker', 'europarcel') . '</button>';
         echo '<div class="europarcel-location-details" id="europarcel-location-details" style="display: none;"></div>';
         echo '</td>';
         echo '</tr>';

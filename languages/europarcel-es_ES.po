@@ -1,271 +1,274 @@
+# Spanish (Spain) language file for EuroParcel WooCommerce Integration
 # Copyright (C) 2024 EuroParcel
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
 "Project-Id-Version: EuroParcel WooCommerce Integration 1.0.0\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
-"Last-Translator: EuroParcel Team <cs@europarcel.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: EuroParcel Team\n"
+"Language-Team: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-09-11T12:00:00+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-09-11T12:00:00+00:00\n"
 "X-Generator: Manual\n"
 "X-Domain: europarcel\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: includes/class-europarcel-shipping.php:53
 msgid "Europarcel Shipping"
-msgstr ""
+msgstr "Envío EuroParcel"
 
 #: includes/class-europarcel-shipping.php:54
 msgid "Premium courier shipping integration with support for home delivery and locker services"
-msgstr ""
+msgstr "Integración premium de mensajería con soporte para entrega a domicilio y servicios de taquillas"
 
 #: includes/class-europarcel-shipping.php:90
 msgid "Basic Settings"
-msgstr ""
+msgstr "Configuración básica"
 
 #: includes/class-europarcel-shipping.php:92
 msgid "Configure your connection and basic plugin settings"
-msgstr ""
+msgstr "Configura tu conexión y configuración básica del plugin"
 
 #: includes/class-europarcel-shipping.php:95
 msgid "Method Title"
-msgstr ""
+msgstr "Título del método"
 
 #: includes/class-europarcel-shipping.php:97
 msgid "The shipping method title displayed in the admin shipping zones configuration"
-msgstr ""
+msgstr "El título del método de envío mostrado en la configuración de zonas de envío del admin"
 
 #: includes/class-europarcel-shipping.php:102
 msgid "API Key"
-msgstr ""
+msgstr "Clave API"
 
 #: includes/class-europarcel-shipping.php:104
 msgid "Your API key for accessing the shipping services.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
-msgstr ""
+msgstr "Tu clave API para acceder a los servicios de envío.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Obtén tu clave API aquí →</a>"
 
 #: includes/class-europarcel-shipping.php:117
 msgid "Connection Error"
-msgstr ""
+msgstr "Error de conexión"
 
 #: includes/class-europarcel-shipping.php:119
 msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
-msgstr ""
+msgstr "<div class=\"notice notice-error inline\"><p><strong>No se puede conectar a eAWB.</strong> Verifica que tu clave API sea correcta e inténtalo de nuevo.</p></div>"
 
 #: includes/class-europarcel-shipping.php:142
 msgid "Service Configuration"
-msgstr ""
+msgstr "Configuración de servicios"
 
 #: includes/class-europarcel-shipping.php:144
 msgid "Configure your shipping addresses and available services"
-msgstr ""
+msgstr "Configura tus direcciones de envío y servicios disponibles"
 
 #: includes/class-europarcel-shipping.php:147
 msgid "Primary Sender Address"
-msgstr ""
+msgstr "Dirección del remitente principal"
 
 #: includes/class-europarcel-shipping.php:150
 msgid "Default sender address for eAWB order imports<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Sender Addresses →</a>"
-msgstr ""
+msgstr "Dirección del remitente predeterminada para importaciones de pedidos eAWB<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Gestionar direcciones del remitente →</a>"
 
 #: includes/class-europarcel-shipping.php:155
 msgid "Primary Billing Address"
-msgstr ""
+msgstr "Dirección de facturación principal"
 
 #: includes/class-europarcel-shipping.php:158
 msgid "Default billing address for eAWB order imports<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Billing Addresses →</a>"
-msgstr ""
+msgstr "Dirección de facturación predeterminada para importaciones de pedidos eAWB<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Gestionar direcciones de facturación →</a>"
 
 #: includes/class-europarcel-shipping.php:163
 msgid "Available Shipping Services"
-msgstr ""
+msgstr "Servicios de envío disponibles"
 
 #: includes/class-europarcel-shipping.php:165
 msgid "Select the shipping services that will be available to your customers during checkout"
-msgstr ""
+msgstr "Selecciona los servicios de envío que estarán disponibles para tus clientes durante el checkout"
 
 #: includes/class-europarcel-shipping.php:172
 msgid "Excluded Shipping Classes for Lockers"
-msgstr ""
+msgstr "Clases de envío excluidas para taquillas"
 
 #: includes/class-europarcel-shipping.php:179
 msgid "Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)"
-msgstr ""
+msgstr "Selecciona las clases de envío que no deben tener opciones de entrega en taquilla disponibles (ej. productos grandes o artículos inadecuados para taquillas)"
 
 #: includes/class-europarcel-shipping.php:184
 msgid "Home Delivery Settings"
-msgstr ""
+msgstr "Configuración de entrega a domicilio"
 
 #: includes/class-europarcel-shipping.php:186
 msgid "Configure address delivery options and pricing"
-msgstr ""
+msgstr "Configura opciones y precios de entrega a la dirección"
 
 #: includes/class-europarcel-shipping.php:189
 msgid "Home Delivery Display Name"
-msgstr ""
+msgstr "Nombre mostrado entrega a domicilio"
 
 #: includes/class-europarcel-shipping.php:192
 msgid "The shipping method name shown to customers at checkout for home delivery"
-msgstr ""
+msgstr "El nombre del método de envío mostrado a los clientes en el checkout para entrega a domicilio"
 
 #: includes/class-europarcel-shipping.php:196
 msgid "Home Delivery Fixed Price"
-msgstr ""
+msgstr "Precio fijo entrega a domicilio"
 
 #: includes/class-europarcel-shipping.php:199
 msgid "Set the fixed shipping cost for address deliveries"
-msgstr ""
+msgstr "Establece el costo de envío fijo para entregas a la dirección"
 
 #: includes/class-europarcel-shipping.php:203
 msgid "Free Home Delivery Minimum Order Amount"
-msgstr ""
+msgstr "Importe mínimo pedido entrega gratuita a domicilio"
 
 #: includes/class-europarcel-shipping.php:206
 msgid "Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)"
-msgstr ""
+msgstr "Importe mínimo de pedido requerido para calificar para entrega gratuita a domicilio (dejar vacío para sin envío gratuito)"
 
 #: includes/class-europarcel-shipping.php:210
 msgid "Free Home Delivery Shipping Classes"
-msgstr ""
+msgstr "Clases de envío entrega gratuita a domicilio"
 
 #: includes/class-europarcel-shipping.php:216
 msgid "Select shipping classes that will always have free home delivery regardless of order amount"
-msgstr ""
+msgstr "Selecciona las clases de envío que siempre tendrán entrega gratuita a domicilio independientemente del importe del pedido"
 
 #: includes/class-europarcel-shipping.php:221
 msgid "Locker Delivery Settings"
-msgstr ""
+msgstr "Configuración de entrega en taquilla"
 
 #: includes/class-europarcel-shipping.php:223
 msgid "Configure locker delivery options and pricing"
-msgstr ""
+msgstr "Configura opciones y precios de entrega en taquilla"
 
 #: includes/class-europarcel-shipping.php:226
 msgid "Locker Delivery Display Name"
-msgstr ""
+msgstr "Nombre mostrado entrega en taquilla"
 
 #: includes/class-europarcel-shipping.php:229
 msgid "The shipping method name shown to customers at checkout for locker delivery"
-msgstr ""
+msgstr "El nombre del método de envío mostrado a los clientes en el checkout para entrega en taquilla"
 
 #: includes/class-europarcel-shipping.php:233
 msgid "Locker Delivery Fixed Price"
-msgstr ""
+msgstr "Precio fijo entrega en taquilla"
 
 #: includes/class-europarcel-shipping.php:236
 msgid "Set the fixed shipping cost for locker deliveries"
-msgstr ""
+msgstr "Establece el costo de envío fijo para entregas en taquilla"
 
 #: includes/class-europarcel-shipping.php:240
 msgid "Free Locker Delivery Minimum Order Amount"
-msgstr ""
+msgstr "Importe mínimo pedido entrega gratuita en taquilla"
 
 #: includes/class-europarcel-shipping.php:243
 msgid "Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)"
-msgstr ""
+msgstr "Importe mínimo de pedido requerido para calificar para entrega gratuita en taquilla (dejar vacío para sin envío gratuito)"
 
 #: includes/class-europarcel-shipping.php:247
 msgid "Free Locker Delivery Shipping Classes"
-msgstr ""
+msgstr "Clases de envío entrega gratuita en taquilla"
 
 #: includes/class-europarcel-shipping.php:253
 msgid "Select shipping classes that will always have free locker delivery regardless of order amount"
-msgstr ""
+msgstr "Selecciona las clases de envío que siempre tendrán entrega gratuita en taquilla independientemente del importe del pedido"
 
 # Customer-facing strings (Frontend)
 #: includes/class-europarcel-checkout.php:308
 msgid "Select Locker"
-msgstr ""
+msgstr "Seleccionar taquilla"
 
 #: includes/class-europarcel-checkout.php:164
 msgid "Modify Locker"
-msgstr ""
+msgstr "Modificar taquilla"
 
 #: includes/class-europarcel-checkout.php:166
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando..."
 
 #: includes/class-europarcel-checkout.php:167
 msgid "No couriers configured for locker delivery."
-msgstr ""
+msgstr "No hay mensajeros configurados para entrega en taquilla."
 
 #: includes/class-europarcel-checkout.php:168
 msgid "✓ Locker selected -"
-msgstr ""
+msgstr "✓ Taquilla seleccionada -"
 
 #: includes/class-europarcel-checkout.php:169
 msgid "Delivery locker selection"
-msgstr ""
+msgstr "Selección de taquilla de entrega"
 
 #: includes/class-europarcel-checkout.php:188
 #: includes/class-europarcel-checkout.php:217
 msgid "Security check failed. Please refresh the page and try again."
-msgstr ""
+msgstr "Verificación de seguridad falló. Por favor actualiza la página e inténtalo de nuevo."
 
 # Custom Fields (Admin)
 #: includes/class-europarcel-custom-fields.php:49
 msgid "Fixed price"
-msgstr ""
+msgstr "Precio fijo"
 
 #: includes/class-europarcel-custom-fields.php:55
 msgid "RON"
-msgstr ""
+msgstr "RON"
 
 #: includes/class-europarcel-custom-fields.php:76
 msgid "Calculation parameters"
-msgstr ""
+msgstr "Parámetros de cálculo"
 
 #: includes/class-europarcel-custom-fields.php:78
 msgid "Weight (kg)"
-msgstr ""
+msgstr "Peso (kg)"
 
 #: includes/class-europarcel-custom-fields.php:83
 msgid "Length (cm)"
-msgstr ""
+msgstr "Longitud (cm)"
 
 #: includes/class-europarcel-custom-fields.php:88
 msgid "Width (cm)"
-msgstr ""
+msgstr "Ancho (cm)"
 
 #: includes/class-europarcel-custom-fields.php:93
 msgid "Height (cm)"
-msgstr ""
+msgstr "Altura (cm)"
 
 #: includes/class-europarcel-custom-fields.php:99
 msgid "Price multiplier"
-msgstr ""
+msgstr "Multiplicador de precio"
 
 #: includes/class-europarcel-custom-fields.php:126
 msgid "Shipping Price Type"
-msgstr ""
+msgstr "Tipo de precio de envío"
 
 #: includes/class-europarcel-custom-fields.php:137
 msgid "Fixed Price"
-msgstr ""
+msgstr "Precio fijo"
 
 #: includes/class-europarcel-custom-fields.php:140
 msgid "Calculated Price"
-msgstr ""
+msgstr "Precio calculado"
 
 # HTTP Request Error Messages (Technical)
 #: includes/class-europarcel-http-request.php:123
 msgid "HTTP request failed: "
-msgstr ""
+msgstr "Solicitud HTTP falló: "
 
 #: includes/class-europarcel-http-request.php:127
 msgid "Invalid response format"
-msgstr ""
+msgstr "Formato de respuesta inválido"
 
 #: includes/class-europarcel-http-request.php:136
 msgid "API Error"
-msgstr ""
+msgstr "Error de API"
 
 #: includes/class-europarcel-http-request.php:138
 msgid "API Error: HTTP"
-msgstr ""
+msgstr "Error de API: HTTP"
 
 #: includes/class-europarcel-http-request.php:144
 msgid "Invalid JSON response: "
-msgstr ""
+msgstr "Respuesta JSON inválida: "
