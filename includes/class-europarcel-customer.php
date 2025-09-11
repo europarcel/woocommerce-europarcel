@@ -182,7 +182,7 @@ class EuroparcelCustomer {
 	public function getPrices($package, $allow_locker) {
 		$data = new \EuroparcelShipping\EuroparcelRequestData($this->instance_id, $allow_locker);
 		
-		if ($this->settings['enabled'] != 'yes' || !$this->settings['europarcel_customer']) {
+		if (!$this->settings['europarcel_customer']) {
 			return false;
 		}
 		
