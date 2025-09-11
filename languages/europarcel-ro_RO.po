@@ -53,6 +53,10 @@ msgstr "Cheia ta API pentru accesarea serviciilor de transport.<br><a href=\"htt
 msgid "Connection Error"
 msgstr "Eroare de conexiune"
 
+#: includes/class-europarcel-shipping.php:138
+msgid "✅ Connected: %s"
+msgstr "✅ Conectat: %s"
+
 #: includes/class-europarcel-shipping.php:119
 msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
 msgstr "<div class=\"notice notice-error inline\"><p><strong>Nu se poate conecta la eAWB.</strong> Te rugăm să verifici că cheia API este corectă și încearcă din nou.</p></div>"

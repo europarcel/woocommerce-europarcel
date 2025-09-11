@@ -135,7 +135,7 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
         }
         $this->form_fields = array_merge($this->form_fields, array(
             'customer_info' => array(
-                'title' => __('✅ Connected: ' . esc_html($customer_info['name']), 'europarcel'),
+                'title' => sprintf(__('✅ Connected: %s', 'europarcel'), esc_html($customer_info['name'])),
                 'type' => 'title',
             ),
             'section_service_config' => array(

@@ -53,6 +53,10 @@ msgstr "Az API kulcsod a szállítási szolgáltatások eléréséhez.<br><a hre
 msgid "Connection Error"
 msgstr "Kapcsolódási hiba"
 
+#: includes/class-europarcel-shipping.php:138
+msgid "✅ Connected: %s"
+msgstr "✅ Csatlakoztatva: %s"
+
 #: includes/class-europarcel-shipping.php:119
 msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
 msgstr "<div class=\"notice notice-error inline\"><p><strong>Nem sikerült csatlakozni az eAWB-hez.</strong> Kérjük ellenőrizd, hogy az API kulcs helyes és próbáld újra.</p></div>"

@@ -53,6 +53,10 @@ msgstr "Votre clé API pour accéder aux services de livraison.<br><a href=\"htt
 msgid "Connection Error"
 msgstr "Erreur de connexion"
 
+#: includes/class-europarcel-shipping.php:138
+msgid "✅ Connected: %s"
+msgstr "✅ Connecté: %s"
+
 #: includes/class-europarcel-shipping.php:119
 msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
 msgstr "<div class=\"notice notice-error inline\"><p><strong>Impossible de se connecter à eAWB.</strong> Veuillez vérifier que votre clé API est correcte et réessayer.</p></div>"
