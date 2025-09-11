@@ -54,7 +54,7 @@
 						onmouseout="this.style.background='rgba(0,0,0,0.7)'; this.style.transform='scale(1)';"
 						>&times;</button>
 						<iframe src="${iframeUrl}" style="width: 100%; height: 100%; border: none;"
-							title="Selectare locker de livrare" id="europarcel-locker-iframe"></iframe>
+							title="${europarcel_ajax.i18n.locker_selection_title}" id="europarcel-locker-iframe"></iframe>
 					</div>
 				</div>
 			`;

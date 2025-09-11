@@ -44,15 +44,15 @@ class EuroparcelConstants {
 	 */
 	public static function getAvailableServices() {
 		return [
-			'cargus_national' => __('Cargus National', 'europarcel'),
-			'dpd_standard' => __('DPD Standard', 'europarcel'),
-			'fan_courier' => __('FanCourier Standard', 'europarcel'),
-			'gls_national' => __('GLS National', 'europarcel'),
-			'sameday' => __('SameDay', 'europarcel'),
-			'bookurier' => __('Bookurier', 'europarcel'),
-			'easybox' => __('SameDay EasyBox', 'europarcel'),
-			'fanbox' => __('FanCourier Box', 'europarcel'),
-			'dpdbox' => __('DPD Box', 'europarcel'),
+			'cargus_national' => __('Cargus - Livrare la adresa', 'europarcel'),
+			'dpd_standard' => __('DPD - Livrare la adresa', 'europarcel'),
+			'fan_courier' => __('Fan Courier - Livrare la adresa', 'europarcel'),
+			'gls_national' => __('GLS - Livrare la adresa', 'europarcel'),
+			'sameday' => __('SameDay - Livrare la adresa', 'europarcel'),
+			'bookurier' => __('Bookurier - Livrare la adresa', 'europarcel'),
+			'easybox' => __('Sameday EasyBox - Livrare la locker', 'europarcel'),
+			'fanbox' => __('Fan Courier FANbox - Livrare la locker', 'europarcel'),
+			'dpdbox' => __('DPD Box - Livrare la locker', 'europarcel'),
 		];
 	}
 	/**

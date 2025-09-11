@@ -91,7 +91,7 @@
 			: [];
 
 		if (!carrierIds || carrierIds.length === 0) {
-			alert('Nu există curieri configurați pentru livrare în locker.');
+			alert(europarcel_ajax.i18n.no_carriers_configured);
 			return;
 		}
 
@@ -117,7 +117,7 @@
 		let order_lockers = europarcel_ajax.order_lockers;
 
 		function updateButtonText(button, hasSelectedLocker) {
-			const newText = hasSelectedLocker ? 'Modifică locker' : 'Selectare locker';
+			const newText = hasSelectedLocker ? europarcel_ajax.i18n.modify_locker : europarcel_ajax.i18n.select_locker;
 			button.textContent = newText;
 		}
 
@@ -158,7 +158,7 @@
                     button.type = 'button';
                     button.style.width = '100%';
                     button.style.marginBottom = '10px';
-                    button.textContent = 'Selectare locker';
+                    button.textContent = europarcel_ajax.i18n.select_locker;
                     button.onclick = function (event) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -189,7 +189,7 @@
                         : [];
 
                 if (!carrierIds || carrierIds.length === 0) {
-                    alert('Nu există curieri configurați pentru livrare în locker.');
+                    alert(europarcel_ajax.i18n.no_carriers_configured);
                     hideLoadingState();
                     return;
                 }
@@ -220,13 +220,13 @@
                 const button = document.getElementById('europarcel-blocks-locker-btn');
                 if (button) {
                     button.disabled = true;
-                    button.textContent = 'Se încarcă...';
+                    button.textContent = europarcel_ajax.i18n.loading;
                     button.style.opacity = '0.7';
                 }
             } else {
                 document.querySelectorAll('.select-locker-btn').forEach(btn => {
                     btn.disabled = true;
-                    btn.textContent = 'Se încarcă...';
+                    btn.textContent = europarcel_ajax.i18n.loading;
                     btn.style.opacity = '0.7';
                 });
             }
@@ -271,14 +271,14 @@
                     const blocksDetails = document.getElementById('europarcel-blocks-location-details');
                     
                     if (blocksButton) {
-                        blocksButton.textContent = 'Modifică locker';
+                        blocksButton.textContent = europarcel_ajax.i18n.modify_locker;
                     }
 
                     if (blocksDetails) {
                         blocksDetails.innerHTML = `
                             <div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
                                 <div style="font-weight: bold; margin-bottom: 4px;">
-                                    ✓ Locker selectat - ${locker.carrier_name}
+                                    ${europarcel_ajax.i18n.locker_selected} ${locker.carrier_name}
                                 </div>
                                 <div style="font-weight: 600; margin-bottom: 2px;">
                                     ${locker.name}
@@ -293,7 +293,7 @@
                 } else {
                     const classicButton = document.querySelector('button[onclick="openLockerSelector()"]');
                     if (classicButton) {
-                        classicButton.textContent = 'Modifică locker';
+                        classicButton.textContent = europarcel_ajax.i18n.modify_locker;
                     }
 
                     const details = document.getElementById('europarcel-location-details');
@@ -301,7 +301,7 @@
                         details.innerHTML = `
                             <div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
                                 <div style="font-weight: bold; margin-bottom: 4px;">
-                                    ✓ Locker selectat - ${locker.carrier_name}
+                                    ${europarcel_ajax.i18n.locker_selected} ${locker.carrier_name}
                                 </div>
                                 <div style="font-weight: 600; margin-bottom: 2px;">
                                     ${locker.name}

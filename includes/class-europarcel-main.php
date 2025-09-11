@@ -72,6 +72,7 @@ class Europarcel_Main {
 		$this->plugin_name = 'europarcel';
 
 		$this->load_dependencies();
+		$this->set_locale();
 		$this->define_woocommerce_hooks();
 	}
 
@@ -85,6 +86,31 @@ class Europarcel_Main {
 	 */
 	private function load_dependencies() {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-europarcel-checkout.php';
+	}
+
+	/**
+	 * Define the locale for this plugin for internationalization
+	 *
+	 * Uses the load_plugin_textdomain function in order to set the domain and to register the hook
+	 * with WordPress for loading translations.
+	 *
+	 * @since    1.0.0
+	 */
+	private function set_locale() {
+		add_action('plugins_loaded', array($this, 'load_plugin_textdomain'));
+	}
+
+	/**
+	 * Load the plugin text domain for translation
+	 *
+	 * @since    1.0.0
+	 */
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain(
+			'europarcel',
+			false,
+			dirname(plugin_basename(__FILE__), 2) . '/languages/'
+		);
 	}
 
 	/**

@@ -123,7 +123,7 @@ class Europarcel_Shipping_Custom_Fields {
 		<tr valign="top">
 			<th scope="row">
 				<label for="<?php echo esc_attr($shipping_method->get_field_id('price_type')); ?>">
-					<?php _e('Tip preț transport', 'europarcel'); ?>
+					<?php _e('Shipping Price Type', 'europarcel'); ?>
 				</label>
 			</th>
 			<td>
@@ -134,10 +134,10 @@ class Europarcel_Shipping_Custom_Fields {
 					data-instance="<?php echo esc_attr($shipping_method->instance_id); ?>"
 					>
 					<option value="fixed" <?php selected($shipping_method->get_option('price_type'), 'fixed'); ?>>
-						<?php _e('Preț fix', 'europarcel'); ?>
+						<?php _e('Fixed Price', 'europarcel'); ?>
 					</option>
 					<option value="calculated" <?php selected($shipping_method->get_option('price_type'), 'calculated'); ?>>
-						<?php _e('Preț calculat', 'europarcel'); ?>
+						<?php _e('Calculated Price', 'europarcel'); ?>
 					</option>
 				</select>
 			</td>
