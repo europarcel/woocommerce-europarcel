@@ -72,7 +72,6 @@ class Europarcel_Main {
 		$this->plugin_name = 'europarcel-com';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_woocommerce_hooks();
 	}
 
@@ -86,19 +85,6 @@ class Europarcel_Main {
 	 */
 	private function load_dependencies() {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-europarcel-checkout.php';
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization
-	 *
-	 * Since WordPress 4.6+, translations are automatically loaded by WordPress
-	 * for plugins hosted on WordPress.org, so manual textdomain loading is no longer needed.
-	 *
-	 * @since    1.0.0
-	 */
-	private function set_locale() {
-		// WordPress automatically handles translation loading since version 4.6
-		// No manual intervention required for WordPress.org hosted plugins
 	}
 
 	/**
