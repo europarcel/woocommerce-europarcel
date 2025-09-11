@@ -50,8 +50,8 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
 			$this->id .= '_' . $this->instance_id;
 		}
 		
-		$this->method_title = __('Europarcel Shipping', 'europarcel');
-		$this->method_description = __('Premium courier shipping integration with support for home delivery and locker services', 'europarcel');
+		$this->method_title = __('Europarcel Shipping', 'europarcel-com');
+		$this->method_description = __('Premium courier shipping integration with support for home delivery and locker services', 'europarcel-com');
 		$this->supports = array('shipping-zones', 'instance-settings');
 		$this->init();
 
@@ -87,22 +87,22 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
 	public function init_form_fields() {
         $this->form_fields = array(
             'section_basic' => array(
-                'title' => __('Basic Settings', 'europarcel'),
+                'title' => __('Basic Settings', 'europarcel-com'),
                 'type' => 'title',
-                'description' => __('Configure your connection and basic plugin settings', 'europarcel'),
+                'description' => __('Configure your connection and basic plugin settings', 'europarcel-com'),
                 'class' => 'wc-settings-sub-title',
             ),
             'title' => array(
-                'title' => __('Method Title', 'europarcel'),
+                'title' => __('Method Title', 'europarcel-com'),
                 'type' => 'text',
-                'description' => __('The shipping method title displayed in the admin shipping zones configuration', 'europarcel'),
-                'default' => __('Europarcel Shipping', 'europarcel'),
+                'description' => __('The shipping method title displayed in the admin shipping zones configuration', 'europarcel-com'),
+                'default' => __('Europarcel Shipping', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'api_key' => array(
-                'title' => __('API Key', 'europarcel'),
+                'title' => __('API Key', 'europarcel-com'),
                 'type' => 'text',
-                'description' => __('Your API key for accessing the shipping services.<br><a href="https://www.eawb.ro/dashboard/integrations" target="_blank" class="button button-secondary" style="margin-top: 5px;">Get Your API Key Here →</a>', 'europarcel'),
+                'description' => __('Your API key for accessing the shipping services.<br><a href="https://www.eawb.ro/dashboard/integrations" target="_blank" class="button button-secondary" style="margin-top: 5px;">Get Your API Key Here →</a>', 'europarcel-com'),
                 'desc_tip' => false,
             ),
         );
@@ -120,9 +120,9 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
 		if (!$customer_info) {
 			$this->form_fields = array_merge($this->form_fields, array(
 				'europarcel_customer' => array(
-					'title' => __('Connection Error', 'europarcel'),
+					'title' => __('Connection Error', 'europarcel-com'),
 					'type' => 'title',
-					'description' => __('<div class="notice notice-error inline"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>', 'europarcel'),
+					'description' => '<div class="notice notice-error inline"><p><strong>' . __('Unable to connect to eAWB.', 'europarcel-com') . '</strong> ' . __('Please verify your API key is correct and try again.', 'europarcel-com') . '</p></div>',
 			)));
 			return;
 		} else {
@@ -135,35 +135,36 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
         }
         $this->form_fields = array_merge($this->form_fields, array(
             'customer_info' => array(
-                'title' => sprintf(__('✅ Connected: %s', 'europarcel'), esc_html($customer_info['name'])),
+                /* translators: %s: Customer name from API */
+                'title' => sprintf(__('✅ Connected: %s', 'europarcel-com'), esc_html($customer_info['name'])),
                 'type' => 'title',
             ),
             'section_service_config' => array(
-                'title' => __('Service Configuration', 'europarcel'),
+                'title' => __('Service Configuration', 'europarcel-com'),
                 'type' => 'title',
-                'description' => __('Configure your shipping addresses and available services', 'europarcel'),
+                'description' => __('Configure your shipping addresses and available services', 'europarcel-com'),
                 'class' => 'wc-settings-sub-title',
             ),
             'default_shipping' => array(
-                'title' => __('Primary Sender Address', 'europarcel'),
+                'title' => __('Primary Sender Address', 'europarcel-com'),
                 'type' => 'select',
-                'description' => __('Default sender address for eAWB order imports<br><a href="https://www.eawb.ro/dashboard/addresses?tab=sender" target="_blank" class="button button-secondary" style="margin-top: 5px;">Manage Sender Addresses →</a>', 'europarcel'),
+                'description' => __('Default sender address for eAWB order imports<br><a href="https://www.eawb.ro/dashboard/addresses?tab=sender" target="_blank" class="button button-secondary" style="margin-top: 5px;">Manage Sender Addresses →</a>', 'europarcel-com'),
                 'desc_tip' => false,
                 'default' => "",
                 'options' => $customer->getPickupAddresses(),
             ),
             'default_billing' => array(
-                'title' => __('Primary Billing Address', 'europarcel'),
+                'title' => __('Primary Billing Address', 'europarcel-com'),
                 'type' => 'select',
-                'description' => __('Default billing address for eAWB order imports<br><a href="https://www.eawb.ro/dashboard/addresses?tab=billing" target="_blank" class="button button-secondary" style="margin-top: 5px;">Manage Billing Addresses →</a>', 'europarcel'),
+                'description' => __('Default billing address for eAWB order imports<br><a href="https://www.eawb.ro/dashboard/addresses?tab=billing" target="_blank" class="button button-secondary" style="margin-top: 5px;">Manage Billing Addresses →</a>', 'europarcel-com'),
                 'desc_tip' => false,
                 'default' => "",
                 'options' => $customer->getCustomerBillingAddresses(),
             ),
             'available_services' => array(
-                'title' => __('Available Shipping Services', 'europarcel'),
+                'title' => __('Available Shipping Services', 'europarcel-com'),
                 'type' => 'multiselect',
-                'description' => __('Select the shipping services that will be available to your customers during checkout', 'europarcel'),
+                'description' => __('Select the shipping services that will be available to your customers during checkout', 'europarcel-com'),
                 'desc_tip' => false,
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px;height:450px;',
@@ -171,86 +172,86 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 'options' => \EuroparcelShipping\EuroparcelConstants::getAvailableServices()
             ),
             'excluded_locker_classes' => array(
-                'title' => __('Excluded Shipping Classes for Lockers', 'europarcel'),
+                'title' => __('Excluded Shipping Classes for Lockers', 'europarcel-com'),
                 'type' => 'multiselect',
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px',
                 'default' => array(),
-                'description' => __('Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)', 'europarcel'),
+                'description' => __('Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)', 'europarcel-com'),
                 'desc_tip' => false,
                 'options' => $view_shipping_classes
             ),
             'section_home_delivery' => array(
-                'title' => __('Home Delivery Settings', 'europarcel'),
+                'title' => __('Home Delivery Settings', 'europarcel-com'),
                 'type' => 'title',
-                'description' => __('Configure address delivery options and pricing', 'europarcel'),
+                'description' => __('Configure address delivery options and pricing', 'europarcel-com'),
                 'class' => 'wc-settings-sub-title',
             ),
             'title_for_h2h' => array(
-                'title' => __('Home Delivery Display Name', 'europarcel'),
+                'title' => __('Home Delivery Display Name', 'europarcel-com'),
                 'type' => 'text',
                 'default' => 'Livrare la adresa',
-                'description' => __('The shipping method name shown to customers at checkout for home delivery', 'europarcel'),
+                'description' => __('The shipping method name shown to customers at checkout for home delivery', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'fixed_price_h2h' => array(
-                'title' => __('Home Delivery Fixed Price', 'europarcel'),
+                'title' => __('Home Delivery Fixed Price', 'europarcel-com'),
                 'type' => 'number',
                 'default' => 15,
-                'description' => __('Set the fixed shipping cost for address deliveries', 'europarcel'),
+                'description' => __('Set the fixed shipping cost for address deliveries', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'free_shipping_amount_to_home' => array(
-                'title' => __('Free Home Delivery Minimum Order Amount', 'europarcel'),
+                'title' => __('Free Home Delivery Minimum Order Amount', 'europarcel-com'),
                 'type' => 'number',
                 'default' => 0,
-                'description' => __('Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)', 'europarcel'),
+                'description' => __('Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'free_shipping_classes_to_home' => array(
-                'title' => __('Free Home Delivery Shipping Classes', 'europarcel'),
+                'title' => __('Free Home Delivery Shipping Classes', 'europarcel-com'),
                 'type' => 'multiselect',
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px',
                 'default' => array(),
-                'description' => __('Select shipping classes that will always have free home delivery regardless of order amount', 'europarcel'),
+                'description' => __('Select shipping classes that will always have free home delivery regardless of order amount', 'europarcel-com'),
                 'desc_tip' => false,
                 'options' => $view_shipping_classes
             ),
             'section_locker_delivery' => array(
-                'title' => __('Locker Delivery Settings', 'europarcel'),
+                'title' => __('Locker Delivery Settings', 'europarcel-com'),
                 'type' => 'title',
-                'description' => __('Configure locker delivery options and pricing', 'europarcel'),
+                'description' => __('Configure locker delivery options and pricing', 'europarcel-com'),
                 'class' => 'wc-settings-sub-title',
             ),
             'title_for_h2l' => array(
-                'title' => __('Locker Delivery Display Name', 'europarcel'),
+                'title' => __('Locker Delivery Display Name', 'europarcel-com'),
                 'type' => 'text',
                 'default' => 'Transport la lockerul ales prin Europarcel',
-                'description' => __('The shipping method name shown to customers at checkout for locker delivery', 'europarcel'),
+                'description' => __('The shipping method name shown to customers at checkout for locker delivery', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'fixed_price_h2l' => array(
-                'title' => __('Locker Delivery Fixed Price', 'europarcel'),
+                'title' => __('Locker Delivery Fixed Price', 'europarcel-com'),
                 'type' => 'number',
                 'default' => 15,
-                'description' => __('Set the fixed shipping cost for locker deliveries', 'europarcel'),
+                'description' => __('Set the fixed shipping cost for locker deliveries', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'free_shipping_amount_to_locker' => array(
-                'title' => __('Free Locker Delivery Minimum Order Amount', 'europarcel'),
+                'title' => __('Free Locker Delivery Minimum Order Amount', 'europarcel-com'),
                 'type' => 'number',
                 'default' => 0,
-                'description' => __('Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)', 'europarcel'),
+                'description' => __('Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)', 'europarcel-com'),
                 'desc_tip' => false,
             ),
             'free_shipping_classes_to_locker' => array(
-                'title' => __('Free Locker Delivery Shipping Classes', 'europarcel'),
+                'title' => __('Free Locker Delivery Shipping Classes', 'europarcel-com'),
                 'type' => 'multiselect',
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px',
                 'default' => array(),
-                'description' => __('Select shipping classes that will always have free locker delivery regardless of order amount', 'europarcel'),
+                'description' => __('Select shipping classes that will always have free locker delivery regardless of order amount', 'europarcel-com'),
                 'desc_tip' => false,
                 'options' => $view_shipping_classes
             ),
@@ -267,7 +268,7 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
 	 * @return   bool    True if options were saved successfully, false otherwise
 	 */
 	public function process_admin_options() {
-		if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'woocommerce-settings')) {
+		if (!isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'woocommerce-settings')) {
 			return false;
 		}
 		

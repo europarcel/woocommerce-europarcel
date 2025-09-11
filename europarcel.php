@@ -12,7 +12,7 @@
  * @package           Europarcel
  *
  * @wordpress-plugin
- * Plugin Name:       EuroParcel WooCommerce Integration
+ * Plugin Name:       EuroParcel Integration for WooCommerce
  * Plugin URI:        https://eawb.ro/
  * Description:       Connect your WooCommerce store with EuroParcel shipping platform
  * Version:           1.0.0
@@ -20,7 +20,7 @@
  * Author URI:        https://eawb.ro/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       europarcel
+ * Text Domain:       europarcel-com
  * Domain Path:       /languages
  * WC requires at least: 5.0
  * WC tested up to:      8.9
@@ -111,9 +111,10 @@ function add_europarcel_shipping($methods) {
  * @since    1.0.0
  */
 add_action('admin_enqueue_scripts', function () {
-    if (is_admin() && isset($_GET['page']) && 'wc-settings' === sanitize_text_field($_GET['page'])) {
-        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/europarcel-admin.css', __FILE__));
-        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/europarcel-admin.js', __FILE__), array('jquery', 'select2'), '1.0', true);
+    $current_screen = get_current_screen();
+    if (is_admin() && $current_screen && strpos($current_screen->id, 'woocommerce_page_wc-settings') !== false) {
+        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/europarcel-admin.css', __FILE__), array(), '1.0.0');
+        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/europarcel-admin.js', __FILE__), array('jquery', 'select2'), '1.0.0', true);
     }
 });
 

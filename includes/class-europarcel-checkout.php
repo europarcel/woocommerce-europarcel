@@ -161,12 +161,12 @@ class EuroparcelCheckout {
             'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php'),
             'checkout_type' => $this->is_blocks_checkout ? 'blocks' : 'classic',
             'i18n' => [
-                'select_locker' => __('Select Locker', 'europarcel'),
-                'modify_locker' => __('Modify Locker', 'europarcel'),
-                'loading' => __('Loading...', 'europarcel'),
-                'no_carriers_configured' => __('No couriers configured for locker delivery.', 'europarcel'),
-                'locker_selected' => __('✓ Locker selected -', 'europarcel'),
-                'locker_selection_title' => __('Delivery locker selection', 'europarcel')
+                'select_locker' => __('Select Locker', 'europarcel-com'),
+                'modify_locker' => __('Modify Locker', 'europarcel-com'),
+                'loading' => __('Loading...', 'europarcel-com'),
+                'no_carriers_configured' => __('No couriers configured for locker delivery.', 'europarcel-com'),
+                'locker_selected' => __('✓ Locker selected -', 'europarcel-com'),
+                'locker_selection_title' => __('Delivery locker selection', 'europarcel-com')
             ]
         ];
         
@@ -184,8 +184,8 @@ class EuroparcelCheckout {
 	public function ajax_get_locker_carriers() {
         try {
             // Verify nonce for security
-            if (!wp_verify_nonce($_POST['nonce'], 'europarcel_locker_nonce')) {
-                wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel')]);
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'europarcel_locker_nonce')) {
+                wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel-com')]);
                 return;
             }
             // Get instance ID from the request
@@ -213,19 +213,19 @@ class EuroparcelCheckout {
 	 */
 	public function wp_ajax_update_locker_shipping() {
         // Verify nonce for security
-        if (!wp_verify_nonce($_POST['security'], 'europarcel_locker_nonce')) {
-            wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel')]);
+        if (!isset($_POST['security']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['security'])), 'europarcel_locker_nonce')) {
+            wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel-com')]);
             return;
         }
 
         if (isset($_POST['locker_id']) && isset($_POST['carrier_id']) && isset($_POST['instance_id'])) {
             $locker_info = array(
-                'locker_id' => sanitize_text_field($_POST['locker_id']),
-                'carrier_id' => sanitize_text_field($_POST['carrier_id']),
-                'instance_id' => sanitize_text_field($_POST['instance_id']),
-                'carrier_name' => sanitize_text_field($_POST['carrier_name']),
-                'locker_name' => sanitize_text_field($_POST['locker_name']),
-                'locker_address' => sanitize_text_field($_POST['locker_address'])
+                'locker_id' => sanitize_text_field(wp_unslash($_POST['locker_id'])),
+                'carrier_id' => sanitize_text_field(wp_unslash($_POST['carrier_id'])),
+                'instance_id' => sanitize_text_field(wp_unslash($_POST['instance_id'])),
+                'carrier_name' => isset($_POST['carrier_name']) ? sanitize_text_field(wp_unslash($_POST['carrier_name'])) : '',
+                'locker_name' => isset($_POST['locker_name']) ? sanitize_text_field(wp_unslash($_POST['locker_name'])) : '',
+                'locker_address' => isset($_POST['locker_address']) ? sanitize_text_field(wp_unslash($_POST['locker_address'])) : ''
             );
             WC()->session->set('locker_info', $locker_info);
             $user_id = get_current_user_id();
@@ -313,7 +313,7 @@ class EuroparcelCheckout {
         echo '<tr class="europarcel-locker-selection">';
         echo '<th></th>';
         echo '<td>';
-        echo '<button type="button" class="button alt wp-element-button" onclick="openLockerSelector()" style="width: 100%">' . __('Select Locker', 'europarcel') . '</button>';
+        echo '<button type="button" class="button alt wp-element-button" onclick="openLockerSelector()" style="width: 100%">' . esc_html__('Select Locker', 'europarcel-com') . '</button>';
         echo '<div class="europarcel-location-details" id="europarcel-location-details" style="display: none;"></div>';
         echo '</td>';
         echo '</tr>';

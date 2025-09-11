@@ -1,8 +1,8 @@
-=== EuroParcel WooCommerce Integration ===
+=== EuroParcel Integration for WooCommerce ===
 Contributors: europarcelcom
-Tags: woocommerce, shipping, europarcel, courier, romania, locker
+Tags: woocommerce, shipping, europarcel, courier, romania
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPL-2.0+
@@ -12,7 +12,7 @@ Connect your WooCommerce store with EuroParcel shipping platform for seamless co
 
 == Description ==
 
-EuroParcel WooCommerce Integration provides a comprehensive shipping solution for Romanian online stores. Connect your WooCommerce store directly with EuroParcel's platform to offer multiple courier services and locker delivery options to your customers.
+EuroParcel Integration for WooCommerce provides a comprehensive shipping solution for Romanian online stores. Connect your WooCommerce store directly with EuroParcel's platform to offer multiple courier services and locker delivery options to your customers.
 
 **Key Features:**
 
@@ -97,4 +97,4 @@ This plugin connects to EuroParcel's external API services to provide shipping f
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of EuroParcel WooCommerce Integration plugin.
+Initial release of EuroParcel Integration for WooCommerce plugin.

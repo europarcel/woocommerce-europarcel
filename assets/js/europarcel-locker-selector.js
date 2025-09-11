@@ -380,7 +380,7 @@
         // Handle shipping method changes
         $(document).on("change", "input[type=radio]", function() {
             if ((this.name && this.name.includes('shipping')) || 
-                (this.value && (this.value.includes('shipping') || this.value.includes('europarcel'))) ||
+                (this.value && (this.value.includes('shipping') || this.value.includes('europarcel-com'))) ||
                 this.name === 'radio-control-0') {
                 handleShippingMethodChange();
             }

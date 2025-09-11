@@ -46,13 +46,13 @@ class Europarcel_Shipping_Custom_Fields {
 		ob_start();
 		?>
 		<tr valign="top" class="europarcel-price-type-dependent europarcel-fixed-price">
-			<th scope="row"><?php _e('Fixed price', 'europarcel'); ?></th>
+			<th scope="row"><?php esc_html_e('Fixed price', 'europarcel-com'); ?></th>
 			<td>
 				<input type="text" 
 				       name="<?php echo esc_attr($shipping_method->get_field_key('fixed_price')); ?>" 
 				       value="<?php echo esc_attr($shipping_method->get_option('fixed_price', '15')); ?>"
 				       style="width: 80px; margin-right: 10px;" />
-				<span class="description"><?php _e('RON', 'europarcel'); ?></span>
+				<span class="description"><?php esc_html_e('RON', 'europarcel-com'); ?></span>
 			</td>
 		</tr>
 		<?php
@@ -73,30 +73,30 @@ class Europarcel_Shipping_Custom_Fields {
 		ob_start();
 		?>
 		<tr valign="top" class="europarcel-price-type-dependent europarcel-calculated-price">
-			<th scope="row"><?php _e('Calculation parameters', 'europarcel'); ?></th>
+			<th scope="row"><?php esc_html_e('Calculation parameters', 'europarcel-com'); ?></th>
 			<td>
-				<span class="description" style="margin-right: 15px;"><?php _e('Weight (kg)', 'europarcel'); ?></span>
+				<span class="description" style="margin-right: 15px;"><?php esc_html_e('Weight (kg)', 'europarcel-com'); ?></span>
 				<input type="text" 
 				       name="<?php echo esc_attr($shipping_method->get_field_key('default_weight')); ?>" 
 				       value="<?php echo esc_attr($shipping_method->get_option('default_weight', '1')); ?>"
 				       style="width: 60px;" />
-				<span class="description" style="margin-right: 15px;"><?php _e('Length (cm)', 'europarcel'); ?></span>
+				<span class="description" style="margin-right: 15px;"><?php esc_html_e('Length (cm)', 'europarcel-com'); ?></span>
 				<input type="text" 
 				       name="<?php echo esc_attr($shipping_method->get_field_key('default_length')); ?>" 
 				       value="<?php echo esc_attr($shipping_method->get_option('default_length', '15')); ?>"
 				       style="width: 60px;" />
-				<span class="description" style="margin-right: 15px;"><?php _e('Width (cm)', 'europarcel'); ?></span>
+				<span class="description" style="margin-right: 15px;"><?php esc_html_e('Width (cm)', 'europarcel-com'); ?></span>
 				<input type="text" 
 				       name="<?php echo esc_attr($shipping_method->get_field_key('default_width')); ?>" 
 				       value="<?php echo esc_attr($shipping_method->get_option('default_width', '15')); ?>"
 				       style="width: 60px;" />
-				<span class="description" style="margin-right: 15px;"><?php _e('Height (cm)', 'europarcel'); ?></span>
+				<span class="description" style="margin-right: 15px;"><?php esc_html_e('Height (cm)', 'europarcel-com'); ?></span>
 				<input type="text" 
 				       name="<?php echo esc_attr($shipping_method->get_field_key('default_height')); ?>" 
 				       value="<?php echo esc_attr($shipping_method->get_option('default_height', '15')); ?>"
 				       style="width: 60px;" />
 
-				<span class="description"><?php _e('Price multiplier', 'europarcel'); ?></span>
+				<span class="description"><?php esc_html_e('Price multiplier', 'europarcel-com'); ?></span>
 				<input type="text" 
 				       name="<?php echo esc_attr($shipping_method->get_field_key('price_multiplier')); ?>" 
 				       value="<?php echo esc_attr($shipping_method->get_option('price_multiplier', '1.2')); ?>"
@@ -123,7 +123,7 @@ class Europarcel_Shipping_Custom_Fields {
 		<tr valign="top">
 			<th scope="row">
 				<label for="<?php echo esc_attr($shipping_method->get_field_id('price_type')); ?>">
-					<?php _e('Shipping Price Type', 'europarcel'); ?>
+					<?php esc_html_e('Shipping Price Type', 'europarcel-com'); ?>
 				</label>
 			</th>
 			<td>
@@ -134,10 +134,10 @@ class Europarcel_Shipping_Custom_Fields {
 					data-instance="<?php echo esc_attr($shipping_method->instance_id); ?>"
 					>
 					<option value="fixed" <?php selected($shipping_method->get_option('price_type'), 'fixed'); ?>>
-						<?php _e('Fixed Price', 'europarcel'); ?>
+						<?php esc_html_e('Fixed Price', 'europarcel-com'); ?>
 					</option>
 					<option value="calculated" <?php selected($shipping_method->get_option('price_type'), 'calculated'); ?>>
-						<?php _e('Calculated Price', 'europarcel'); ?>
+						<?php esc_html_e('Calculated Price', 'europarcel-com'); ?>
 					</option>
 				</select>
 			</td>
