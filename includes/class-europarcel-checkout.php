@@ -136,7 +136,7 @@ class EuroparcelCheckout {
             
             $shipping_methods = $zone->get_shipping_methods();
             foreach ($shipping_methods as $method) {
-                if (strpos($method->id, 'europarcel_shipping') === 0) {
+                if (strpos($method->id, 'europarcel_shipping') === 0 && $method->enabled === 'yes') {
                     $settings = get_option('woocommerce_europarcel_shipping_' . $method->instance_id . '_settings', []);
                     if (isset($settings['available_services'])) {
                         $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
