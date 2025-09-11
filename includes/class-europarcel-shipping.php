@@ -171,16 +171,6 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 'default' => array(),
                 'options' => \EuroparcelShipping\EuroparcelConstants::getAvailableServices()
             ),
-            'excluded_locker_classes' => array(
-                'title' => __('Excluded Shipping Classes for Lockers', 'europarcel-com'),
-                'type' => 'multiselect',
-                'class' => 'wc-enhanced-select',
-                'css' => 'width: 450px',
-                'default' => array(),
-                'description' => __('Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)', 'europarcel-com'),
-                'desc_tip' => false,
-                'options' => $view_shipping_classes
-            ),
             'section_home_delivery' => array(
                 'title' => __('Home Delivery Settings', 'europarcel-com'),
                 'type' => 'title',
@@ -252,6 +242,16 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
                 'css' => 'width: 450px',
                 'default' => array(),
                 'description' => __('Select shipping classes that will always have free locker delivery regardless of order amount', 'europarcel-com'),
+                'desc_tip' => false,
+                'options' => $view_shipping_classes
+            ),
+            'excluded_locker_classes' => array(
+                'title' => __('Excluded Shipping Classes for Lockers', 'europarcel-com'),
+                'type' => 'multiselect',
+                'class' => 'wc-enhanced-select',
+                'css' => 'width: 450px',
+                'default' => array(),
+                'description' => __('Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)', 'europarcel-com'),
                 'desc_tip' => false,
                 'options' => $view_shipping_classes
             ),
