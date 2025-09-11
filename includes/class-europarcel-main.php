@@ -69,7 +69,7 @@ class Europarcel_Main {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'europarcel';
+		$this->plugin_name = 'europarcel-com';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -91,26 +91,14 @@ class Europarcel_Main {
 	/**
 	 * Define the locale for this plugin for internationalization
 	 *
-	 * Uses the load_plugin_textdomain function in order to set the domain and to register the hook
-	 * with WordPress for loading translations.
+	 * Since WordPress 4.6+, translations are automatically loaded by WordPress
+	 * for plugins hosted on WordPress.org, so manual textdomain loading is no longer needed.
 	 *
 	 * @since    1.0.0
 	 */
 	private function set_locale() {
-		add_action('plugins_loaded', array($this, 'load_plugin_textdomain'));
-	}
-
-	/**
-	 * Load the plugin text domain for translation
-	 *
-	 * @since    1.0.0
-	 */
-	public function load_plugin_textdomain() {
-		load_plugin_textdomain(
-			'europarcel',
-			false,
-			dirname(plugin_basename(__FILE__), 2) . '/languages/'
-		);
+		// WordPress automatically handles translation loading since version 4.6
+		// No manual intervention required for WordPress.org hosted plugins
 	}
 
 	/**

@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: EuroParcel WooCommerce Integration 1.0.0\n"
+"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
 "Last-Translator: EuroParcel Team <cs@europarcel.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2025-09-11T12:00:00+00:00\n"
 "PO-Revision-Date: 2025-09-11T12:00:00+00:00\n"
 "X-Generator: Manual\n"
-"X-Domain: europarcel\n"
+"X-Domain: europarcel-com\n"
 
 #: includes/class-europarcel-shipping.php:53
 msgid "Europarcel Shipping"
@@ -50,12 +50,17 @@ msgstr ""
 msgid "Connection Error"
 msgstr ""
 
+# translators: %s: Customer name from API
 #: includes/class-europarcel-shipping.php:138
 msgid "✅ Connected: %s"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:119
-msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
+#: includes/class-europarcel-shipping.php:125
+msgid "Unable to connect to eAWB."
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:125  
+msgid "Please verify your API key is correct and try again."
 msgstr ""
 
 #: includes/class-europarcel-shipping.php:142
@@ -251,6 +256,43 @@ msgstr ""
 
 #: includes/class-europarcel-custom-fields.php:140
 msgid "Calculated Price"
+msgstr ""
+
+# Courier Service Names (Constants)
+#: includes/class-europarcel-constants.php:47
+msgid "Cargus - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:48
+msgid "DPD - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:49
+msgid "Fan Courier - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:50
+msgid "GLS - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:51
+msgid "SameDay - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:52
+msgid "Bookurier - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:53
+msgid "Sameday EasyBox - Delivery to locker"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:54
+msgid "Fan Courier FANbox - Delivery to locker"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:55
+msgid "DPD Box - Delivery to locker"
 msgstr ""
 
 # HTTP Request Error Messages (Technical)

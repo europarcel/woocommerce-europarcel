@@ -1,220 +1,220 @@
-# French (France) language file for EuroParcel WooCommerce Integration
+# Hungarian (Hungary) language file for EuroParcel WooCommerce Integration
 # Copyright (C) 2025 EuroParcel
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: EuroParcel WooCommerce Integration 1.0.0\n"
+"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
 "Last-Translator: EuroParcel Team\n"
-"Language-Team: French\n"
-"Language: fr_FR\n"
+"Language-Team: Hungarian\n"
+"Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-09-11T12:00:00+00:00\n"
 "PO-Revision-Date: 2025-09-11T12:00:00+00:00\n"
 "X-Generator: Manual\n"
-"X-Domain: europarcel\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: europarcel-com\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: includes/class-europarcel-shipping.php:53
 msgid "Europarcel Shipping"
-msgstr "Livraison EuroParcel"
+msgstr "EuroParcel Szállítás"
 
 #: includes/class-europarcel-shipping.php:54
 msgid "Premium courier shipping integration with support for home delivery and locker services"
-msgstr "Intégration premium de service de coursier avec support pour la livraison à domicile et les services de casiers"
+msgstr "Prémium futárszolgálat integráció házhozszállítási és csomagautomata szolgáltatásokkal"
 
 #: includes/class-europarcel-shipping.php:90
 msgid "Basic Settings"
-msgstr "Paramètres de base"
+msgstr "Alapbeállítások"
 
 #: includes/class-europarcel-shipping.php:92
 msgid "Configure your connection and basic plugin settings"
-msgstr "Configurez votre connexion et les paramètres de base du plugin"
+msgstr "Kapcsolat és alap plugin beállítások konfigurálása"
 
 #: includes/class-europarcel-shipping.php:95
 msgid "Method Title"
-msgstr "Titre de la méthode"
+msgstr "Módszer címe"
 
 #: includes/class-europarcel-shipping.php:97
 msgid "The shipping method title displayed in the admin shipping zones configuration"
-msgstr "Le titre de la méthode de livraison affiché dans la configuration des zones de livraison admin"
+msgstr "A szállítási módszer címe, amely az admin szállítási zónák konfigurációjában jelenik meg"
 
 #: includes/class-europarcel-shipping.php:102
 msgid "API Key"
-msgstr "Clé API"
+msgstr "API kulcs"
 
 #: includes/class-europarcel-shipping.php:104
 msgid "Your API key for accessing the shipping services.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
-msgstr "Votre clé API pour accéder aux services de livraison.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Obtenez votre clé API ici →</a>"
+msgstr "Az API kulcsod a szállítási szolgáltatások eléréséhez.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">API kulcs beszerzése itt →</a>"
 
 #: includes/class-europarcel-shipping.php:117
 msgid "Connection Error"
-msgstr "Erreur de connexion"
+msgstr "Kapcsolódási hiba"
 
 #: includes/class-europarcel-shipping.php:138
 msgid "✅ Connected: %s"
-msgstr "✅ Connecté: %s"
+msgstr "✅ Csatlakoztatva: %s"
 
 #: includes/class-europarcel-shipping.php:119
 msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
-msgstr "<div class=\"notice notice-error inline\"><p><strong>Impossible de se connecter à eAWB.</strong> Veuillez vérifier que votre clé API est correcte et réessayer.</p></div>"
+msgstr "<div class=\"notice notice-error inline\"><p><strong>Nem sikerült csatlakozni az eAWB-hez.</strong> Kérjük ellenőrizd, hogy az API kulcs helyes és próbáld újra.</p></div>"
 
 #: includes/class-europarcel-shipping.php:142
 msgid "Service Configuration"
-msgstr "Configuration des services"
+msgstr "Szolgáltatás konfiguráció"
 
 #: includes/class-europarcel-shipping.php:144
 msgid "Configure your shipping addresses and available services"
-msgstr "Configurez vos adresses de livraison et services disponibles"
+msgstr "Szállítási címek és elérhető szolgáltatások konfigurálása"
 
 #: includes/class-europarcel-shipping.php:147
 msgid "Primary Sender Address"
-msgstr "Adresse d'expéditeur principale"
+msgstr "Elsődleges feladói cím"
 
 #: includes/class-europarcel-shipping.php:150
 msgid "Default sender address for eAWB order imports<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Sender Addresses →</a>"
-msgstr "Adresse d'expéditeur par défaut pour les imports de commandes eAWB<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Gérer les adresses d'expéditeur →</a>"
+msgstr "Alapértelmezett feladói cím az eAWB rendelés importhoz<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Feladói címek kezelése →</a>"
 
 #: includes/class-europarcel-shipping.php:155
 msgid "Primary Billing Address"
-msgstr "Adresse de facturation principale"
+msgstr "Elsődleges számlázási cím"
 
 #: includes/class-europarcel-shipping.php:158
 msgid "Default billing address for eAWB order imports<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Billing Addresses →</a>"
-msgstr "Adresse de facturation par défaut pour les imports de commandes eAWB<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Gérer les adresses de facturation →</a>"
+msgstr "Alapértelmezett számlázási cím az eAWB rendelés importhoz<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Számlázási címek kezelése →</a>"
 
 #: includes/class-europarcel-shipping.php:163
 msgid "Available Shipping Services"
-msgstr "Services de livraison disponibles"
+msgstr "Elérhető szállítási szolgáltatások"
 
 #: includes/class-europarcel-shipping.php:165
 msgid "Select the shipping services that will be available to your customers during checkout"
-msgstr "Sélectionnez les services de livraison qui seront disponibles pour vos clients lors du checkout"
+msgstr "Válaszd ki a szállítási szolgáltatásokat, amelyek elérhetőek lesznek a vásárlók számára a pénztárnál"
 
 #: includes/class-europarcel-shipping.php:172
 msgid "Excluded Shipping Classes for Lockers"
-msgstr "Classes d'expédition exclues pour les casiers"
+msgstr "Csomagautomatából kizárt szállítási osztályok"
 
 #: includes/class-europarcel-shipping.php:179
 msgid "Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)"
-msgstr "Sélectionnez les classes d'expédition qui ne doivent pas avoir d'options de livraison en casier (ex: gros produits ou articles inadaptés aux casiers)"
+msgstr "Válaszd ki azokat a szállítási osztályokat, amelyekhez nem legyen elérhető csomagautomata szállítás (pl. nagy termékek vagy automatába nem megfelelő tárgyak)"
 
 #: includes/class-europarcel-shipping.php:184
 msgid "Home Delivery Settings"
-msgstr "Paramètres de livraison à domicile"
+msgstr "Házhozszállítás beállításai"
 
 #: includes/class-europarcel-shipping.php:186
 msgid "Configure address delivery options and pricing"
-msgstr "Configurez les options et prix de livraison à l'adresse"
+msgstr "Címre szállítás beállításai és árazása"
 
 #: includes/class-europarcel-shipping.php:189
 msgid "Home Delivery Display Name"
-msgstr "Nom d'affichage livraison à domicile"
+msgstr "Házhozszállítás megjelenített neve"
 
 #: includes/class-europarcel-shipping.php:192
 msgid "The shipping method name shown to customers at checkout for home delivery"
-msgstr "Le nom de la méthode de livraison montré aux clients au checkout pour la livraison à domicile"
+msgstr "A szállítási módszer neve, ami a vásárlók számára megjelenik a pénztárnál házhozszállításnál"
 
 #: includes/class-europarcel-shipping.php:196
 msgid "Home Delivery Fixed Price"
-msgstr "Prix fixe livraison à domicile"
+msgstr "Házhozszállítás fix ár"
 
 #: includes/class-europarcel-shipping.php:199
 msgid "Set the fixed shipping cost for address deliveries"
-msgstr "Définissez le coût de livraison fixe pour les livraisons à l'adresse"
+msgstr "Állítsd be a fix szállítási költséget a címre szállításhoz"
 
 #: includes/class-europarcel-shipping.php:203
 msgid "Free Home Delivery Minimum Order Amount"
-msgstr "Montant minimum commande livraison gratuite à domicile"
+msgstr "Ingyenes házhozszállítás minimum rendelési összege"
 
 #: includes/class-europarcel-shipping.php:206
 msgid "Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)"
-msgstr "Montant minimum de commande requis pour la livraison gratuite à domicile (laisser vide pour désactiver la livraison gratuite)"
+msgstr "A minimum rendelési összeg az ingyenes házhozszállításhoz (hagyd üresen az ingyenes szállítás kikapcsolásához)"
 
 #: includes/class-europarcel-shipping.php:210
 msgid "Free Home Delivery Shipping Classes"
-msgstr "Classes d'expédition livraison gratuite à domicile"
+msgstr "Ingyenes házhozszállítási szállítási osztályok"
 
 #: includes/class-europarcel-shipping.php:216
 msgid "Select shipping classes that will always have free home delivery regardless of order amount"
-msgstr "Sélectionnez les classes d'expédition qui auront toujours la livraison gratuite à domicile quel que soit le montant de la commande"
+msgstr "Válaszd ki azokat a szállítási osztályokat, amelyek mindig ingyenes házhozszállítást kapnak a rendelési összegtől függetlenül"
 
 #: includes/class-europarcel-shipping.php:221
 msgid "Locker Delivery Settings"
-msgstr "Paramètres de livraison en casier"
+msgstr "Csomagautomata szállítás beállításai"
 
 #: includes/class-europarcel-shipping.php:223
 msgid "Configure locker delivery options and pricing"
-msgstr "Configurez les options et prix de livraison en casier"
+msgstr "Csomagautomata szállítás beállításai és árazása"
 
 #: includes/class-europarcel-shipping.php:226
 msgid "Locker Delivery Display Name"
-msgstr "Nom d'affichage livraison en casier"
+msgstr "Csomagautomata szállítás megjelenített neve"
 
 #: includes/class-europarcel-shipping.php:229
 msgid "The shipping method name shown to customers at checkout for locker delivery"
-msgstr "Le nom de la méthode de livraison montré aux clients au checkout pour la livraison en casier"
+msgstr "A szállítási módszer neve, ami a vásárlók számára megjelenik a pénztárnál csomagautomata szállításnál"
 
 #: includes/class-europarcel-shipping.php:233
 msgid "Locker Delivery Fixed Price"
-msgstr "Prix fixe livraison en casier"
+msgstr "Csomagautomata szállítás fix ár"
 
 #: includes/class-europarcel-shipping.php:236
 msgid "Set the fixed shipping cost for locker deliveries"
-msgstr "Définissez le coût de livraison fixe pour les livraisons en casier"
+msgstr "Állítsd be a fix szállítási költséget a csomagautomata szállításhoz"
 
 #: includes/class-europarcel-shipping.php:240
 msgid "Free Locker Delivery Minimum Order Amount"
-msgstr "Montant minimum commande livraison gratuite en casier"
+msgstr "Ingyenes csomagautomata szállítás minimum rendelési összege"
 
 #: includes/class-europarcel-shipping.php:243
 msgid "Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)"
-msgstr "Montant minimum de commande requis pour la livraison gratuite en casier (laisser vide pour désactiver la livraison gratuite)"
+msgstr "A minimum rendelési összeg az ingyenes csomagautomata szállításhoz (hagyd üresen az ingyenes szállítás kikapcsolásához)"
 
 #: includes/class-europarcel-shipping.php:247
 msgid "Free Locker Delivery Shipping Classes"
-msgstr "Classes d'expédition livraison gratuite en casier"
+msgstr "Ingyenes csomagautomata szállítási osztályok"
 
 #: includes/class-europarcel-shipping.php:253
 msgid "Select shipping classes that will always have free locker delivery regardless of order amount"
-msgstr "Sélectionnez les classes d'expédition qui auront toujours la livraison gratuite en casier quel que soit le montant de la commande"
+msgstr "Válaszd ki azokat a szállítási osztályokat, amelyek mindig ingyenes csomagautomata szállítást kapnak a rendelési összegtől függetlenül"
 
 # Customer-facing strings (Frontend)
 #: includes/class-europarcel-checkout.php:308
 msgid "Select Locker"
-msgstr "Sélectionner un casier"
+msgstr "Csomagautomata kiválasztása"
 
 #: includes/class-europarcel-checkout.php:164
 msgid "Modify Locker"
-msgstr "Modifier le casier"
+msgstr "Csomagautomata módosítása"
 
 #: includes/class-europarcel-checkout.php:166
 msgid "Loading..."
-msgstr "Chargement..."
+msgstr "Betöltés..."
 
 #: includes/class-europarcel-checkout.php:167
 msgid "No couriers configured for locker delivery."
-msgstr "Aucun coursier configuré pour la livraison en casier."
+msgstr "Nincsenek futárszolgálatok beállítva csomagautomata szállításhoz."
 
 #: includes/class-europarcel-checkout.php:168
 msgid "✓ Locker selected -"
-msgstr "✓ Casier sélectionné -"
+msgstr "✓ Csomagautomata kiválasztva -"
 
 #: includes/class-europarcel-checkout.php:169
 msgid "Delivery locker selection"
-msgstr "Sélection du casier de livraison"
+msgstr "Szállítási csomagautomata kiválasztása"
 
 #: includes/class-europarcel-checkout.php:188
 #: includes/class-europarcel-checkout.php:217
 msgid "Security check failed. Please refresh the page and try again."
-msgstr "Vérification de sécurité échouée. Veuillez rafraîchir la page et réessayer."
+msgstr "Biztonsági ellenőrzés sikertelen. Kérjük frissítsd az oldalt és próbáld újra."
 
 # Custom Fields (Admin)
 #: includes/class-europarcel-custom-fields.php:49
 msgid "Fixed price"
-msgstr "Prix fixe"
+msgstr "Fix ár"
 
 #: includes/class-europarcel-custom-fields.php:55
 msgid "RON"
@@ -222,57 +222,94 @@ msgstr "RON"
 
 #: includes/class-europarcel-custom-fields.php:76
 msgid "Calculation parameters"
-msgstr "Paramètres de calcul"
+msgstr "Számítási paraméterek"
 
 #: includes/class-europarcel-custom-fields.php:78
 msgid "Weight (kg)"
-msgstr "Poids (kg)"
+msgstr "Súly (kg)"
 
 #: includes/class-europarcel-custom-fields.php:83
 msgid "Length (cm)"
-msgstr "Longueur (cm)"
+msgstr "Hossz (cm)"
 
 #: includes/class-europarcel-custom-fields.php:88
 msgid "Width (cm)"
-msgstr "Largeur (cm)"
+msgstr "Szélesség (cm)"
 
 #: includes/class-europarcel-custom-fields.php:93
 msgid "Height (cm)"
-msgstr "Hauteur (cm)"
+msgstr "Magasság (cm)"
 
 #: includes/class-europarcel-custom-fields.php:99
 msgid "Price multiplier"
-msgstr "Multiplicateur de prix"
+msgstr "Ár szorzó"
 
 #: includes/class-europarcel-custom-fields.php:126
 msgid "Shipping Price Type"
-msgstr "Type de prix de livraison"
+msgstr "Szállítási ár típusa"
 
 #: includes/class-europarcel-custom-fields.php:137
 msgid "Fixed Price"
-msgstr "Prix fixe"
+msgstr "Fix ár"
 
 #: includes/class-europarcel-custom-fields.php:140
 msgid "Calculated Price"
-msgstr "Prix calculé"
+msgstr "Számított ár"
+
+# Courier Service Names (Constants)
+#: includes/class-europarcel-constants.php:47
+msgid "Cargus - Delivery to address"
+msgstr "Cargus - Házhoz szállítás"
+
+#: includes/class-europarcel-constants.php:48
+msgid "DPD - Delivery to address"
+msgstr "DPD - Házhoz szállítás"
+
+#: includes/class-europarcel-constants.php:49
+msgid "Fan Courier - Delivery to address"
+msgstr "Fan Courier - Házhoz szállítás"
+
+#: includes/class-europarcel-constants.php:50
+msgid "GLS - Delivery to address"
+msgstr "GLS - Házhoz szállítás"
+
+#: includes/class-europarcel-constants.php:51
+msgid "SameDay - Delivery to address"
+msgstr "SameDay - Házhoz szállítás"
+
+#: includes/class-europarcel-constants.php:52
+msgid "Bookurier - Delivery to address"
+msgstr "Bookurier - Házhoz szállítás"
+
+#: includes/class-europarcel-constants.php:53
+msgid "Sameday EasyBox - Delivery to locker"
+msgstr "Sameday EasyBox - Csomagautomatába szállítás"
+
+#: includes/class-europarcel-constants.php:54
+msgid "Fan Courier FANbox - Delivery to locker"
+msgstr "Fan Courier FANbox - Csomagautomatába szállítás"
+
+#: includes/class-europarcel-constants.php:55
+msgid "DPD Box - Delivery to locker"
+msgstr "DPD Box - Csomagautomatába szállítás"
 
 # HTTP Request Error Messages (Technical)
 #: includes/class-europarcel-http-request.php:123
 msgid "HTTP request failed: "
-msgstr "Requête HTTP échouée: "
+msgstr "HTTP kérés sikertelen: "
 
 #: includes/class-europarcel-http-request.php:127
 msgid "Invalid response format"
-msgstr "Format de réponse invalide"
+msgstr "Érvénytelen válasz formátum"
 
 #: includes/class-europarcel-http-request.php:136
 msgid "API Error"
-msgstr "Erreur API"
+msgstr "API hiba"
 
 #: includes/class-europarcel-http-request.php:138
 msgid "API Error: HTTP"
-msgstr "Erreur API: HTTP"
+msgstr "API hiba: HTTP"
 
 #: includes/class-europarcel-http-request.php:144
 msgid "Invalid JSON response: "
-msgstr "Réponse JSON invalide: "
+msgstr "Érvénytelen JSON válasz: "

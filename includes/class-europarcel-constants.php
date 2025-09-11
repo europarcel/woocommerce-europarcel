@@ -44,15 +44,15 @@ class EuroparcelConstants {
 	 */
 	public static function getAvailableServices() {
 		return [
-			'cargus_national' => __('Cargus - Livrare la adresa', 'europarcel'),
-			'dpd_standard' => __('DPD - Livrare la adresa', 'europarcel'),
-			'fan_courier' => __('Fan Courier - Livrare la adresa', 'europarcel'),
-			'gls_national' => __('GLS - Livrare la adresa', 'europarcel'),
-			'sameday' => __('SameDay - Livrare la adresa', 'europarcel'),
-			'bookurier' => __('Bookurier - Livrare la adresa', 'europarcel'),
-			'easybox' => __('Sameday EasyBox - Livrare la locker', 'europarcel'),
-			'fanbox' => __('Fan Courier FANbox - Livrare la locker', 'europarcel'),
-			'dpdbox' => __('DPD Box - Livrare la locker', 'europarcel'),
+			'cargus_national' => __('Cargus - Delivery to address', 'europarcel-com'),
+			'dpd_standard' => __('DPD - Delivery to address', 'europarcel-com'),
+			'fan_courier' => __('Fan Courier - Delivery to address', 'europarcel-com'),
+			'gls_national' => __('GLS - Delivery to address', 'europarcel-com'),
+			'sameday' => __('SameDay - Delivery to address', 'europarcel-com'),
+			'bookurier' => __('Bookurier - Delivery to address', 'europarcel-com'),
+			'easybox' => __('Sameday EasyBox - Delivery to locker', 'europarcel-com'),
+			'fanbox' => __('Fan Courier FANbox - Delivery to locker', 'europarcel-com'),
+			'dpdbox' => __('DPD Box - Delivery to locker', 'europarcel-com'),
 		];
 	}
 	/**
