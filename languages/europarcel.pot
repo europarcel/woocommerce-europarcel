@@ -46,7 +46,7 @@ msgstr ""
 msgid "Your API key for accessing the shipping services.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:117
+#: includes/class-europarcel-shipping.php:123
 msgid "Connection Error"
 msgstr ""
 
@@ -315,3 +315,4 @@ msgstr ""
 #: includes/class-europarcel-http-request.php:144
 msgid "Invalid JSON response: "
 msgstr ""
+

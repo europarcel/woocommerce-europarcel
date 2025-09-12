@@ -49,7 +49,7 @@ msgstr "Cheie API"
 msgid "Your API key for accessing the shipping services.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
 msgstr "Cheia ta API pentru accesarea serviciilor de transport.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Obține cheia API aici →</a>"
 
-#: includes/class-europarcel-shipping.php:117
+#: includes/class-europarcel-shipping.php:123
 msgid "Connection Error"
 msgstr "Eroare de conexiune"
 
@@ -57,9 +57,13 @@ msgstr "Eroare de conexiune"
 msgid "✅ Connected: %s"
 msgstr "✅ Conectat: %s"
 
-#: includes/class-europarcel-shipping.php:119
-msgid "<div class=\"notice notice-error inline\"><p><strong>Unable to connect to eAWB.</strong> Please verify your API key is correct and try again.</p></div>"
-msgstr "<div class=\"notice notice-error inline\"><p><strong>Nu se poate conecta la eAWB.</strong> Te rugăm să verifici că cheia API este corectă și încearcă din nou.</p></div>"
+#: includes/class-europarcel-shipping.php:125
+msgid "Unable to connect to eAWB."
+msgstr "Nu se poate conecta la eAWB."
+
+#: includes/class-europarcel-shipping.php:125  
+msgid "Please verify your API key is correct and try again."
+msgstr "Te rugăm să verifici că cheia API este corectă și încearcă din nou."
 
 #: includes/class-europarcel-shipping.php:142
 msgid "Service Configuration"
