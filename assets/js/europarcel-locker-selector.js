@@ -111,7 +111,7 @@
 	/**
 	 * Initialize locker selector functionality
 	 */
-	function initializeLockerSelector() {
+        function initializeLockerSelector() {
 		let instances_lockers = europarcel_ajax.instances_lockers;
 		let user_lockers = europarcel_ajax.user_lockers;
 		let order_lockers = europarcel_ajax.order_lockers;
@@ -119,6 +119,93 @@
 		function updateButtonText(button, hasSelectedLocker) {
 			const newText = hasSelectedLocker ? europarcel_ajax.i18n.modify_locker : europarcel_ajax.i18n.select_locker;
 			button.textContent = newText;
+		}
+
+		/**
+		 * Display locker information - handles both new selections and saved lockers
+		 */
+		function displayLockerInfo(lockerData, isNewSelection = false) {
+			if (!lockerData) {
+				return;
+			}
+
+			// Normalize data format (saved vs new selection have different property names)
+			const normalizedLocker = {
+				carrier_name: lockerData.carrier_name,
+				name: lockerData.locker_name || lockerData.name,
+				address: lockerData.locker_address || lockerData.address
+			};
+
+			if (checkoutType === 'blocks') {
+				const blocksButton = document.getElementById('europarcel-blocks-locker-btn');
+				const blocksDetails = document.getElementById('europarcel-blocks-location-details');
+				
+				if (blocksButton) {
+					blocksButton.textContent = europarcel_ajax.i18n.modify_locker;
+				}
+
+				if (blocksDetails) {
+					blocksDetails.innerHTML = `
+						<div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
+							<div style="font-weight: bold; margin-bottom: 4px;">
+								${europarcel_ajax.i18n.locker_selected} ${normalizedLocker.carrier_name}
+							</div>
+							<div style="font-weight: 600; margin-bottom: 2px;">
+								${normalizedLocker.name}
+							</div>
+							<div style="margin-bottom: 0;">
+								${normalizedLocker.address}
+							</div>
+						</div>
+					`;
+					blocksDetails.style.display = 'block';
+				}
+			} else {
+				const classicButton = document.querySelector('button[onclick="openLockerSelector()"]');
+				if (classicButton) {
+					classicButton.textContent = europarcel_ajax.i18n.modify_locker;
+				}
+
+				const details = document.getElementById('europarcel-location-details');
+				if (details) {
+					details.innerHTML = `
+						<div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
+							<div style="font-weight: bold; margin-bottom: 4px;">
+								${europarcel_ajax.i18n.locker_selected} ${normalizedLocker.carrier_name}
+							</div>
+							<div style="font-weight: 600; margin-bottom: 2px;">
+								${normalizedLocker.name}
+							</div>
+							<div style="margin-bottom: 0;">
+								${normalizedLocker.address}
+							</div>
+						</div>
+					`;
+					details.style.display = 'block';
+				}
+			}
+		}
+
+		/**
+		 * Check and display saved locker for current shipping method
+		 */
+		function checkAndDisplaySavedLocker() {
+			if (!user_lockers || Object.keys(user_lockers).length === 0) {
+				return;
+			}
+
+			const instanceId = window.getSelectedShippingInstanceId();
+			const availableCarriers = instances_lockers && instances_lockers[instanceId] 
+				? instances_lockers[instanceId] 
+				: [];
+
+			// Find a saved locker that matches available carriers for current shipping method
+			for (const carrierKey in user_lockers) {
+				if (availableCarriers.includes(parseInt(carrierKey))) {
+					displayLockerInfo(user_lockers[carrierKey]);
+					return;
+				}
+			}
 		}
 
         const addLockerButtonToReviewSection = () => {
@@ -266,54 +353,8 @@
                     window.EuroparcelModal.close();
                 }
 
-                if (checkoutType === 'blocks') {
-                    const blocksButton = document.getElementById('europarcel-blocks-locker-btn');
-                    const blocksDetails = document.getElementById('europarcel-blocks-location-details');
-                    
-                    if (blocksButton) {
-                        blocksButton.textContent = europarcel_ajax.i18n.modify_locker;
-                    }
-
-                    if (blocksDetails) {
-                        blocksDetails.innerHTML = `
-                            <div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
-                                <div style="font-weight: bold; margin-bottom: 4px;">
-                                    ${europarcel_ajax.i18n.locker_selected} ${locker.carrier_name}
-                                </div>
-                                <div style="font-weight: 600; margin-bottom: 2px;">
-                                    ${locker.name}
-                                </div>
-                                <div style="margin-bottom: 0;">
-                                    ${locker.address}
-                                </div>
-                            </div>
-                        `;
-                        blocksDetails.style.display = 'block';
-                    }
-                } else {
-                    const classicButton = document.querySelector('button[onclick="openLockerSelector()"]');
-                    if (classicButton) {
-                        classicButton.textContent = europarcel_ajax.i18n.modify_locker;
-                    }
-
-                    const details = document.getElementById('europarcel-location-details');
-                    if (details) {
-                        details.innerHTML = `
-                            <div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
-                                <div style="font-weight: bold; margin-bottom: 4px;">
-                                    ${europarcel_ajax.i18n.locker_selected} ${locker.carrier_name}
-                                </div>
-                                <div style="font-weight: 600; margin-bottom: 2px;">
-                                    ${locker.name}
-                                </div>
-                                <div style="margin-bottom: 0;">
-                                    ${locker.address}
-                                </div>
-                            </div>
-                        `;
-                        details.style.display = 'block';
-                    }
-                }
+                // Use unified display function
+                displayLockerInfo(locker, true);
 
                 $("body").trigger("update_checkout");
             }
@@ -335,8 +376,10 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    user_lockers = response['data']['user_locker'];
-                    order_lockers = response['data']['order_lockers'];
+                    if (response.success) {
+                        user_lockers = response.data['user_locker'];
+                        order_lockers = response.data['order_lockers'];
+                    }
                 }
             });
         }
@@ -353,25 +396,38 @@
 
             if (selectedMethod) {
                 const methodValue = selectedMethod.value || selectedMethod.id || '';
-                const selectedMethodText = selectedMethod.parentElement ? selectedMethod.parentElement.textContent : '';
-                
-                isLockerMethod = methodValue.includes('_locker') ||
-                        methodValue.includes('locker') ||
-                        selectedMethodText.toLowerCase().includes('locker');
+                isLockerMethod = methodValue.includes('europarcel_shipping');
+            }
+
+            // Check if current shipping method instance has locker services
+            let hasLockerServices = false;
+            if (isLockerMethod) {
+                const instanceId = window.getSelectedShippingInstanceId();
+                hasLockerServices = instances_lockers && instances_lockers[instanceId] && instances_lockers[instanceId].length > 0;
             }
 
             if (checkoutType === 'blocks') {
                 const blocksContainer = document.getElementById('europarcel-blocks-locker-container');
                 
                 if (blocksContainer) {
-                    if (isLockerMethod) {
+                    if (isLockerMethod && hasLockerServices) {
                         blocksContainer.style.display = 'block';
+                        checkAndDisplaySavedLocker();
                     } else {
                         blocksContainer.style.display = 'none';
                         const details = document.getElementById('europarcel-blocks-location-details');
                         if (details) {
                             details.style.display = 'none';
                         }
+                    }
+                }
+            } else {
+                if (isLockerMethod && hasLockerServices) {
+                    checkAndDisplaySavedLocker();
+                } else {
+                    const details = document.getElementById('europarcel-location-details');
+                    if (details) {
+                        details.style.display = 'none';
                     }
                 }
             }
@@ -396,18 +452,26 @@
         });
 
         if (checkoutType === 'blocks') {
-            // For blocks, need to wait for dynamic content to load
+            // For blocks, use MutationObserver to watch for dynamic content
             const initBlocks = () => {
                 addLockerButtonToReviewSection();
                 handleShippingMethodChange();
-                
-                // If button wasn't added, content isn't ready yet
-                const button = document.getElementById('europarcel-blocks-locker-btn');
-                if (!button) {
-                    setTimeout(initBlocks, 500);
-                }
             };
+            
+            // Initial attempt
             initBlocks();
+            
+            // Watch for DOM changes in case blocks content loads later
+            const observer = new MutationObserver(() => {
+                if (!document.getElementById('europarcel-blocks-locker-btn')) {
+                    initBlocks();
+                }
+            });
+            
+            observer.observe(document.body, { 
+                childList: true, 
+                subtree: true 
+            });
         } else {
             handleShippingMethodChange();
         }
