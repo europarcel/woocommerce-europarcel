@@ -41,7 +41,4 @@ yarn-error.log*
 .env.production.local
 
 # Build Scripts
-build-wordpress-org.sh
-
-# Development i18n scripts
-check-i18n.sh
+*.sh
