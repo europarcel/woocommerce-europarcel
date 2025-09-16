@@ -184,27 +184,28 @@ msgid "Select shipping classes that will always have free locker delivery regard
 msgstr ""
 
 # Customer-facing strings (Frontend)
-#: includes/class-europarcel-checkout.php:316
+#: includes/class-europarcel-checkout.php:172
+#: includes/class-europarcel-checkout.php:334
 msgid "Select Locker"
 msgstr ""
 
-#: includes/class-europarcel-checkout.php:164
+#: includes/class-europarcel-checkout.php:173
 msgid "Modify Locker"
 msgstr ""
 
-#: includes/class-europarcel-checkout.php:166
+#: includes/class-europarcel-checkout.php:174
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-europarcel-checkout.php:167
+#: includes/class-europarcel-checkout.php:175
 msgid "No couriers configured for locker delivery."
 msgstr ""
 
-#: includes/class-europarcel-checkout.php:168
+#: includes/class-europarcel-checkout.php:176
 msgid "✓ Locker selected -"
 msgstr ""
 
-#: includes/class-europarcel-checkout.php:169
+#: includes/class-europarcel-checkout.php:177
 msgid "Delivery locker selection"
 msgstr ""
 
