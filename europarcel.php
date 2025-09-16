@@ -13,7 +13,6 @@
  *
  * @wordpress-plugin
  * Plugin Name:       EuroParcel Integration for WooCommerce
- * Plugin URI:        https://eawb.ro/
  * Description:       Connect your WooCommerce store with EuroParcel shipping platform
  * Version:           1.0.0
  * Author:            EuroParcel
