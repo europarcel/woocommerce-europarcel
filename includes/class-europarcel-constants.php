@@ -66,10 +66,18 @@ class EuroparcelConstants {
 	 * - 2: Locker delivery (home to locker)
 	 *
 	 * @since    1.0.0
-	 * @param    array    $services    Array of service keys to convert
+	 * @param    array|string    $services    Array of service keys to convert (or string for backward compatibility)
 	 * @return   array    Array of carrier configuration arrays
 	 */
-	public static function getSettingsServices(array $services) {
+	public static function getSettingsServices($services) {
+		// Handle non-array input for backward compatibility
+		if (!is_array($services)) {
+			if (empty($services)) {
+				return [];
+			}
+			// Convert string to array
+			$services = [$services];
+		}
 		$carrier_settings = [
 			'cargus_national' => [
 				'carrier' => 'cargus_national',

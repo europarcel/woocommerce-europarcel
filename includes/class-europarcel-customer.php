@@ -212,7 +212,17 @@ class EuroparcelCustomer {
 		}
 		
 		if (is_array($response) && isset($response['data'])) {
-			$services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($this->settings['available_services']);
+			// Ensure available_services is an array, convert string to array if needed
+			$available_services = $this->settings['available_services'];
+			if (!is_array($available_services)) {
+				$available_services = !empty($available_services) ? [$available_services] : [];
+			}
+
+			if (empty($available_services)) {
+				return false;
+			}
+
+			$services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
 			$standard_services = []; // Standard delivery (home to home)
 			$locker_services = [];   // Locker delivery (home to locker)
 			
@@ -275,7 +285,17 @@ class EuroparcelCustomer {
 			return [];
 		}
 
-		$all_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($this->settings['available_services']);
+		// Ensure available_services is an array, convert string to array if needed
+		$available_services = $this->settings['available_services'];
+		if (!is_array($available_services)) {
+			$available_services = !empty($available_services) ? [$available_services] : [];
+		}
+
+		if (empty($available_services)) {
+			return [];
+		}
+
+		$all_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
 		$locker_services = array_filter($all_services, function ($service) {
 			return $service['service_id'] == 2; // Locker delivery service
 		});
@@ -301,7 +321,17 @@ class EuroparcelCustomer {
 			return false;
 		}
 
-		$all_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($this->settings['available_services']);
+		// Ensure available_services is an array, convert string to array if needed
+		$available_services = $this->settings['available_services'];
+		if (!is_array($available_services)) {
+			$available_services = !empty($available_services) ? [$available_services] : [];
+		}
+
+		if (empty($available_services)) {
+			return false;
+		}
+
+		$all_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
 		$standard_services = array_filter($all_services, function ($service) {
 			return $service['service_id'] == 1; // Standard delivery service
 		});

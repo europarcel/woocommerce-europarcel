@@ -139,12 +139,20 @@ class EuroparcelCheckout {
                 if (strpos($method->id, 'europarcel_shipping') === 0 && $method->enabled === 'yes') {
                     $settings = get_option('woocommerce_europarcel_shipping_' . $method->instance_id . '_settings', []);
                     if (isset($settings['available_services'])) {
-                        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
+                        // Ensure available_services is an array, convert string to array if needed
+                        $available_services = $settings['available_services'];
+                        if (!is_array($available_services)) {
+                            $available_services = !empty($available_services) ? [$available_services] : [];
+                        }
+
+                        if (!empty($available_services)) {
+                            $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
                         $locker_services = array_filter($method_services, function ($service) {
                             return $service['service_id'] == 2;
                         });
-                        if (!empty($locker_services)) {
-                            $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
+                            if (!empty($locker_services)) {
+                                $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
+                            }
                         }
                     }
                 }
@@ -299,7 +307,17 @@ class EuroparcelCheckout {
             return;
         }
 
-        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
+        // Ensure available_services is an array, convert string to array if needed
+        $available_services = $settings['available_services'];
+        if (!is_array($available_services)) {
+            $available_services = !empty($available_services) ? [$available_services] : [];
+        }
+
+        if (empty($available_services)) {
+            return;
+        }
+
+        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
         $locker_services = array_filter($method_services, function ($service) {
             return $service['service_id'] == 2; // Locker service
         });

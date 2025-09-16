@@ -126,7 +126,17 @@ class EuroparcelRequestData {
 			return;
 		}
 
-		$services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($settings['available_services']);
+		// Ensure available_services is an array, convert string to array if needed
+		$available_services = $settings['available_services'];
+		if (!is_array($available_services)) {
+			$available_services = !empty($available_services) ? [$available_services] : [];
+		}
+
+		if (empty($available_services)) {
+			return;
+		}
+
+		$services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
 		
 		if (count($services_config) == 1) {
 			$this->request_data['carrier_id'] = intval($services_config[0]['carrier_id']);
