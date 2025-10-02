@@ -118,7 +118,7 @@ class EuroparcelCheckout {
             $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
             if (is_array($user_lockers)) {
                 foreach ($user_lockers as $key => $locker) {
-                    $order_lockers[] = $key;
+                    $order_lockers[] = $locker['carrier_id'];
                 }
             }
         }
@@ -239,18 +239,18 @@ class EuroparcelCheckout {
             $user_id = get_current_user_id();
             if ($user_id) {
                 $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
-                if ($user_lockers && $locker_info['carrier_id']) {
-                    $user_lockers = [$locker_info['carrier_id'] => $locker_info] + $user_lockers;
+                if (is_array($user_lockers) && $locker_info['instance_id']) {
+                    $user_lockers = [$locker_info['instance_id'] => $locker_info] + $user_lockers;
                     update_user_meta($user_id, '_europarcel_carrier_lockers', $user_lockers);
                 } else {
-                    update_user_meta($user_id, '_europarcel_carrier_lockers', [$locker_info['carrier_id'] => $locker_info]);
+                    update_user_meta($user_id, '_europarcel_carrier_lockers', [$locker_info['instance_id'] => $locker_info]);
                     $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
                 }
             }
             $order_lockers = [];
             if (is_array($user_lockers)) {
                 foreach ($user_lockers as $key => $locker) {
-                    $order_lockers[] = $key;
+                    $order_lockers[] = $locker['carrier_id'];
                 }
             }
             wp_send_json_success(['user_locker' => $user_lockers, 'order_lockers' => $order_lockers]);

@@ -423,12 +423,12 @@ class WC_Europarcel_Shipping extends WC_Shipping_Method {
 			if ($user_id) {
 				$user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
 				if (is_array($user_lockers)) {
-					foreach ($user_lockers as $carrier_id => $locker) {
-						if (in_array($carrier_id, $customer_locker_carriers) && is_array($locker)) {
+					foreach ($user_lockers as $instance_id => $locker) {
+						if (in_array($locker['carrier_id'], $customer_locker_carriers) && is_array($locker) && $instance_id==$this->instance_id) {
 							$locker_info = [
 								'locker_id' => $locker['locker_id'],
 								'carrier_id' => $locker['carrier_id'],
-								'instance_id' => $this->instance_id,
+								'instance_id' => $instance_id,
 								'carrier_name' => $locker['carrier_name'],
 								'locker_name' => $locker['locker_name'],
 								'locker_address' => $locker['locker_address']
