@@ -200,12 +200,19 @@
 				: [];
 
 			// Find a saved locker that matches available carriers for current shipping method
-			for (const carrierKey in user_lockers) {
+			/*
+                        for (const carrierKey in user_lockers) {
 				if (availableCarriers.includes(parseInt(carrierKey))) {
 					displayLockerInfo(user_lockers[carrierKey]);
 					return;
 				}
 			}
+                     * 
+                         */
+                        if (instanceId in user_lockers) {
+                            displayLockerInfo(user_lockers[instanceId]);
+                            return;
+                        }
 		}
 
         const addLockerButtonToReviewSection = () => {
