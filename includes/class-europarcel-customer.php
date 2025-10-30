@@ -8,7 +8,7 @@
  * and carrier services. Handles both standard and locker delivery options.
  *
  * @link       https://eawb.ro
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -28,7 +28,7 @@ require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-http-request.php
  * Manages API interactions for pricing, address validation,
  * and carrier service availability.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -38,7 +38,7 @@ class EuroparcelCustomer {
 	/**
 	 * The WooCommerce shipping instance ID
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   private
 	 * @var      int    $instance_id    WooCommerce shipping method instance ID
 	 */
@@ -47,7 +47,7 @@ class EuroparcelCustomer {
 	/**
 	 * The shipping method settings
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   public
 	 * @var      array    $settings    WooCommerce shipping method settings
 	 */
@@ -59,7 +59,7 @@ class EuroparcelCustomer {
 	 * Sets up the customer handler with WooCommerce shipping instance
 	 * configuration and loads the associated settings.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @param    int    $instance_id    WooCommerce shipping method instance ID
 	 */
 	public function __construct($instance_id) {
@@ -73,7 +73,7 @@ class EuroparcelCustomer {
 	 * Retrieves the customer's account profile information from
 	 * the EuroParcel API including name, contact details, and account status.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @return   array|null    Customer account data or null on failure
 	 */
 	public function getCustomerInfo() {
@@ -97,7 +97,7 @@ class EuroparcelCustomer {
 	 * Retrieves all billing addresses associated with the customer's
 	 * EuroParcel account for use in shipping calculations.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @return   array    Array of billing addresses with ID as key and formatted address as value
 	 */
 	public function getCustomerBillingAddresses() {
@@ -135,7 +135,7 @@ class EuroparcelCustomer {
 	 * Retrieves all pickup/shipping addresses associated with the customer's
 	 * EuroParcel account for use as pickup locations.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @return   array    Array of pickup addresses with ID as key and formatted address as value
 	 */
 	public function getPickupAddresses() {
@@ -174,7 +174,7 @@ class EuroparcelCustomer {
 	 * and locker delivery (home to locker) options based on package details
 	 * and destination address.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @param    array    $package        WooCommerce package data with destination details
 	 * @param    bool     $allow_locker   Whether to include locker delivery options
 	 * @return   array|false    Array containing [standard_services, locker_services] or false on failure
@@ -259,7 +259,7 @@ class EuroparcelCustomer {
 	 * Comparison function for sorting shipping services by total price.
 	 * Used with usort() to arrange services from lowest to highest cost.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @param    array    $first_service     First service for comparison
 	 * @param    array    $second_service    Second service for comparison
 	 * @return   int      -1, 0, or 1 for sorting comparison
@@ -277,7 +277,7 @@ class EuroparcelCustomer {
 	 * Retrieves all carrier IDs that support locker delivery
 	 * based on the configured available services.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @return   array    Array of carrier IDs that support locker delivery
 	 */
 	public function get_locker_carriers() {
@@ -313,7 +313,7 @@ class EuroparcelCustomer {
 	 * Retrieves all carrier IDs that support standard home delivery
 	 * based on the configured available services.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @return   array|false    Array of carrier IDs that support standard delivery or false if none available
 	 */
 	public function get_home_carriers() {

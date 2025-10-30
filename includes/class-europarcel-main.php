@@ -8,7 +8,7 @@
  * handler and AJAX functionality for both checkout types.
  *
  * @link       https://eawb.ro
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -21,7 +21,7 @@
  * Manages checkout detection and AJAX handlers for
  * both classic and blocks checkout types.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -31,7 +31,7 @@ class Europarcel_Main {
 	/**
 	 * The plugin name
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   protected
 	 * @var      string    $plugin_name    The plugin identifier name
 	 */
@@ -40,7 +40,7 @@ class Europarcel_Main {
 	/**
 	 * The plugin version
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   protected
 	 * @var      string    $version    The current plugin version
 	 */
@@ -49,7 +49,7 @@ class Europarcel_Main {
 	/**
 	 * The checkout handler instance
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   protected
 	 * @var      EuroparcelCheckout    $checkout_handler    Handles checkout functionality
 	 */
@@ -61,13 +61,13 @@ class Europarcel_Main {
 	 * Sets the plugin name and version, loads dependencies,
 	 * and defines WooCommerce hooks for checkout functionality.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function __construct() {
 		if (defined('EUROPARCEL_VERSION')) {
 			$this->version = EUROPARCEL_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'europarcel-com';
 
@@ -81,7 +81,7 @@ class Europarcel_Main {
 	 * Loads the checkout handler class required for
 	 * managing checkout functionality and locker selection.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	private function load_dependencies() {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-europarcel-checkout.php';
@@ -93,7 +93,7 @@ class Europarcel_Main {
 	 * Initializes the checkout handler and registers all necessary
 	 * WordPress hooks for AJAX functionality and checkout integration.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	private function define_woocommerce_hooks() {
 		$this->checkout_handler = new EuroparcelCheckout();
@@ -117,7 +117,7 @@ class Europarcel_Main {
 	 * All hooks are registered in the constructor,
 	 * so this method is available for future use if needed.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function run() {
 		// All hooks are already registered in constructor
@@ -126,7 +126,7 @@ class Europarcel_Main {
 	/**
 	 * Get the plugin name
 	 *
-	 * @since     1.0.0
+	 * @since     1.0.1
 	 * @return    string    The plugin name
 	 */
 	public function get_plugin_name() {
@@ -136,7 +136,7 @@ class Europarcel_Main {
 	/**
 	 * Get the plugin version
 	 *
-	 * @since     1.0.0
+	 * @since     1.0.1
 	 * @return    string    The plugin version number
 	 */
 	public function get_version() {

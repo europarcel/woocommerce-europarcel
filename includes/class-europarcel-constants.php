@@ -8,7 +8,7 @@
  * for both standard delivery and locker services.
  *
  * @link       https://eawb.ro
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -25,7 +25,7 @@ defined('ABSPATH') || exit;
  * and mappings. Handles the translation and organization of available
  * shipping services for both admin configuration and API requests.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -39,7 +39,7 @@ class EuroparcelConstants {
 	 * display names. Includes both standard delivery and locker services.
 	 * All strings are internationalized for translation support.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @return   array    Array of service keys and their translated display names
 	 */
 	public static function getAvailableServices() {
@@ -65,7 +65,7 @@ class EuroparcelConstants {
 	 * - 1: Standard delivery (home to home)
 	 * - 2: Locker delivery (home to locker)
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @param    array|string    $services    Array of service keys to convert (or string for backward compatibility)
 	 * @return   array    Array of carrier configuration arrays
 	 */

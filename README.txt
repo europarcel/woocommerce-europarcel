@@ -4,7 +4,7 @@ Tags: woocommerce, shipping, europarcel, courier, romania
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -87,7 +87,7 @@ This plugin connects to EuroParcel's external API services to provide shipping f
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 =
 * Initial release
 * Multiple courier integration
 * Locker delivery support
@@ -96,5 +96,5 @@ This plugin connects to EuroParcel's external API services to provide shipping f
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.1 =
 Initial release of EuroParcel Integration for WooCommerce plugin.
