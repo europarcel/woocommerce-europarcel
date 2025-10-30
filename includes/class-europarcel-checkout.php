@@ -8,7 +8,7 @@
  * enqueuing for the checkout process.
  *
  * @link       https://eawb.ro
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -24,7 +24,7 @@ require_once dirname(__DIR__) . '/includes/class-europarcel-constants.php';
  * Handles smart initialization, script enqueuing, and AJAX functionality
  * for locker selection and shipping updates.
  *
- * @since      1.0.1
+ * @since      1.0.2
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -34,7 +34,7 @@ class EuroparcelCheckout {
 	/**
 	 * Whether the current checkout is blocks-based
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 * @access   private
 	 * @var      bool    $is_blocks_checkout    True if blocks checkout detected
 	 */
@@ -46,7 +46,7 @@ class EuroparcelCheckout {
 	 * Constructor kept minimal - actual initialization happens
 	 * via smart_init method to detect checkout type first.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	public function __construct() {
 		// Constructor kept minimal - initialization happens via smart_init
@@ -58,7 +58,7 @@ class EuroparcelCheckout {
 	 * Automatically detects whether the current checkout is Classic
 	 * or Blocks-based and initializes the appropriate functionality.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	public function smart_init() {
 		if (!is_checkout()) {
@@ -79,7 +79,7 @@ class EuroparcelCheckout {
 	 *
 	 * Enqueues scripts and localizes data for WooCommerce Blocks checkout.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	private function init_blocks_checkout() {
 		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
@@ -92,7 +92,7 @@ class EuroparcelCheckout {
 	 *
 	 * Enqueues scripts and localizes data for WooCommerce Classic checkout.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	private function init_classic_checkout() {
 		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
@@ -106,7 +106,7 @@ class EuroparcelCheckout {
 	 * Prepares AJAX data including user lockers, available carriers,
 	 * and checkout type information for JavaScript usage.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	private function localize_script_data() {
         $user_id = get_current_user_id();
@@ -187,7 +187,7 @@ class EuroparcelCheckout {
 	 * Retrieves available locker carriers for a shipping instance.
 	 * Validates nonce and returns carrier data via JSON response.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	public function ajax_get_locker_carriers() {
         try {
@@ -217,7 +217,7 @@ class EuroparcelCheckout {
 	 * Updates the selected locker information in session and user meta.
 	 * Validates nonce and sanitizes all input data.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	public function wp_ajax_update_locker_shipping() {
         // Verify nonce for security
@@ -267,7 +267,7 @@ class EuroparcelCheckout {
 	 * Called by woocommerce_review_order_after_shipping hook to display
 	 * the locker selection button in classic checkout when applicable.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	public function classic_checkout_button() {
         if (!is_checkout()) {

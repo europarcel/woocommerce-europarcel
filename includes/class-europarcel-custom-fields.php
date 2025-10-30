@@ -8,7 +8,7 @@
  * calculation parameters for package dimensions.
  *
  * @link       https://eawb.ro
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -25,7 +25,7 @@ defined('ABSPATH') || exit;
  * used in the shipping method admin configuration. Handles
  * price type selection and calculation parameter inputs.
  *
- * @since      1.0.1
+ * @since      1.0.2
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -38,7 +38,7 @@ class Europarcel_Shipping_Custom_Fields {
 	 * Creates HTML for the fixed price input field used when
 	 * the shipping method is set to fixed price mode.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 * @param    object    $shipping_method    The shipping method instance
 	 * @return   string    HTML for the fixed price field group
 	 */
@@ -65,7 +65,7 @@ class Europarcel_Shipping_Custom_Fields {
 	 * Creates HTML for the calculation parameters including package
 	 * dimensions (weight, length, width, height) and price multiplier.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 * @param    object    $shipping_method    The shipping method instance
 	 * @return   string    HTML for the calculation parameters field group
 	 */
@@ -113,7 +113,7 @@ class Europarcel_Shipping_Custom_Fields {
 	 * Creates HTML for the price type selector allowing users to choose
 	 * between fixed price and calculated price shipping methods.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 * @param    object    $shipping_method    The shipping method instance
 	 * @return   string    HTML for the price type selector field
 	 */

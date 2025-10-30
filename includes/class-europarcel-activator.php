@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       https://europarcel.com
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.1
+ * @since      1.0.2
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -27,12 +27,12 @@ class Europarcel_Activator {
 	 *
 	 * Handles any setup tasks required when the plugin is activated.
 	 *
-	 * @since    1.0.1
+	 * @since    1.0.2
 	 */
 	public static function activate() {
 		// Store plugin version
 		if (!get_option('europarcel_version')) {
-			add_option('europarcel_version', '1.0.1');
+			add_option('europarcel_version', '1.0.2');
 		}
 		
 		flush_rewrite_rules();
