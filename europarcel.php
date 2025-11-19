@@ -58,7 +58,11 @@ require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-deactivator.php'
 register_deactivation_hook(__FILE__, array('Europarcel_Deactivator', 'deactivate'));
 
 // Check if WooCommerce is active
-if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+if (!function_exists('is_plugin_active')) {
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+}
+
+if (!is_plugin_active('woocommerce/woocommerce.php')) {
     return;
 }
 
@@ -86,7 +90,7 @@ add_action('woocommerce_shipping_init', 'europarcel_shipping_init');
  * @since    1.0.2
  */
 function europarcel_shipping_init() {
-    if (!class_exists('WC_Europarcel_Shipping')) {
+    if (!class_exists('Europarcel_Plugin_Shipping_Method')) {
         require_once plugin_dir_path(__FILE__) . 'includes/class-europarcel-shipping.php';
         add_filter('woocommerce_shipping_methods', 'add_europarcel_shipping');
     }
@@ -100,7 +104,7 @@ function europarcel_shipping_init() {
  * @return   array                Updated shipping methods
  */
 function add_europarcel_shipping($methods) {
-    $methods['europarcel_shipping'] = 'WC_Europarcel_Shipping';
+    $methods['europarcel_shipping'] = 'Europarcel_Plugin_Shipping_Method';
     return $methods;
 }
 
@@ -122,11 +126,11 @@ add_action('admin_enqueue_scripts', function () {
  * 
  * @since    1.0.2
  */
-function run_europarcel() {
+function europarcel_plugin_run() {
     require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-main.php';
     $plugin = new Europarcel_Main();
     $plugin->run();
 }
 
-run_europarcel();
+europarcel_plugin_run();
 
