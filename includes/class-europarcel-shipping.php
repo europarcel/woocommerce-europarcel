@@ -459,7 +459,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
 
             if ($has_free_shipping_to_locker) {
                 $this->add_rate(array(
-                    'id' => $this->id . ':' . $this->instance_id . '_free_locker_' . $this->instance_id,
+                    'id' => $this->id . ':' . $this->instance_id . '_free_locker',
                     'label' => $locker_label,
                     'cost' => 0,
                     'package' => $package,
@@ -467,7 +467,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
                 ));
             } else {
                 $this->add_rate(array(
-                    'id' => $this->id . ':' . $this->instance_id . '_fixed_locker_' . $this->instance_id,
+                    'id' => $this->id . ':' . $this->instance_id . '_fixed_locker',
                     'label' => $locker_label,
                     'cost' => $customer->settings['fixed_price_h2l'],
                     'package' => $package,

@@ -291,8 +291,12 @@ class EuroparcelCheckout {
         // Get the instance ID - could be from session format or embedded in method ID
         $instance_id = '1'; // default
         if (isset($shipping_method[1])) {
-            // From session format: europarcel_shipping:1
-            $instance_id = $shipping_method[1];
+            // From session format: europarcel_shipping:1_free_h2h or europarcel_shipping:1
+            // Extract only the numeric instance ID (remove suffixes like _free_h2h, _fixed_locker, etc.)
+            $instance_part = $shipping_method[1];
+            if (preg_match('/^(\d+)/', $instance_part, $matches)) {
+                $instance_id = $matches[1];
+            }
         } else {
             // From embedded format: europarcel_shipping_1
             $parts = explode('_', $shipping_method[0]);
