@@ -288,11 +288,18 @@ class EuroparcelCheckout {
             return;
         }
 
+        // Check if the selected shipping method is a locker delivery option
+        // Locker rates have '_locker' suffix in their ID
+        $full_rate_id = $shipping_methods[0];
+        if (strpos($full_rate_id, '_locker') === false) {
+            return;
+        }
+
         // Get the instance ID - could be from session format or embedded in method ID
         $instance_id = '1'; // default
         if (isset($shipping_method[1])) {
-            // From session format: europarcel_shipping:1_free_h2h or europarcel_shipping:1
-            // Extract only the numeric instance ID (remove suffixes like _free_h2h, _fixed_locker, etc.)
+            // From session format: europarcel_shipping:1_free_locker or europarcel_shipping:1_fixed_locker
+            // Extract only the numeric instance ID (remove suffixes like _free_locker, _fixed_locker, etc.)
             $instance_part = $shipping_method[1];
             if (preg_match('/^(\d+)/', $instance_part, $matches)) {
                 $instance_id = $matches[1];
@@ -304,34 +311,8 @@ class EuroparcelCheckout {
                 $instance_id = end($parts);
             }
         }
-        
-        // Check if this specific instance has locker services enabled
-        $settings = get_option('woocommerce_europarcel_shipping_' . $instance_id . '_settings', []);
-        if (empty($settings['available_services'])) {
-            return;
-        }
 
-        // Ensure available_services is an array, convert string to array if needed
-        $available_services = $settings['available_services'];
-        if (!is_array($available_services)) {
-            $available_services = !empty($available_services) ? [$available_services] : [];
-        }
-
-        if (empty($available_services)) {
-            return;
-        }
-
-        $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
-        $locker_services = array_filter($method_services, function ($service) {
-            return $service['service_id'] == 2; // Locker service
-        });
-
-        // Only show if this shipping method has locker carriers
-        if (empty($locker_services)) {
-            return;
-        }
-
-        // 🎯 Output button
+        // Output button
         echo '<tr class="europarcel-locker-selection">';
         echo '<th></th>';
         echo '<td>';

@@ -66,8 +66,15 @@
 		if (selectedMethod) {
 			const methodValue = selectedMethod.value || selectedMethod.id;
 			const parts = methodValue.split(':');
-			if (parts.length > 1)
-				return parts[1];
+			if (parts.length > 1) {
+				// Extract only the numeric instance ID (remove suffixes like _free_h2h, _fixed_locker, etc.)
+				const instancePart = parts[1];
+				const match = instancePart.match(/^(\d+)/);
+				if (match) {
+					return match[1];
+				}
+				return instancePart;
+			}
 
 			const underscoreParts = methodValue.split('_');
 			if (underscoreParts.length > 1)
@@ -403,7 +410,8 @@
 
             if (selectedMethod) {
                 const methodValue = selectedMethod.value || selectedMethod.id || '';
-                isLockerMethod = methodValue.includes('europarcel_shipping');
+                // Check if it's a locker method (must have _locker suffix)
+                isLockerMethod = methodValue.includes('europarcel_shipping') && methodValue.includes('_locker');
             }
 
             // Check if current shipping method instance has locker services
