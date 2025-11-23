@@ -5,7 +5,7 @@
  * updates and price type toggling in the shipping method configuration.
  *
  * @package    Europarcel
- * @since      1.0.2
+ * @since      1.0.3
  */
 
 jQuery(document).ready(function ($) {
