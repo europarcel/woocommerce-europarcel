@@ -127,6 +127,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
         if (!isset($this->settings['europarcel_customer']) || !$this->settings['europarcel_customer']) {
             $this->settings['europarcel_customer'] = $customer_info;
             $settings_key = $this->plugin_id . $this->id . '_' . $this->instance_id . '_settings';
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
             $settings_value = apply_filters('woocommerce_shipping_' . $this->id . '_' . $this->instance_id . '_settings_values', $this->settings, $this);
             if (get_option($settings_key)) {
                 update_option($settings_key, $settings_value, 'yes');
@@ -293,6 +294,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
         }
 
         $settings_key = $this->plugin_id . $this->id . '_' . $this->instance_id . '_settings';
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
         $settings_value = apply_filters('woocommerce_shipping_' . $this->id . '_' . $this->instance_id . '_settings_values', $this->settings, $this);
 
         if (get_option($settings_key)) {
