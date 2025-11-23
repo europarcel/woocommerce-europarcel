@@ -5,189 +5,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.2\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
+"POT-Creation-Date: 2025-11-23 07:31+0000\n"
+"PO-Revision-Date: 2025-09-11T12:00:00+00:00\n"
 "Last-Translator: EuroParcel Team\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-11T12:00:00+00:00\n"
-"PO-Revision-Date: 2025-09-11T12:00:00+00:00\n"
 "X-Generator: Manual\n"
 "X-Domain: europarcel-com\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
-
-#: includes/class-europarcel-shipping.php:53
-msgid "Europarcel Shipping"
-msgstr "Transport EuroParcel"
-
-#: includes/class-europarcel-shipping.php:54
-msgid "Premium courier shipping integration with support for home delivery and locker services"
-msgstr "Integrare premium pentru servicii de curierat cu suport pentru livrare la adresă și în locker"
-
-#: includes/class-europarcel-shipping.php:90
-msgid "Basic Settings"
-msgstr "Setări de bază"
-
-#: includes/class-europarcel-shipping.php:92
-msgid "Configure your connection and basic plugin settings"
-msgstr "Configurează conexiunea și setările de bază ale plugin-ului"
-
-#: includes/class-europarcel-shipping.php:95
-msgid "Method Title"
-msgstr "Titlul metodei"
-
-#: includes/class-europarcel-shipping.php:97
-msgid "The shipping method title displayed in the admin shipping zones configuration"
-msgstr "Titlul metodei de transport afișat în configurarea zonelor de transport din admin"
-
-#: includes/class-europarcel-shipping.php:102
-msgid "API Key"
-msgstr "Cheie API"
-
-#: includes/class-europarcel-shipping.php:104
-msgid "Your API key for accessing the shipping services.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
-msgstr "Cheia ta API pentru accesarea serviciilor de transport.<br><a href=\"https://www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Obține cheia API aici →</a>"
-
-#: includes/class-europarcel-shipping.php:123
-msgid "Connection Error"
-msgstr "Eroare de conexiune"
-
-#: includes/class-europarcel-shipping.php:138
-msgid "✅ Connected: %s"
-msgstr "✅ Conectat: %s"
-
-#: includes/class-europarcel-shipping.php:125
-msgid "Unable to connect to eAWB."
-msgstr "Nu se poate conecta la eAWB."
-
-#: includes/class-europarcel-shipping.php:125  
-msgid "Please verify your API key is correct and try again."
-msgstr "Te rugăm să verifici că cheia API este corectă și încearcă din nou."
-
-#: includes/class-europarcel-shipping.php:142
-msgid "Service Configuration"
-msgstr "Configurarea serviciilor"
-
-#: includes/class-europarcel-shipping.php:144
-msgid "Configure your shipping addresses and available services"
-msgstr "Configurează adresele de expediere și serviciile disponibile"
-
-#: includes/class-europarcel-shipping.php:147
-msgid "Primary Sender Address"
-msgstr "Adresa principală de expediere"
-
-#: includes/class-europarcel-shipping.php:150
-msgid "Default sender address for eAWB order imports<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Sender Addresses →</a>"
-msgstr "Adresa implicită de expediere pentru importul comenzilor în eAWB<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Gestionează adresele de expediere →</a>"
-
-#: includes/class-europarcel-shipping.php:155
-msgid "Primary Billing Address"
-msgstr "Adresa principală de facturare"
-
-#: includes/class-europarcel-shipping.php:158
-msgid "Default billing address for eAWB order imports<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Billing Addresses →</a>"
-msgstr "Adresa implicită de facturare pentru importul comenzilor în eAWB<br><a href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;\">Gestionează adresele de facturare →</a>"
-
-#: includes/class-europarcel-shipping.php:163
-msgid "Available Shipping Services"
-msgstr "Servicii de transport disponibile"
-
-#: includes/class-europarcel-shipping.php:165
-msgid "Select the shipping services that will be available to your customers during checkout"
-msgstr "Selectează serviciile de transport care vor fi disponibile clienților la finalizarea comenzii"
-
-#: includes/class-europarcel-shipping.php:249
-msgid "Excluded Shipping Classes for Lockers"
-msgstr "Clase de expediere excluse pentru lockere"
-
-#: includes/class-europarcel-shipping.php:254
-msgid "Select shipping classes that should not have locker delivery options available (e.g., large products or items unsuitable for lockers)"
-msgstr "Selectează clasele de expediere care nu ar trebui să aibă opțiuni de livrare în locker (ex: produse mari sau neadecvate pentru lockere)"
-
-#: includes/class-europarcel-shipping.php:175
-msgid "Home Delivery Settings"
-msgstr "Setări livrare la adresă"
-
-#: includes/class-europarcel-shipping.php:177
-msgid "Configure address delivery options and pricing"
-msgstr "Configurează opțiunile și prețurile pentru livrarea la adresă"
-
-#: includes/class-europarcel-shipping.php:181
-msgid "Home Delivery Display Name"
-msgstr "Numele afișat pentru livrarea la adresă"
-
-#: includes/class-europarcel-shipping.php:184
-msgid "The shipping method name shown to customers at checkout for home delivery"
-msgstr "Numele metodei de transport afișat clienților la checkout pentru livrarea la adresă"
-
-#: includes/class-europarcel-shipping.php:188
-msgid "Home Delivery Fixed Price"
-msgstr "Preț fix livrare la adresă"
-
-#: includes/class-europarcel-shipping.php:191
-msgid "Set the fixed shipping cost for address deliveries"
-msgstr "Setează costul fix de transport pentru livrările la adresă"
-
-#: includes/class-europarcel-shipping.php:195
-msgid "Free Home Delivery Minimum Order Amount"
-msgstr "Suma minimă pentru livrare gratuită la adresă"
-
-#: includes/class-europarcel-shipping.php:198
-msgid "Minimum order amount required to qualify for free home delivery (leave empty for no free shipping)"
-msgstr "Suma minimă de comandă pentru livrare gratuită la adresă (lasă gol pentru a dezactiva livrarea gratuită)"
-
-#: includes/class-europarcel-shipping.php:202
-msgid "Free Home Delivery Shipping Classes"
-msgstr "Clase de expediere cu livrare gratuită la adresă"
-
-#: includes/class-europarcel-shipping.php:207
-msgid "Select shipping classes that will always have free home delivery regardless of order amount"
-msgstr "Selectează clasele de expediere care vor avea întotdeauna livrare gratuită la adresă, indiferent de suma comenzii"
-
-#: includes/class-europarcel-shipping.php:212
-msgid "Locker Delivery Settings"
-msgstr "Setări livrare în locker"
-
-#: includes/class-europarcel-shipping.php:214
-msgid "Configure locker delivery options and pricing"
-msgstr "Configurează opțiunile și prețurile pentru livrarea în locker"
-
-#: includes/class-europarcel-shipping.php:218
-msgid "Locker Delivery Display Name"
-msgstr "Numele afișat pentru livrarea în locker"
-
-#: includes/class-europarcel-shipping.php:221
-msgid "The shipping method name shown to customers at checkout for locker delivery"
-msgstr "Numele metodei de transport afișat clienților la checkout pentru livrarea în locker"
-
-#: includes/class-europarcel-shipping.php:225
-msgid "Locker Delivery Fixed Price"
-msgstr "Preț fix livrare în locker"
-
-#: includes/class-europarcel-shipping.php:228
-msgid "Set the fixed shipping cost for locker deliveries"
-msgstr "Setează costul fix de transport pentru livrările în locker"
-
-#: includes/class-europarcel-shipping.php:232
-msgid "Free Locker Delivery Minimum Order Amount"
-msgstr "Suma minimă pentru livrare gratuită în locker"
-
-#: includes/class-europarcel-shipping.php:235
-msgid "Minimum order amount required to qualify for free locker delivery (leave empty for no free shipping)"
-msgstr "Suma minimă de comandă pentru livrare gratuită în locker (lasă gol pentru a dezactiva livrarea gratuită)"
-
-#: includes/class-europarcel-shipping.php:239
-msgid "Free Locker Delivery Shipping Classes"
-msgstr "Clase de expediere cu livrare gratuită în locker"
-
-#: includes/class-europarcel-shipping.php:244
-msgid "Select shipping classes that will always have free locker delivery regardless of order amount"
-msgstr "Selectează clasele de expediere care vor avea întotdeauna livrare gratuită în locker, indiferent de suma comenzii"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);\n"
 
 # Customer-facing strings (Frontend)
-#: includes/class-europarcel-checkout.php:172
-#: includes/class-europarcel-checkout.php:334
+#: includes/class-europarcel-checkout.php:172,
+#: includes/class-europarcel-checkout.php:319
 msgid "Select Locker"
 msgstr "Selectare locker"
 
@@ -211,10 +44,49 @@ msgstr "✓ Locker selectat -"
 msgid "Delivery locker selection"
 msgstr "Selectarea lockerului de livrare"
 
-#: includes/class-europarcel-checkout.php:188
-#: includes/class-europarcel-checkout.php:217
+#: includes/class-europarcel-checkout.php:196,
+#: includes/class-europarcel-checkout.php:225
 msgid "Security check failed. Please refresh the page and try again."
-msgstr "Verificarea de securitate a eșuat. Te rugăm să reîmprospătezi pagina și să încerci din nou."
+msgstr ""
+"Verificarea de securitate a eșuat. Te rugăm să reîmprospătezi pagina și să "
+"încerci din nou."
+
+# Courier Service Names (Constants)
+#: includes/class-europarcel-constants.php:47
+msgid "Cargus - Delivery to address"
+msgstr "Cargus - Livrare la adresă"
+
+#: includes/class-europarcel-constants.php:48
+msgid "DPD - Delivery to address"
+msgstr "DPD - Livrare la adresă"
+
+#: includes/class-europarcel-constants.php:49
+msgid "Fan Courier - Delivery to address"
+msgstr "Fan Courier - Livrare la adresă"
+
+#: includes/class-europarcel-constants.php:50
+msgid "GLS - Delivery to address"
+msgstr "GLS - Livrare la adresă"
+
+#: includes/class-europarcel-constants.php:51
+msgid "SameDay - Delivery to address"
+msgstr "SameDay - Livrare la adresă"
+
+#: includes/class-europarcel-constants.php:52
+msgid "Bookurier - Delivery to address"
+msgstr "Bookurier - Livrare la adresă"
+
+#: includes/class-europarcel-constants.php:53
+msgid "Sameday EasyBox - Delivery to locker"
+msgstr "Sameday EasyBox - Livrare la locker"
+
+#: includes/class-europarcel-constants.php:54
+msgid "Fan Courier FANbox - Delivery to locker"
+msgstr "Fan Courier FANbox - Livrare la locker"
+
+#: includes/class-europarcel-constants.php:55
+msgid "DPD Box - Delivery to locker"
+msgstr "DPD Box - Livrare la locker"
 
 # Custom Fields (Admin)
 #: includes/class-europarcel-custom-fields.php:49
@@ -261,43 +133,6 @@ msgstr "Preț fix"
 msgid "Calculated Price"
 msgstr "Preț calculat"
 
-# Courier Service Names (Constants)
-#: includes/class-europarcel-constants.php:47
-msgid "Cargus - Delivery to address"
-msgstr "Cargus - Livrare la adresă"
-
-#: includes/class-europarcel-constants.php:48
-msgid "DPD - Delivery to address"
-msgstr "DPD - Livrare la adresă"
-
-#: includes/class-europarcel-constants.php:49
-msgid "Fan Courier - Delivery to address"
-msgstr "Fan Courier - Livrare la adresă"
-
-#: includes/class-europarcel-constants.php:50
-msgid "GLS - Delivery to address"
-msgstr "GLS - Livrare la adresă"
-
-#: includes/class-europarcel-constants.php:51
-msgid "SameDay - Delivery to address"
-msgstr "SameDay - Livrare la adresă"
-
-#: includes/class-europarcel-constants.php:52
-msgid "Bookurier - Delivery to address"
-msgstr "Bookurier - Livrare la adresă"
-
-#: includes/class-europarcel-constants.php:53
-msgid "Sameday EasyBox - Delivery to locker"
-msgstr "Sameday EasyBox - Livrare la locker"
-
-#: includes/class-europarcel-constants.php:54
-msgid "Fan Courier FANbox - Delivery to locker"
-msgstr "Fan Courier FANbox - Livrare la locker"
-
-#: includes/class-europarcel-constants.php:55
-msgid "DPD Box - Delivery to locker"
-msgstr "DPD Box - Livrare la locker"
-
 # HTTP Request Error Messages (Technical)
 #: includes/class-europarcel-http-request.php:123
 msgid "HTTP request failed: "
@@ -307,14 +142,243 @@ msgstr "Cererea HTTP a eșuat: "
 msgid "Invalid response format"
 msgstr "Format de răspuns nevalid"
 
-#: includes/class-europarcel-http-request.php:136
-msgid "API Error"
-msgstr "Eroare API"
-
 #: includes/class-europarcel-http-request.php:138
 msgid "API Error: HTTP"
 msgstr "Eroare API: HTTP"
 
+#: includes/class-europarcel-http-request.php:136
+msgid "API Error"
+msgstr "Eroare API"
+
 #: includes/class-europarcel-http-request.php:144
 msgid "Invalid JSON response: "
 msgstr "Răspuns JSON nevalid: "
+
+#: includes/class-europarcel-shipping.php:52,
+#: includes/class-europarcel-shipping.php:99
+msgid "Europarcel Shipping"
+msgstr "Transport EuroParcel"
+
+#: includes/class-europarcel-shipping.php:53
+msgid ""
+"Premium courier shipping integration with support for home delivery and "
+"locker services"
+msgstr ""
+"Integrare premium pentru servicii de curierat cu suport pentru livrare la "
+"adresă și în locker"
+
+#: includes/class-europarcel-shipping.php:90
+msgid "Basic Settings"
+msgstr "Setări de bază"
+
+#: includes/class-europarcel-shipping.php:92
+msgid "Configure your connection and basic plugin settings"
+msgstr "Configurează conexiunea și setările de bază ale plugin-ului"
+
+#: includes/class-europarcel-shipping.php:96
+msgid "Method Title"
+msgstr "Titlul metodei"
+
+#: includes/class-europarcel-shipping.php:98
+msgid ""
+"The shipping method title displayed in the admin shipping zones configuration"
+msgstr ""
+"Titlul metodei de transport afișat în configurarea zonelor de transport din "
+"admin"
+
+#: includes/class-europarcel-shipping.php:103
+msgid "API Key"
+msgstr "Cheie API"
+
+#: includes/class-europarcel-shipping.php:105
+msgid ""
+"Your API key for accessing the shipping services.<br><a href=\"https://"
+"www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-"
+"secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
+msgstr ""
+"Cheia ta API pentru accesarea serviciilor de transport.<br><a href=\"https://"
+"www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-"
+"secondary\" style=\"margin-top: 5px;\">Obține cheia API aici →</a>"
+
+#: includes/class-europarcel-shipping.php:121
+msgid "Connection Error"
+msgstr "Eroare de conexiune"
+
+#: includes/class-europarcel-shipping.php:123
+msgid "Unable to connect to eAWB."
+msgstr "Nu se poate conecta la eAWB."
+
+#: includes/class-europarcel-shipping.php:123
+msgid "Please verify your API key is correct and try again."
+msgstr "Te rugăm să verifici că cheia API este corectă și încearcă din nou."
+
+#. translators: %s: Customer name from API
+#: includes/class-europarcel-shipping.php:145
+msgid "✅ Connected: %s"
+msgstr "✅ Conectat: %s"
+
+#: includes/class-europarcel-shipping.php:149
+msgid "Service Configuration"
+msgstr "Configurarea serviciilor"
+
+#: includes/class-europarcel-shipping.php:151
+msgid "Configure your shipping addresses and available services"
+msgstr "Configurează adresele de expediere și serviciile disponibile"
+
+#: includes/class-europarcel-shipping.php:155
+msgid "Primary Sender Address"
+msgstr "Adresa principală de expediere"
+
+#: includes/class-europarcel-shipping.php:157
+msgid ""
+"Default sender address for eAWB order imports<br><a href=\"https://"
+"www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" "
+"class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Sender "
+"Addresses →</a>"
+msgstr ""
+"Adresa implicită de expediere pentru importul comenzilor în eAWB<br><a "
+"href=\"https://www.eawb.ro/dashboard/addresses?tab=sender\" "
+"target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;"
+"\">Gestionează adresele de expediere →</a>"
+
+#: includes/class-europarcel-shipping.php:163
+msgid "Primary Billing Address"
+msgstr "Adresa principală de facturare"
+
+#: includes/class-europarcel-shipping.php:165
+msgid ""
+"Default billing address for eAWB order imports<br><a href=\"https://"
+"www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" "
+"class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Billing "
+"Addresses →</a>"
+msgstr ""
+"Adresa implicită de facturare pentru importul comenzilor în eAWB<br><a "
+"href=\"https://www.eawb.ro/dashboard/addresses?tab=billing\" "
+"target=\"_blank\" class=\"button button-secondary\" style=\"margin-top: 5px;"
+"\">Gestionează adresele de facturare →</a>"
+
+#: includes/class-europarcel-shipping.php:171
+msgid "Available Shipping Services"
+msgstr "Servicii de transport disponibile"
+
+#: includes/class-europarcel-shipping.php:173
+msgid ""
+"Select the shipping services that will be available to your customers during "
+"checkout"
+msgstr ""
+"Selectează serviciile de transport care vor fi disponibile clienților la "
+"finalizarea comenzii"
+
+#: includes/class-europarcel-shipping.php:181
+msgid "Home Delivery Settings"
+msgstr "Setări livrare la adresă"
+
+#: includes/class-europarcel-shipping.php:183
+msgid "Configure address delivery options and pricing"
+msgstr "Configurează opțiunile și prețurile pentru livrarea la adresă"
+
+#: includes/class-europarcel-shipping.php:187
+msgid "Home Delivery Display Name"
+msgstr "Numele afișat pentru livrarea la adresă"
+
+#: includes/class-europarcel-shipping.php:190
+msgid ""
+"The shipping method name shown to customers at checkout for home delivery"
+msgstr ""
+"Numele metodei de transport afișat clienților la checkout pentru livrarea la "
+"adresă"
+
+#: includes/class-europarcel-shipping.php:194
+msgid "Home Delivery Fixed Price"
+msgstr "Preț fix livrare la adresă"
+
+#: includes/class-europarcel-shipping.php:197
+msgid "Set the fixed shipping cost for address deliveries"
+msgstr "Setează costul fix de transport pentru livrările la adresă"
+
+#: includes/class-europarcel-shipping.php:201
+msgid "Free Home Delivery Minimum Order Amount"
+msgstr "Suma minimă pentru livrare gratuită la adresă"
+
+#: includes/class-europarcel-shipping.php:204
+msgid ""
+"Minimum order amount required to qualify for free home delivery (leave empty "
+"for no free shipping)"
+msgstr ""
+"Suma minimă de comandă pentru livrare gratuită la adresă (lasă gol pentru a "
+"dezactiva livrarea gratuită)"
+
+#: includes/class-europarcel-shipping.php:208
+msgid "Free Home Delivery Shipping Classes"
+msgstr "Clase de expediere cu livrare gratuită la adresă"
+
+#: includes/class-europarcel-shipping.php:213
+msgid ""
+"Select shipping classes that will always have free home delivery regardless "
+"of order amount"
+msgstr ""
+"Selectează clasele de expediere care vor avea întotdeauna livrare gratuită "
+"la adresă, indiferent de suma comenzii"
+
+#: includes/class-europarcel-shipping.php:218
+msgid "Locker Delivery Settings"
+msgstr "Setări livrare în locker"
+
+#: includes/class-europarcel-shipping.php:220
+msgid "Configure locker delivery options and pricing"
+msgstr "Configurează opțiunile și prețurile pentru livrarea în locker"
+
+#: includes/class-europarcel-shipping.php:224
+msgid "Locker Delivery Display Name"
+msgstr "Numele afișat pentru livrarea în locker"
+
+#: includes/class-europarcel-shipping.php:227
+msgid ""
+"The shipping method name shown to customers at checkout for locker delivery"
+msgstr ""
+"Numele metodei de transport afișat clienților la checkout pentru livrarea în "
+"locker"
+
+#: includes/class-europarcel-shipping.php:231
+msgid "Locker Delivery Fixed Price"
+msgstr "Preț fix livrare în locker"
+
+#: includes/class-europarcel-shipping.php:234
+msgid "Set the fixed shipping cost for locker deliveries"
+msgstr "Setează costul fix de transport pentru livrările în locker"
+
+#: includes/class-europarcel-shipping.php:238
+msgid "Free Locker Delivery Minimum Order Amount"
+msgstr "Suma minimă pentru livrare gratuită în locker"
+
+#: includes/class-europarcel-shipping.php:241
+msgid ""
+"Minimum order amount required to qualify for free locker delivery (leave "
+"empty for no free shipping)"
+msgstr ""
+"Suma minimă de comandă pentru livrare gratuită în locker (lasă gol pentru a "
+"dezactiva livrarea gratuită)"
+
+#: includes/class-europarcel-shipping.php:245
+msgid "Free Locker Delivery Shipping Classes"
+msgstr "Clase de expediere cu livrare gratuită în locker"
+
+#: includes/class-europarcel-shipping.php:250
+msgid ""
+"Select shipping classes that will always have free locker delivery "
+"regardless of order amount"
+msgstr ""
+"Selectează clasele de expediere care vor avea întotdeauna livrare gratuită "
+"în locker, indiferent de suma comenzii"
+
+#: includes/class-europarcel-shipping.php:255
+msgid "Excluded Shipping Classes for Lockers"
+msgstr "Clase de expediere excluse pentru lockere"
+
+#: includes/class-europarcel-shipping.php:260
+msgid ""
+"Select shipping classes that should not have locker delivery options "
+"available (e.g., large products or items unsuitable for lockers)"
+msgstr ""
+"Selectează clasele de expediere care nu ar trebui să aibă opțiuni de livrare "
+"în locker (ex: produse mari sau neadecvate pentru lockere)"
