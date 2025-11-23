@@ -92,7 +92,7 @@ add_action('woocommerce_shipping_init', 'europarcel_shipping_init');
 function europarcel_shipping_init() {
     if (!class_exists('Europarcel_Plugin_Shipping_Method')) {
         require_once plugin_dir_path(__FILE__) . 'includes/class-europarcel-shipping.php';
-        add_filter('woocommerce_shipping_methods', 'add_europarcel_shipping');
+        add_filter('woocommerce_shipping_methods', 'europarcel_shipping_add');
     }
 }
 
@@ -103,7 +103,7 @@ function europarcel_shipping_init() {
  * @param    array    $methods    Existing shipping methods
  * @return   array                Updated shipping methods
  */
-function add_europarcel_shipping($methods) {
+function europarcel_shipping_add($methods) {
     $methods['europarcel_shipping'] = 'Europarcel_Plugin_Shipping_Method';
     return $methods;
 }
