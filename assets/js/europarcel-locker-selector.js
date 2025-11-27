@@ -12,7 +12,7 @@
 (function ($) {
 	'use strict';
 
-	const checkoutType = europarcel_ajax.checkout_type || 'blocks';
+	const checkoutType = europarcelcom_wc_ajax.checkout_type || 'blocks';
 
 	/**
 	 * Helper function to get WooCommerce county/state
@@ -93,12 +93,12 @@
 		const city = window.getWooCommerceCity();
 
 		const instanceId = window.getSelectedShippingInstanceId();
-		const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
-			? europarcel_ajax.instances_lockers[instanceId]
+		const carrierIds = europarcelcom_wc_ajax.instances_lockers && europarcelcom_wc_ajax.instances_lockers[instanceId]
+			? europarcelcom_wc_ajax.instances_lockers[instanceId]
 			: [];
 
 		if (!carrierIds || carrierIds.length === 0) {
-			alert(europarcel_ajax.i18n.no_carriers_configured);
+			alert(europarcelcom_wc_ajax.i18n.no_carriers_configured);
 			return;
 		}
 
@@ -119,12 +119,12 @@
 	 * Initialize locker selector functionality
 	 */
         function initializeLockerSelector() {
-		let instances_lockers = europarcel_ajax.instances_lockers;
-		let user_lockers = europarcel_ajax.user_lockers;
-		let order_lockers = europarcel_ajax.order_lockers;
+		let instances_lockers = europarcelcom_wc_ajax.instances_lockers;
+		let user_lockers = europarcelcom_wc_ajax.user_lockers;
+		let order_lockers = europarcelcom_wc_ajax.order_lockers;
 
 		function updateButtonText(button, hasSelectedLocker) {
-			const newText = hasSelectedLocker ? europarcel_ajax.i18n.modify_locker : europarcel_ajax.i18n.select_locker;
+			const newText = hasSelectedLocker ? europarcelcom_wc_ajax.i18n.modify_locker : europarcelcom_wc_ajax.i18n.select_locker;
 			button.textContent = newText;
 		}
 
@@ -148,14 +148,14 @@
 				const blocksDetails = document.getElementById('europarcel-blocks-location-details');
 				
 				if (blocksButton) {
-					blocksButton.textContent = europarcel_ajax.i18n.modify_locker;
+					blocksButton.textContent = europarcelcom_wc_ajax.i18n.modify_locker;
 				}
 
 				if (blocksDetails) {
 					blocksDetails.innerHTML = `
 						<div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
 							<div style="font-weight: bold; margin-bottom: 4px;">
-								${europarcel_ajax.i18n.locker_selected} ${normalizedLocker.carrier_name}
+								${europarcelcom_wc_ajax.i18n.locker_selected} ${normalizedLocker.carrier_name}
 							</div>
 							<div style="font-weight: 600; margin-bottom: 2px;">
 								${normalizedLocker.name}
@@ -170,7 +170,7 @@
 			} else {
 				const classicButton = document.querySelector('button[onclick="openLockerSelector()"]');
 				if (classicButton) {
-					classicButton.textContent = europarcel_ajax.i18n.modify_locker;
+					classicButton.textContent = europarcelcom_wc_ajax.i18n.modify_locker;
 				}
 
 				const details = document.getElementById('europarcel-location-details');
@@ -178,7 +178,7 @@
 					details.innerHTML = `
 						<div style="margin-top: 10px; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; background-color: rgba(0,0,0,0.02);">
 							<div style="font-weight: bold; margin-bottom: 4px;">
-								${europarcel_ajax.i18n.locker_selected} ${normalizedLocker.carrier_name}
+								${europarcelcom_wc_ajax.i18n.locker_selected} ${normalizedLocker.carrier_name}
 							</div>
 							<div style="font-weight: 600; margin-bottom: 2px;">
 								${normalizedLocker.name}
@@ -259,7 +259,7 @@
                     button.type = 'button';
                     button.style.width = '100%';
                     button.style.marginBottom = '10px';
-                    button.textContent = europarcel_ajax.i18n.select_locker;
+                    button.textContent = europarcelcom_wc_ajax.i18n.select_locker;
                     button.onclick = function (event) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -285,12 +285,12 @@
                 const city = window.getWooCommerceCity();
 
                 const instanceId = window.getSelectedShippingInstanceId();
-                const carrierIds = europarcel_ajax.instances_lockers && europarcel_ajax.instances_lockers[instanceId]
-                        ? europarcel_ajax.instances_lockers[instanceId]
+                const carrierIds = europarcelcom_wc_ajax.instances_lockers && europarcelcom_wc_ajax.instances_lockers[instanceId]
+                        ? europarcelcom_wc_ajax.instances_lockers[instanceId]
                         : [];
 
                 if (!carrierIds || carrierIds.length === 0) {
-                    alert(europarcel_ajax.i18n.no_carriers_configured);
+                    alert(europarcelcom_wc_ajax.i18n.no_carriers_configured);
                     hideLoadingState();
                     return;
                 }
@@ -321,13 +321,13 @@
                 const button = document.getElementById('europarcel-blocks-locker-btn');
                 if (button) {
                     button.disabled = true;
-                    button.textContent = europarcel_ajax.i18n.loading;
+                    button.textContent = europarcelcom_wc_ajax.i18n.loading;
                     button.style.opacity = '0.7';
                 }
             } else {
                 document.querySelectorAll('.select-locker-btn').forEach(btn => {
                     btn.disabled = true;
-                    btn.textContent = europarcel_ajax.i18n.loading;
+                    btn.textContent = europarcelcom_wc_ajax.i18n.loading;
                     btn.style.opacity = '0.7';
                 });
             }
@@ -376,11 +376,11 @@
 
         function updateWooCommerceFields(locker) {
             $.ajax({
-                url: europarcel_ajax.ajax_url,
+                url: europarcelcom_wc_ajax.ajax_url,
                 type: 'POST',
                 data: {
-                    action: 'update_locker_shipping',
-                    security: europarcel_ajax.nonce,
+                    action: 'europarcelcomwc_update_locker_shipping',
+                    security: europarcelcom_wc_ajax.nonce,
                     instance_id: window.getSelectedShippingInstanceId(),
                     locker_id: locker.id,
                     carrier_id: locker.carrier_id,
@@ -411,7 +411,7 @@
             if (selectedMethod) {
                 const methodValue = selectedMethod.value || selectedMethod.id || '';
                 // Check if it's a locker method (must have _locker suffix)
-                isLockerMethod = methodValue.includes('europarcel_shipping') && methodValue.includes('_locker');
+                isLockerMethod = methodValue.includes('europarcelcom_wc_shipping') && methodValue.includes('_locker');
             }
 
             // Check if current shipping method instance has locker services

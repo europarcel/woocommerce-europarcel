@@ -14,10 +14,12 @@
  * @subpackage Europarcel/includes
  */
 
-namespace EuroparcelShipping;
+namespace EuroparcelComWCShipping;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-defined('ABSPATH') || exit;
-include_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-constants.php';
+include_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-constants.php';
 
 /**
  * EuroParcel Request Data Class
@@ -31,7 +33,7 @@ include_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-constants.php';
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class EuroparcelRequestData {
+class EuroParcelComWC_RequestData {
 
 	/**
 	 * The WooCommerce shipping instance ID
@@ -120,7 +122,7 @@ class EuroparcelRequestData {
 	 */
 	public function __construct(int $instance_id, $allow_locker = false) {
 		$this->instance_id = $instance_id;
-		$settings = get_option('woocommerce_europarcel_shipping_' . $instance_id . '_settings');
+		$settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $instance_id . '_settings');
 
 		if (!$settings || !isset($settings['available_services'])) {
 			return;
@@ -136,7 +138,7 @@ class EuroparcelRequestData {
 			return;
 		}
 
-		$services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
+		$services_config = \EuroparcelComWCShipping\EuroParcelComWC_Constants::getSettingsServices($available_services);
 		
 		if (count($services_config) == 1) {
 			$this->request_data['carrier_id'] = intval($services_config[0]['carrier_id']);

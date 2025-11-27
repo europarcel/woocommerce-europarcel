@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * EuroParcel Main Plugin Class
  *
@@ -26,7 +30,7 @@
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class Europarcel_Main {
+class EuroParcelComWC_Main {
 
 	/**
 	 * The plugin name
@@ -64,8 +68,8 @@ class Europarcel_Main {
 	 * @since    1.0.3
 	 */
 	public function __construct() {
-		if (defined('EUROPARCEL_VERSION')) {
-			$this->version = EUROPARCEL_VERSION;
+		if (defined('EUROPARCELCOM_WC_VERSION')) {
+			$this->version = EUROPARCELCOM_WC_VERSION;
 		} else {
 			$this->version = '1.0.3';
 		}
@@ -84,7 +88,8 @@ class Europarcel_Main {
 	 * @since    1.0.3
 	 */
 	private function load_dependencies() {
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-europarcel-checkout.php';
+            $plugin_path=plugin_dir_path(dirname(__FILE__));
+		require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-checkout.php';
 	}
 
 	/**
@@ -96,13 +101,13 @@ class Europarcel_Main {
 	 * @since    1.0.3
 	 */
 	private function define_woocommerce_hooks() {
-		$this->checkout_handler = new EuroparcelCheckout();
+		$this->checkout_handler = new EuroParcelComWC_Checkout();
 
 		// Register AJAX handlers for locker functionality
-		add_action('wp_ajax_get_locker_carriers', array($this->checkout_handler, 'ajax_get_locker_carriers'));
-		add_action('wp_ajax_nopriv_get_locker_carriers', array($this->checkout_handler, 'ajax_get_locker_carriers'));
-		add_action('wp_ajax_update_locker_shipping', array($this->checkout_handler, 'wp_ajax_update_locker_shipping'));
-		add_action('wp_ajax_nopriv_update_locker_shipping', array($this->checkout_handler, 'wp_ajax_update_locker_shipping'));
+		add_action('wp_ajax_europarcelcomwc_get_locker_carriers', array($this->checkout_handler, 'wp_ajax_europarcelcomwc_get_locker_carriers'));
+		add_action('wp_ajax_nopriv_europarcelcomwc_get_locker_carriers', array($this->checkout_handler, 'wp_ajax_europarcelcomwc_get_locker_carriers'));
+		add_action('wp_ajax_europarcelcomwc_update_locker_shipping', array($this->checkout_handler, 'wp_ajax_europarcelcomwc_update_locker_shipping'));
+		add_action('wp_ajax_nopriv_europarcelcomwc_update_locker_shipping', array($this->checkout_handler, 'wp_ajax_europarcelcomwc_update_locker_shipping'));
 
 		// Smart initialization for both checkout types
 		add_action('wp_footer', array($this->checkout_handler, 'smart_init'));

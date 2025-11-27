@@ -14,12 +14,14 @@
  * @subpackage Europarcel/includes
  */
 
-namespace EuroparcelShipping;
+namespace EuroparcelComWCShipping;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-defined('ABSPATH') || exit;
-include_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-constants.php';
-require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-request-data.php';
-require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-http-request.php';
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-constants.php';
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-request-data.php';
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-http-request.php';
 
 /**
  * EuroParcel Customer Class
@@ -33,7 +35,7 @@ require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-http-request.php
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class EuroparcelCustomer {
+class EuroParcelComWC_Customer {
 
 	/**
 	 * The WooCommerce shipping instance ID
@@ -64,7 +66,7 @@ class EuroparcelCustomer {
 	 */
 	public function __construct($instance_id) {
 		$this->instance_id = $instance_id;
-		$this->settings = get_option('woocommerce_europarcel_shipping_' . $this->instance_id . '_settings');
+		$this->settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $this->instance_id . '_settings');
 	}
 
 	/**
@@ -78,7 +80,7 @@ class EuroparcelCustomer {
 	 */
 	public function getCustomerInfo() {
 		try {
-			$http_request = new \EuroparcelShipping\EuroparcelHttpRequest($this->instance_id);
+			$http_request = new \EuroparcelComWCShipping\EuroParcelComWC_HttpRequest($this->instance_id);
 			$response = $http_request->get('public/account/profile');
 		} catch (\Exception $ex) {
 			return null;
@@ -106,7 +108,7 @@ class EuroparcelCustomer {
 				'page' => 1,
 				'per_page' => 200
 			];
-			$http_request = new \EuroparcelShipping\EuroparcelHttpRequest($this->instance_id);
+			$http_request = new \EuroparcelComWCShipping\EuroParcelComWC_HttpRequest($this->instance_id);
 			$response = $http_request->get('public/addresses/billing', $data);
 
 			if (is_array($response) && isset($response['list'])) {
@@ -144,7 +146,7 @@ class EuroparcelCustomer {
 				'page' => 1,
 				'per_page' => 200
 			];
-			$http_request = new \EuroparcelShipping\EuroparcelHttpRequest($this->instance_id);
+			$http_request = new \EuroparcelComWCShipping\EuroParcelComWC_HttpRequest($this->instance_id);
 			$response = $http_request->get('public/addresses/shipping', $data);
 
 			if (is_array($response) && isset($response['list'])) {
@@ -180,7 +182,7 @@ class EuroparcelCustomer {
 	 * @return   array|false    Array containing [standard_services, locker_services] or false on failure
 	 */
 	public function getPrices($package, $allow_locker) {
-		$data = new \EuroparcelShipping\EuroparcelRequestData($this->instance_id, $allow_locker);
+		$data = new \EuroparcelComWCShipping\EuroParcelComWC_RequestData($this->instance_id, $allow_locker);
 		
 		if (!$this->settings['europarcel_customer']) {
 			return false;
@@ -205,7 +207,7 @@ class EuroparcelCustomer {
 		$data->setDeliveryAddress($delivery_address);
 		
 		try {
-			$http_request = new \EuroparcelShipping\EuroparcelHttpRequest($this->instance_id);
+			$http_request = new \EuroparcelComWCShipping\EuroParcelComWC_HttpRequest($this->instance_id);
 			$response = $http_request->post('public/orders/prices', $data->getData());
 		} catch (\Exception $ex) {
 			return false;
@@ -222,7 +224,7 @@ class EuroparcelCustomer {
 				return false;
 			}
 
-			$services_config = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
+			$services_config = \EuroparcelComWCShipping\EuroParcelComWC_Constants::getSettingsServices($available_services);
 			$standard_services = []; // Standard delivery (home to home)
 			$locker_services = [];   // Locker delivery (home to locker)
 			
@@ -295,7 +297,7 @@ class EuroparcelCustomer {
 			return [];
 		}
 
-		$all_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
+		$all_services = \EuroparcelComWCShipping\EuroParcelComWC_Constants::getSettingsServices($available_services);
 		$locker_services = array_filter($all_services, function ($service) {
 			return $service['service_id'] == 2; // Locker delivery service
 		});
@@ -331,7 +333,7 @@ class EuroparcelCustomer {
 			return false;
 		}
 
-		$all_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
+		$all_services = \EuroparcelComWCShipping\EuroParcelComWC_Constants::getSettingsServices($available_services);
 		$standard_services = array_filter($all_services, function ($service) {
 			return $service['service_id'] == 1; // Standard delivery service
 		});

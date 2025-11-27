@@ -14,9 +14,10 @@
  * @subpackage Europarcel/includes
  */
 
-namespace EuroparcelShipping;
-
-defined('ABSPATH') || exit;
+namespace EuroparcelComWCShipping;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * EuroParcel Constants Class
@@ -30,7 +31,7 @@ defined('ABSPATH') || exit;
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class EuroparcelConstants {
+class EuroParcelComWC_Constants {
 
 	/**
 	 * Get available shipping services
@@ -49,6 +50,8 @@ class EuroparcelConstants {
 			'fan_courier' => __('Fan Courier - Delivery to address', 'europarcel-com'),
 			'gls_national' => __('GLS - Delivery to address', 'europarcel-com'),
 			'sameday' => __('SameDay - Delivery to address', 'europarcel-com'),
+                        'dsc' => __('Dragon star - Delivery to address', 'europarcel-com'),
+                        'fedex' => __('FedEx - Delivery to address', 'europarcel-com'),
 			'bookurier' => __('Bookurier - Delivery to address', 'europarcel-com'),
 			'easybox' => __('Sameday EasyBox - Delivery to locker', 'europarcel-com'),
 			'fanbox' => __('Fan Courier FANbox - Delivery to locker', 'europarcel-com'),
@@ -102,6 +105,16 @@ class EuroparcelConstants {
 			'sameday' => [
 				'carrier' => 'sameday',
 				'carrier_id' => 6,
+				'service_id' => 1
+			],
+			'dsc' => [
+				'carrier' => 'dsc',
+				'carrier_id' => 14,
+				'service_id' => 1
+			],
+			'fedex' => [
+				'carrier' => 'fedex',
+				'carrier_id' => 78,
 				'service_id' => 1
 			],
 			'bookurier' => [

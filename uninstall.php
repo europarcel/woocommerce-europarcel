@@ -1,5 +1,7 @@
 <?php
-
+if (!defined('ABSPATH')) {
+    exit;
+}
 /**
  * Plugin uninstall handler
  *
@@ -18,4 +20,4 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 // Clean up plugin data
-delete_option('europarcel_version');
+delete_option('EUROPARCELCOM_WC_VERSION');

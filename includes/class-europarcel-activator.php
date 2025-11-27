@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Fired during plugin activation
  *
@@ -20,7 +24,7 @@
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class Europarcel_Activator {
+class EuroParcelComWC_Activator {
 
 	/**
 	 * Plugin activation handler
@@ -31,8 +35,8 @@ class Europarcel_Activator {
 	 */
 	public static function activate() {
 		// Store plugin version
-		if (!get_option('europarcel_version')) {
-			add_option('europarcel_version', '1.0.3');
+		if (!get_option('EUROPARCELCOM_WC_VERSION')) {
+			add_option('EUROPARCELCOM_WC_VERSION', '1.0.3');
 		}
 		
 		flush_rewrite_rules();
