@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * Fired during plugin activation
  *
  * @link       https://europarcel.com
- * @since      1.0.3
+ * @since      1.0.4
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.3
+ * @since      1.0.4
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -31,12 +31,12 @@ class EuroParcelComWC_Activator {
 	 *
 	 * Handles any setup tasks required when the plugin is activated.
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 */
 	public static function activate() {
 		// Store plugin version
 		if (!get_option('EUROPARCELCOM_WC_VERSION')) {
-			add_option('EUROPARCELCOM_WC_VERSION', '1.0.3');
+			add_option('EUROPARCELCOM_WC_VERSION', '1.0.4');
 		}
 		
 		flush_rewrite_rules();

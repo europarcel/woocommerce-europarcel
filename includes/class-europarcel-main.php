@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
  * handler and AJAX functionality for both checkout types.
  *
  * @link       https://eawb.ro
- * @since      1.0.3
+ * @since      1.0.4
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
  * Manages checkout detection and AJAX handlers for
  * both classic and blocks checkout types.
  *
- * @since      1.0.3
+ * @since      1.0.4
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -35,7 +35,7 @@ class EuroParcelComWC_Main {
 	/**
 	 * The plugin name
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 * @access   protected
 	 * @var      string    $plugin_name    The plugin identifier name
 	 */
@@ -44,7 +44,7 @@ class EuroParcelComWC_Main {
 	/**
 	 * The plugin version
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 * @access   protected
 	 * @var      string    $version    The current plugin version
 	 */
@@ -53,7 +53,7 @@ class EuroParcelComWC_Main {
 	/**
 	 * The checkout handler instance
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 * @access   protected
 	 * @var      EuroparcelCheckout    $checkout_handler    Handles checkout functionality
 	 */
@@ -65,13 +65,13 @@ class EuroParcelComWC_Main {
 	 * Sets the plugin name and version, loads dependencies,
 	 * and defines WooCommerce hooks for checkout functionality.
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 */
 	public function __construct() {
 		if (defined('EUROPARCELCOM_WC_VERSION')) {
 			$this->version = EUROPARCELCOM_WC_VERSION;
 		} else {
-			$this->version = '1.0.3';
+			$this->version = '1.0.4';
 		}
 		$this->plugin_name = 'europarcel-com';
 
@@ -85,7 +85,7 @@ class EuroParcelComWC_Main {
 	 * Loads the checkout handler class required for
 	 * managing checkout functionality and locker selection.
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 */
 	private function load_dependencies() {
             $plugin_path=plugin_dir_path(dirname(__FILE__));
@@ -98,7 +98,7 @@ class EuroParcelComWC_Main {
 	 * Initializes the checkout handler and registers all necessary
 	 * WordPress hooks for AJAX functionality and checkout integration.
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 */
 	private function define_woocommerce_hooks() {
 		$this->checkout_handler = new EuroParcelComWC_Checkout();
@@ -122,7 +122,7 @@ class EuroParcelComWC_Main {
 	 * All hooks are registered in the constructor,
 	 * so this method is available for future use if needed.
 	 *
-	 * @since    1.0.3
+	 * @since    1.0.4
 	 */
 	public function run() {
 		// All hooks are already registered in constructor
@@ -131,7 +131,7 @@ class EuroParcelComWC_Main {
 	/**
 	 * Get the plugin name
 	 *
-	 * @since     1.0.3
+	 * @since     1.0.4
 	 * @return    string    The plugin name
 	 */
 	public function get_plugin_name() {
@@ -141,7 +141,7 @@ class EuroParcelComWC_Main {
 	/**
 	 * Get the plugin version
 	 *
-	 * @since     1.0.3
+	 * @since     1.0.4
 	 * @return    string    The plugin version number
 	 */
 	public function get_version() {

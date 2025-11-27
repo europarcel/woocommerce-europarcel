@@ -6,7 +6,7 @@
  * and locker selection workflow.
  *
  * @package    Europarcel
- * @since      1.0.3
+ * @since      1.0.4
  */
 
 (function ($) {
