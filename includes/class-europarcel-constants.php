@@ -14,9 +14,10 @@
  * @subpackage Europarcel/includes
  */
 
-namespace EuroparcelShipping;
-
-defined('ABSPATH') || exit;
+namespace EuroparcelComWCShipping;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * EuroParcel Constants Class
@@ -30,7 +31,7 @@ defined('ABSPATH') || exit;
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class EuroparcelConstants {
+class EuroParcelComWC_Constants {
 
 	/**
 	 * Get available shipping services

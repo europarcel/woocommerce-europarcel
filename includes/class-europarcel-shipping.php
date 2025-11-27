@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * EuroParcel WooCommerce Shipping Method
  *
@@ -13,10 +17,9 @@
  * @package    Europarcel
  * @subpackage Europarcel/includes
  */
-defined('ABSPATH') || exit;
-require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-customer.php';
-require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-custom-fields.php';
-include_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-constants.php';
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-customer.php';
+//require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-custom-fields.php';
+include_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-constants.php';
 
 /**
  * WooCommerce EuroParcel Shipping Method Class
@@ -30,7 +33,7 @@ include_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-constants.php';
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
+class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
 
     /**
      * Initialize the shipping method
@@ -43,7 +46,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
      */
     public function __construct($instance_id = 0) {
         $this->instance_id = absint($instance_id);
-        $this->id = 'europarcel_shipping';
+        $this->id = 'europarcelcom_wc_shipping';
         /*
           if ($this->instance_id) {
           $this->id .= '_' . $this->instance_id;
@@ -69,7 +72,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
         if (!$this->instance_id) {
             return;
         }
-        $this->settings = get_option('woocommerce_europarcel_shipping_' . $this->instance_id . '_settings');
+        $this->settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $this->instance_id . '_settings');
         $this->init_form_fields();
         $this->title = $this->get_option('title');
         //add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
@@ -113,7 +116,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
         if (!isset($this->settings['api_key']) || empty($this->settings['api_key'])) {
             return;
         }
-        $customer = new \EuroparcelShipping\EuroparcelCustomer($this->instance_id);
+        $customer = new \EuroparcelComWCShipping\EuroParcelComWC_Customer($this->instance_id);
         $customer_info = $customer->getCustomerInfo();
         if (!$customer_info) {
             $this->form_fields = array_merge($this->form_fields, array(
@@ -176,7 +179,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
                 'class' => 'wc-enhanced-select',
                 'css' => 'width: 450px;height:450px;',
                 'default' => array(),
-                'options' => \EuroparcelShipping\EuroparcelConstants::getAvailableServices()
+                'options' => \EuroparcelComWCShipping\EuroParcelComWC_Constants::getAvailableServices()
             ),
             'section_home_delivery' => array(
                 'title' => __('Home Delivery Settings', 'europarcel-com'),
@@ -333,7 +336,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
                 return;
             }
         }
-        $customer = new \EuroparcelShipping\EuroparcelCustomer($this->instance_id);
+        $customer = new \EuroparcelComWCShipping\EuroParcelComWC_Customer($this->instance_id);
         if (!$customer->settings) {
             return false;
         }
@@ -432,7 +435,7 @@ class Europarcel_Plugin_Shipping_Method extends WC_Shipping_Method {
 
             // Check for saved user locker preferences
             if ($user_id) {
-                $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
+                $user_lockers = get_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', true);
                 if (is_array($user_lockers)) {
                     foreach ($user_lockers as $instance_id => $locker) {
                         if (in_array($locker['carrier_id'], $customer_locker_carriers) && is_array($locker) && $instance_id == $this->instance_id) {

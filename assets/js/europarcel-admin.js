@@ -12,9 +12,9 @@ jQuery(document).ready(function ($) {
 	'use strict';
 
 	// Update default service dropdown when available services change
-	$('select[name="woocommerce_europarcel_shipping_available_services[]"]').on('change', function () {
+	$('select[name="woocommerce_europarcelcom_wc_shipping_available_services[]"]').on('change', function () {
 		var available = $(this).val() || [];
-		var $default = $('select[name="woocommerce_europarcel_shipping_default_service"]');
+		var $default = $('select[name="woocommerce_europarcelcom_wc_shipping_default_service"]');
 
 		$default.find('option').each(function () {
 			if ($(this).val() && !available.includes($(this).val()) && $(this).val() !== 'none') {

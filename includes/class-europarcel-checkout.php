@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * EuroParcel Checkout Handler
  *
@@ -13,9 +17,8 @@
  * @package    Europarcel
  * @subpackage Europarcel/includes
  */
-
-require_once dirname(__DIR__) . '/includes/class-europarcel-customer.php';
-require_once dirname(__DIR__) . '/includes/class-europarcel-constants.php';
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-constants.php';
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-customer.php';
 
 /**
  * EuroParcel Checkout Class
@@ -29,115 +32,115 @@ require_once dirname(__DIR__) . '/includes/class-europarcel-constants.php';
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class EuroparcelCheckout {
+class EuroParcelComWC_Checkout {
 
-	/**
-	 * Whether the current checkout is blocks-based
-	 *
-	 * @since    1.0.3
-	 * @access   private
-	 * @var      bool    $is_blocks_checkout    True if blocks checkout detected
-	 */
-	private $is_blocks_checkout = false;
+    /**
+     * Whether the current checkout is blocks-based
+     *
+     * @since    1.0.3
+     * @access   private
+     * @var      bool    $is_blocks_checkout    True if blocks checkout detected
+     */
+    private $is_blocks_checkout = false;
 
-	/**
-	 * Initialize the checkout handler
-	 *
-	 * Constructor kept minimal - actual initialization happens
-	 * via smart_init method to detect checkout type first.
-	 *
-	 * @since    1.0.3
-	 */
-	public function __construct() {
-		// Constructor kept minimal - initialization happens via smart_init
-	}
+    /**
+     * Initialize the checkout handler
+     *
+     * Constructor kept minimal - actual initialization happens
+     * via smart_init method to detect checkout type first.
+     *
+     * @since    1.0.3
+     */
+    public function __construct() {
+        // Constructor kept minimal - initialization happens via smart_init
+    }
 
-	/**
-	 * Smart initialization - detects checkout type
-	 *
-	 * Automatically detects whether the current checkout is Classic
-	 * or Blocks-based and initializes the appropriate functionality.
-	 *
-	 * @since    1.0.3
-	 */
-	public function smart_init() {
-		if (!is_checkout()) {
-			return;
-		}
+    /**
+     * Smart initialization - detects checkout type
+     *
+     * Automatically detects whether the current checkout is Classic
+     * or Blocks-based and initializes the appropriate functionality.
+     *
+     * @since    1.0.3
+     */
+    public function smart_init() {
+        if (!is_checkout()) {
+            return;
+        }
 
-		$this->is_blocks_checkout = has_block('woocommerce/checkout');
+        $this->is_blocks_checkout = has_block('woocommerce/checkout');
 
-		if ($this->is_blocks_checkout) {
-			$this->init_blocks_checkout();
-		} else {
-			$this->init_classic_checkout();
-		}
-	}
+        if ($this->is_blocks_checkout) {
+            $this->init_blocks_checkout();
+        } else {
+            $this->init_classic_checkout();
+        }
+    }
 
-	/**
-	 * Initialize blocks checkout
-	 *
-	 * Enqueues scripts and localizes data for WooCommerce Blocks checkout.
-	 *
-	 * @since    1.0.3
-	 */
-	private function init_blocks_checkout() {
-		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.8', true);
-		$this->localize_script_data();
-	}
+    /**
+     * Initialize blocks checkout
+     *
+     * Enqueues scripts and localizes data for WooCommerce Blocks checkout.
+     *
+     * @since    1.0.3
+     */
+    private function init_blocks_checkout() {
+        wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), '1.0', true);
+        wp_enqueue_script('europarcelcom-wc-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery', 'europarcelcom-wc-modal'), '2.8', true);
+        $this->localize_script_data();
+    }
 
-	/**
-	 * Initialize classic checkout
-	 *
-	 * Enqueues scripts and localizes data for WooCommerce Classic checkout.
-	 *
-	 * @since    1.0.3
-	 */
-	private function init_classic_checkout() {
-		wp_enqueue_script('europarcel-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcel-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel.php'), array('jquery', 'europarcel-modal'), '2.8', true);
-		$this->localize_script_data();
-	}
+    /**
+     * Initialize classic checkout
+     *
+     * Enqueues scripts and localizes data for WooCommerce Classic checkout.
+     *
+     * @since    1.0.3
+     */
+    private function init_classic_checkout() {
+        wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), '1.0', true);
+        wp_enqueue_script('europarcelcom-wc-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery', 'europarcelcom-wc-modal'), '2.8', true);
+        $this->localize_script_data();
+    }
 
-	/**
-	 * Prepare and localize script data
-	 *
-	 * Prepares AJAX data including user lockers, available carriers,
-	 * and checkout type information for JavaScript usage.
-	 *
-	 * @since    1.0.3
-	 */
-	private function localize_script_data() {
+    /**
+     * Prepare and localize script data
+     *
+     * Prepares AJAX data including user lockers, available carriers,
+     * and checkout type information for JavaScript usage.
+     *
+     * @since    1.0.3
+     */
+    private function localize_script_data() {
         $user_id = get_current_user_id();
         $user_lockers = null;
         $instances_lockers = [];
         $order_lockers = [];
-        
+
         if ($user_id) {
-            $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
+            $user_lockers = get_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', true);
             if (is_array($user_lockers)) {
                 foreach ($user_lockers as $key => $locker) {
                     $order_lockers[] = $locker['carrier_id'];
                 }
             }
         }
-        
+
         // Get all shipping method instances from shipping zones
         $shipping_zones = WC_Shipping_Zones::get_zones();
         $shipping_zones[] = new WC_Shipping_Zone(0); // Add default/worldwide zone
-        
+
         foreach ($shipping_zones as $zone_data) {
             if (is_array($zone_data)) {
                 $zone = new WC_Shipping_Zone($zone_data['id']);
             } else {
                 $zone = $zone_data;
             }
-            
+
             $shipping_methods = $zone->get_shipping_methods();
             foreach ($shipping_methods as $method) {
-                if (strpos($method->id, 'europarcel_shipping') === 0 && $method->enabled === 'yes') {
-                    $settings = get_option('woocommerce_europarcel_shipping_' . $method->instance_id . '_settings', []);
+                if (strpos($method->id, 'europarcelcom_wc_shipping') === 0 && $method->enabled === 'yes') {
+                    $settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $method->instance_id . '_settings', []);
                     if (isset($settings['available_services'])) {
                         // Ensure available_services is an array, convert string to array if needed
                         $available_services = $settings['available_services'];
@@ -146,10 +149,10 @@ class EuroparcelCheckout {
                         }
 
                         if (!empty($available_services)) {
-                            $method_services = \EuroparcelShipping\EuroparcelConstants::getSettingsServices($available_services);
-                        $locker_services = array_filter($method_services, function ($service) {
-                            return $service['service_id'] == 2;
-                        });
+                            $method_services = \EuroparcelComWCShipping\EuroParcelComWC_Constants::getSettingsServices($available_services);
+                            $locker_services = array_filter($method_services, function ($service) {
+                                return $service['service_id'] == 2;
+                            });
                             if (!empty($locker_services)) {
                                 $instances_lockers[$method->instance_id] = array_column($locker_services, 'carrier_id');
                             }
@@ -158,7 +161,7 @@ class EuroparcelCheckout {
                 }
             }
         }
-        
+
         // Localize script with AJAX parameters
         $script_data = [
             'ajax_url' => admin_url('admin-ajax.php'),
@@ -166,7 +169,7 @@ class EuroparcelCheckout {
             'user_lockers' => $user_lockers,
             'order_lockers' => $order_lockers,
             'instances_lockers' => $instances_lockers,
-            'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel.php'),
+            'plugin_url' => plugins_url('', dirname(__DIR__) . '/europarcel-com.php'),
             'checkout_type' => $this->is_blocks_checkout ? 'blocks' : 'classic',
             'i18n' => [
                 'select_locker' => __('Select Locker', 'europarcel-com'),
@@ -177,19 +180,19 @@ class EuroparcelCheckout {
                 'locker_selection_title' => __('Delivery locker selection', 'europarcel-com')
             ]
         ];
-        
-        wp_localize_script('europarcel-locker-selector', 'europarcel_ajax', $script_data);
+
+        wp_localize_script('europarcelcom-wc-locker-selector', 'europarcelcom_wc_ajax', $script_data);
     }
 
-	/**
-	 * AJAX handler for getting locker carriers
-	 *
-	 * Retrieves available locker carriers for a shipping instance.
-	 * Validates nonce and returns carrier data via JSON response.
-	 *
-	 * @since    1.0.3
-	 */
-	public function ajax_get_locker_carriers() {
+    /**
+     * AJAX handler for getting locker carriers
+     *
+     * Retrieves available locker carriers for a shipping instance.
+     * Validates nonce and returns carrier data via JSON response.
+     *
+     * @since    1.0.3
+     */
+    public function wp_ajax_europarcelcomwc_get_locker_carriers() {
         try {
             // Verify nonce for security
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'europarcel_locker_nonce')) {
@@ -199,7 +202,7 @@ class EuroparcelCheckout {
             // Get instance ID from the request
             $instance_id = isset($_POST['instance_id']) ? intval($_POST['instance_id']) : 1;
             // Create customer instance and get locker carriers
-            $customer = new \EuroparcelShipping\EuroparcelCustomer($instance_id);
+            $customer = new \EuroparcelComWCShipping\EuroParcelComWC_Customer($instance_id);
             $locker_carriers = $customer->get_locker_carriers();
 
             wp_send_json_success([
@@ -211,15 +214,15 @@ class EuroparcelCheckout {
         }
     }
 
-	/**
-	 * AJAX handler for updating locker shipping
-	 *
-	 * Updates the selected locker information in session and user meta.
-	 * Validates nonce and sanitizes all input data.
-	 *
-	 * @since    1.0.3
-	 */
-	public function wp_ajax_update_locker_shipping() {
+    /**
+     * AJAX handler for updating locker shipping
+     *
+     * Updates the selected locker information in session and user meta.
+     * Validates nonce and sanitizes all input data.
+     *
+     * @since    1.0.3
+     */
+    public function wp_ajax_europarcelcomwc_update_locker_shipping() {
         // Verify nonce for security
         if (!isset($_POST['security']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['security'])), 'europarcel_locker_nonce')) {
             wp_send_json_error(['message' => __('Security check failed. Please refresh the page and try again.', 'europarcel-com')]);
@@ -238,13 +241,13 @@ class EuroparcelCheckout {
             WC()->session->set('locker_info', $locker_info);
             $user_id = get_current_user_id();
             if ($user_id) {
-                $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
+                $user_lockers = get_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', true);
                 if (is_array($user_lockers) && $locker_info['instance_id']) {
                     $user_lockers = [$locker_info['instance_id'] => $locker_info] + $user_lockers;
-                    update_user_meta($user_id, '_europarcel_carrier_lockers', $user_lockers);
+                    update_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', $user_lockers);
                 } else {
-                    update_user_meta($user_id, '_europarcel_carrier_lockers', [$locker_info['instance_id'] => $locker_info]);
-                    $user_lockers = get_user_meta($user_id, '_europarcel_carrier_lockers', true);
+                    update_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', [$locker_info['instance_id'] => $locker_info]);
+                    $user_lockers = get_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', true);
                 }
             }
             $order_lockers = [];
@@ -261,30 +264,30 @@ class EuroparcelCheckout {
         wp_die();
     }
 
-	/**
-	 * Display locker selection button for classic checkout
-	 *
-	 * Called by woocommerce_review_order_after_shipping hook to display
-	 * the locker selection button in classic checkout when applicable.
-	 *
-	 * @since    1.0.3
-	 */
-	public function classic_checkout_button() {
+    /**
+     * Display locker selection button for classic checkout
+     *
+     * Called by woocommerce_review_order_after_shipping hook to display
+     * the locker selection button in classic checkout when applicable.
+     *
+     * @since    1.0.3
+     */
+    public function classic_checkout_button() {
         if (!is_checkout()) {
             return;
         }
 
         $shipping_methods = WC()->session->get('chosen_shipping_methods');
-        
+
         if (!is_array($shipping_methods) || empty($shipping_methods[0])) {
             return;
         }
 
         $shipping_method = explode(':', $shipping_methods[0]);
-        
+
         // Check if it's a europarcel shipping method
-        // Handle both 'europarcel_shipping' and 'europarcel_shipping_X' formats
-        if (empty($shipping_method[0]) || strpos($shipping_method[0], 'europarcel_shipping') !== 0) {
+        // Handle both 'europarcelcom_wc_shipping' and 'europarcelcom_wc_shipping_X' formats
+        if (empty($shipping_method[0]) || strpos($shipping_method[0], 'europarcelcom_wc_shipping') !== 0) {
             return;
         }
 
@@ -298,14 +301,14 @@ class EuroparcelCheckout {
         // Get the instance ID - could be from session format or embedded in method ID
         $instance_id = '1'; // default
         if (isset($shipping_method[1])) {
-            // From session format: europarcel_shipping:1_free_locker or europarcel_shipping:1_fixed_locker
+            // From session format: europarcelcom_wc_shipping:1_free_locker or europarcelcom_wc_shipping:1_fixed_locker
             // Extract only the numeric instance ID (remove suffixes like _free_locker, _fixed_locker, etc.)
             $instance_part = $shipping_method[1];
             if (preg_match('/^(\d+)/', $instance_part, $matches)) {
                 $instance_id = $matches[1];
             }
         } else {
-            // From embedded format: europarcel_shipping_1
+            // From embedded format: europarcelcom_wc_shipping_1
             $parts = explode('_', $shipping_method[0]);
             if (count($parts) >= 3 && is_numeric(end($parts))) {
                 $instance_id = end($parts);
@@ -321,5 +324,4 @@ class EuroparcelCheckout {
         echo '</td>';
         echo '</tr>';
     }
-
 }

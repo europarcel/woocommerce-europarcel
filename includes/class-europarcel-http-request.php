@@ -13,9 +13,10 @@
  * @subpackage Europarcel/includes
  */
 
-namespace EuroparcelShipping;
-
-defined('ABSPATH') || exit;
+namespace EuroparcelComWCShipping;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * EuroParcel HTTP Request Class
@@ -29,7 +30,7 @@ defined('ABSPATH') || exit;
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class EuroparcelHttpRequest {
+class EuroParcelComWC_HttpRequest {
 
 	/**
 	 * The shipping method instance ID
@@ -66,7 +67,7 @@ class EuroparcelHttpRequest {
 	 * @throws   \Exception             On API errors or invalid responses
 	 */
 	public function get(string $function, array $data = array(), int $timeout = 15) {
-		$url = EUROPARCEL_API_URL . $function;
+		$url = EUROPARCELCOM_WC_API_URL . $function;
 		
 		if (!empty($data)) {
 			$url .= '?' . http_build_query($data);
@@ -95,7 +96,7 @@ class EuroparcelHttpRequest {
 	 * @throws   \Exception             On API errors or invalid responses
 	 */
 	public function post(string $function, array $data = array(), int $timeout = 15) {
-		$url = EUROPARCEL_API_URL . $function;
+		$url = EUROPARCELCOM_WC_API_URL . $function;
 		
 		$params = array(
 			'body' => $data,
@@ -157,7 +158,7 @@ class EuroparcelHttpRequest {
 	 * @return   array    HTTP headers array with API key
 	 */
 	private function getHeader() {
-		$settings = get_option('woocommerce_europarcel_shipping_' . $this->instance_id . '_settings');
+		$settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $this->instance_id . '_settings');
 		return [
 			'accept' => 'application/json',
 			'X-API-Key' => isset($settings['api_key']) ? $settings['api_key'] : ''

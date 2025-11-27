@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Fired during plugin deactivation
  *
@@ -20,7 +24,7 @@
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
  */
-class Europarcel_Deactivator {
+class EuroParcelComWC_Deactivator {
 
 	/**
 	 * Plugin deactivation handler

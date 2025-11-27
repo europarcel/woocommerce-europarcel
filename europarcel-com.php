@@ -35,27 +35,27 @@ if (!defined('ABSPATH')) {
  * Start at version 1.0.3 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('EUROPARCEL_VERSION', '1.0.3');
+define('EUROPARCELCOM_WC_VERSION', '1.0.3');
 
 /**
  * Plugin constants
  */
-define('EUROPARCEL_API_URL', 'https://api.europarcel.com/api/');
-define('EUROPARCEL_ROOT_PATH', dirname(__FILE__));
+define('EUROPARCELCOM_WC_API_URL', 'https://api.europarcel.com/api/');
+define('EUROPARCELCOM_WC_ROOT_PATH', dirname(__FILE__));
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-europarcel-activator.php
  */
-require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-activator.php';
-register_activation_hook(__FILE__, array('Europarcel_Activator', 'activate'));
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-activator.php';
+register_activation_hook(__FILE__, array('EuroParcelComWC_Activator', 'activate'));
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-europarcel-deactivator.php
  */
-require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-deactivator.php';
-register_deactivation_hook(__FILE__, array('Europarcel_Deactivator', 'deactivate'));
+require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-deactivator.php';
+register_deactivation_hook(__FILE__, array('EuroParcelComWC_Deactivator', 'deactivate'));
 
 // Check if WooCommerce is active
 if (!function_exists('is_plugin_active')) {
@@ -82,17 +82,17 @@ add_action('before_woocommerce_init', function() {
  * 
  * @since    1.0.3
  */
-add_action('woocommerce_shipping_init', 'europarcel_shipping_init');
+add_action('woocommerce_shipping_init', 'europarcelcom_wc_shipping_init');
 
 /**
  * Load the shipping method class
  * 
  * @since    1.0.3
  */
-function europarcel_shipping_init() {
-    if (!class_exists('Europarcel_Plugin_Shipping_Method')) {
+function europarcelcom_wc_shipping_init() {
+    if (!class_exists('EuroParcelComWC_Shipping_Method')) {
         require_once plugin_dir_path(__FILE__) . 'includes/class-europarcel-shipping.php';
-        add_filter('woocommerce_shipping_methods', 'europarcel_shipping_add');
+        add_filter('woocommerce_shipping_methods', 'europarcelcom_wc_shipping_add');
     }
 }
 
@@ -103,8 +103,8 @@ function europarcel_shipping_init() {
  * @param    array    $methods    Existing shipping methods
  * @return   array                Updated shipping methods
  */
-function europarcel_shipping_add($methods) {
-    $methods['europarcel_shipping'] = 'Europarcel_Plugin_Shipping_Method';
+function europarcelcom_wc_shipping_add($methods) {
+    $methods['europarcelcom_wc_shipping'] = 'EuroParcelComWC_Shipping_Method';
     return $methods;
 }
 
@@ -126,11 +126,11 @@ add_action('admin_enqueue_scripts', function () {
  * 
  * @since    1.0.3
  */
-function europarcel_plugin_run() {
-    require_once EUROPARCEL_ROOT_PATH . '/includes/class-europarcel-main.php';
-    $plugin = new Europarcel_Main();
+function europarcelcom_wc_plugin_run() {
+    require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-main.php';
+    $plugin = new EuroParcelComWC_Main();
     $plugin->run();
 }
 
-europarcel_plugin_run();
+europarcelcom_wc_plugin_run();
 
