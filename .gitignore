@@ -24,6 +24,9 @@ yarn-error.log*
 *.temp
 *~
 
+# SVN
+europarcel-svn/
+
 # Log files
 *.log
 

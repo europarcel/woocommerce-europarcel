@@ -8,45 +8,48 @@ Stable tag: 1.0.4
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Connect your WooCommerce store with EuroParcel shipping platform for seamless courier integration in Romania.
+Save up to 50% on shipping costs with EuroParcel. Access negotiated rates from top Romanian couriers directly in your WooCommerce store.
 
 == Description ==
 
-EuroParcel Integration for WooCommerce provides a comprehensive shipping solution for Romanian online stores. Connect your WooCommerce store directly with EuroParcel's platform to offer multiple courier services and locker delivery options to your customers.
+EuroParcel helps Romanian online stores ship smarter. We negotiate bulk rates with all major couriers so you can offer competitive shipping without the hassle of managing multiple contracts.
 
-**Key Features:**
+[Get started at eawb.ro](https://eawb.ro) | [Manage integration](https://eawb.ro/dashboard/integrations) | [Contact us](https://eawb.ro/contact)
 
-* Multiple courier integration (Cargus, DPD, FanCourier, GLS, SameDay, and more)
-* Locker delivery options with interactive map selection
-* Support for both WooCommerce Classic and Block-based checkout
-* Real-time shipping cost calculation
-* Advanced shipping zone configuration
-* HPOS (High-Performance Order Storage) compatible
+**Why EuroParcel?**
+
+* **Save up to 50%** on shipping with pre-negotiated courier rates
+* **One integration, all couriers** – FAN Courier, DPD, Cargus, GLS, SameDay, FedEx and more
+* **Locker delivery** – Let customers pick up from EasyBox, FanBox or DPD lockers
+* **Daily reimbursements** – Get your cash-on-delivery payments faster
+* **98%+ on-time delivery** – Trusted by 9,000+ Romanian businesses
 
 **Supported Couriers:**
 
-* Cargus National
-* DPD Standard
-* FanCourier Standard
-* GLS National
+* FAN Courier
+* DPD
+* Cargus
+* GLS
 * SameDay
 * SameDay EasyBox
-* FanCourier Box
+* FedEx
+* Dragon Star
+* FanBox
 * DPD Box
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/europarcel-plugin` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Navigate to WooCommerce > Settings > Shipping to configure the plugin.
-4. Add EuroParcel shipping method to your shipping zones.
-5. Enter your EuroParcel API credentials to connect your account.
+1. Go to Plugins > Add New in your WordPress admin.
+2. Search for "EuroParcel".
+3. Click "Install Now" and then "Activate".
+4. Go to WooCommerce > Settings > Shipping and add EuroParcel to your shipping zones.
+5. Enter your EuroParcel API credentials from [eawb.ro/dashboard/integrations](https://eawb.ro/dashboard/integrations).
 
 == Frequently Asked Questions ==
 
 = Do I need an EuroParcel account? =
 
-Yes, you need an active EuroParcel account and API credentials to use this plugin.
+Yes, you need an active EuroParcel account. [Create a free account at eawb.ro](https://eawb.ro/inregistrare) and get your API credentials from the [integrations dashboard](https://eawb.ro/dashboard/integrations).
 
 = Does this plugin work with WooCommerce Blocks checkout? =
 
@@ -60,11 +63,15 @@ Yes, customers can select delivery to lockers using our interactive map interfac
 
 Yes, the plugin is fully compatible with WooCommerce High-Performance Order Storage.
 
+= Need help? =
+
+[Contact our support team](https://eawb.ro/contact) – we're happy to help!
+
 == Screenshots ==
 
-1. Plugin configuration settings
-2. Shipping method setup in WooCommerce
-3. Customer checkout with locker selection
+1. Plugin configuration settings in eAWB
+2. Shipping method setup in eAWB
+3. Shipping method setup in WooCommerce
 4. Interactive locker map interface
 
 == External Services ==
