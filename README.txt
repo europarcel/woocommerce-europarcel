@@ -4,7 +4,7 @@ Tags: woocommerce, shipping, europarcel, courier, romania
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -76,6 +76,15 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 
 == Changelog ==
 
+= 1.0.6 =
+* Fixed locker selection bug where wrong locker was saved to order meta
+* Fixed race condition between session update and checkout refresh
+
+= 1.0.5 =
+* Improved checkout integration for both Classic and Blocks checkout
+* Enhanced locker selection modal interface
+* Code refactoring and documentation improvements
+
 = 1.0.4 =
 * Added Dragon star courier support
 * Added FedEx courier support
@@ -90,6 +99,12 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 * HPOS compatibility
 
 == Upgrade Notice ==
+
+= 1.0.6 =
+Fixed locker selection bug where wrong locker was saved to order meta.
+
+= 1.0.5 =
+Improved checkout integration and locker selection modal.
 
 = 1.0.4 =
 Added support for Dragon star and FedEx couriers. Updated translations.

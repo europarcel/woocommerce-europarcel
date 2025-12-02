@@ -6,7 +6,7 @@
  * and locker selection workflow.
  *
  * @package    Europarcel
- * @since      1.0.5
+ * @since      1.0.6
  */
 
 (function ($) {
@@ -361,16 +361,12 @@
             if (event.data && event.data.type === 'locker-selected') {
                 const locker = event.data.locker;
 
-                updateWooCommerceFields(locker);
-
                 if (window.EuroparcelModal) {
                     window.EuroparcelModal.close();
                 }
 
-                // Use unified display function
                 displayLockerInfo(locker, true);
-
-                $("body").trigger("update_checkout");
+                updateWooCommerceFields(locker);
             }
         });
 
@@ -394,6 +390,7 @@
                         user_lockers = response.data['user_locker'];
                         order_lockers = response.data['order_lockers'];
                     }
+                    $("body").trigger("update_checkout");
                 }
             });
         }
