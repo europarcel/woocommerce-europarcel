@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
  * Supports both standard delivery and locker delivery options.
  *
  * @link       https://eawb.ro
- * @since      1.0.4
+ * @since      1.0.5
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -28,7 +28,7 @@ include_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-constants.
  * Handles admin configuration, shipping calculations, free shipping rules,
  * and both standard and locker delivery options.
  *
- * @since      1.0.4
+ * @since      1.0.5
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -41,7 +41,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
      * Sets up the shipping method with basic configuration including
      * instance ID, method title, description, and supported features.
      *
-     * @since    1.0.4
+     * @since    1.0.5
      * @param    int    $instance_id    WooCommerce shipping zone instance ID
      */
     public function __construct($instance_id = 0) {
@@ -66,7 +66,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
      * Loads the shipping method settings from WordPress options
      * and initializes the admin form fields.
      *
-     * @since    1.0.4
+     * @since    1.0.5
      */
     public function init() {
         if (!$this->instance_id) {
@@ -85,7 +85,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
      * service selection, pricing options, and free shipping rules.
      * Dynamically loads customer information when API key is provided.
      *
-     * @since    1.0.4
+     * @since    1.0.5
      */
     public function init_form_fields() {
         $this->form_fields = array(
@@ -274,7 +274,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
      * Handles the processing and saving of admin configuration options.
      * Validates nonce for security and processes each form field.
      *
-     * @since    1.0.4
+     * @since    1.0.5
      * @return   bool    True if options were saved successfully, false otherwise
      */
     public function process_admin_options() {
@@ -314,7 +314,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
      * free shipping rules, product class exclusions, and locker availability.
      * Creates shipping rates for both standard and locker delivery options.
      *
-     * @since    1.0.4
+     * @since    1.0.5
      * @param    array    $package    WooCommerce package data with contents and destination
      */
     public function calculate_shipping($package = array()) {

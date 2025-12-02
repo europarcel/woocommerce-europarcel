@@ -306,3 +306,11 @@ msgstr ""
 #: includes/class-europarcel-checkout.php:179
 msgid "✓ Locker selected -"
 msgstr ""
+
+#: europarcel-com.php:145
+msgid "Documentation"
+msgstr ""
+
+#: europarcel-com.php:146
+msgid "Video tutorial"
+msgstr ""

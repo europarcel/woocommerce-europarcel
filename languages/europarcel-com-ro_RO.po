@@ -3,7 +3,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.4\n"
+"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.5\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
 "POT-Creation-Date: 2025-11-27 19:43+0200\n"
 "PO-Revision-Date: 2025-09-11T12:00:00+00:00\n"
@@ -347,6 +347,14 @@ msgstr "✅ Conectat: %s"
 #: includes/class-europarcel-checkout.php:179
 msgid "✓ Locker selected -"
 msgstr "✓ Locker selectat -"
+
+#: europarcel-com.php:145
+msgid "Documentation"
+msgstr "Documentație"
+
+#: europarcel-com.php:146
+msgid "Video tutorial"
+msgstr "Tutorial video"
 
 # Custom Fields (Admin)
 #~ msgid "Fixed price"

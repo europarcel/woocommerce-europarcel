@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * Fired during plugin deactivation
  *
  * @link       https://europarcel.com
- * @since      1.0.4
+ * @since      1.0.5
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
- * @since      1.0.4
+ * @since      1.0.5
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -31,7 +31,7 @@ class EuroParcelComWC_Deactivator {
 	 *
 	 * Handles any cleanup tasks required when the plugin is deactivated.
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 */
 	public static function deactivate() {
 		// Nothing to do on deactivation

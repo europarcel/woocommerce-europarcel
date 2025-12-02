@@ -8,7 +8,7 @@
  * content details, and extra options for shipping requests.
  *
  * @link       https://eawb.ro
- * @since      1.0.4
+ * @since      1.0.5
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -28,7 +28,7 @@ include_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-constants.
  * Handles carrier selection, addressing, parcel details, and extra options
  * based on WooCommerce shipping instance configuration.
  *
- * @since      1.0.4
+ * @since      1.0.5
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -38,7 +38,7 @@ class EuroParcelComWC_RequestData {
 	/**
 	 * The WooCommerce shipping instance ID
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @access   private
 	 * @var      int    $instance_id    WooCommerce shipping method instance ID
 	 */
@@ -50,7 +50,7 @@ class EuroParcelComWC_RequestData {
 	 * Contains all data required for EuroParcel API shipping requests
 	 * including carrier info, addresses, content details, and extra options.
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @access   private
 	 * @var      array    $request_data    Complete shipping request data
 	 */
@@ -116,7 +116,7 @@ class EuroParcelComWC_RequestData {
 	 * configuration. Configures carriers, services, addresses, and default
 	 * parcel specifications.
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @param    int     $instance_id     WooCommerce shipping method instance ID
 	 * @param    bool    $allow_locker    Whether to allow locker delivery services
 	 */
@@ -175,7 +175,7 @@ class EuroParcelComWC_RequestData {
 	/**
 	 * Set the carrier ID for the shipping request
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @param    int    $carrier_id    The carrier ID from EuroParcel
 	 */
 	public function setCarrierId($carrier_id) {
@@ -185,7 +185,7 @@ class EuroParcelComWC_RequestData {
 	/**
 	 * Set the service ID for the shipping request
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @param    int    $service_id    The service ID (1=standard, 2=locker)
 	 */
 	public function setServiceId($service_id) {
@@ -195,7 +195,7 @@ class EuroParcelComWC_RequestData {
 	/**
 	 * Set the delivery address for the shipping request
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @param    array    $delivery_address    Complete delivery address data
 	 */
 	public function setDeliveryAddress($delivery_address) {
@@ -207,7 +207,7 @@ class EuroParcelComWC_RequestData {
 	 *
 	 * Returns the prepared shipping request data ready for EuroParcel API calls.
 	 *
-	 * @since    1.0.4
+	 * @since    1.0.5
 	 * @return   array    Complete shipping request data
 	 */
 	public function getData() {

@@ -8,13 +8,13 @@
  * that starts the plugin.
  *
  * @link              https://eawb.ro
- * @since             1.0.4
+ * @since             1.0.5
  * @package           Europarcel
  *
  * @wordpress-plugin
  * Plugin Name:       EuroParcel Integration for WooCommerce
  * Description:       Connect your WooCommerce store with eAWB shipping platform
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            EuroParcel
  * Author URI:        https://eawb.ro/
  * License:           GPL-2.0+
@@ -32,10 +32,10 @@ if (!defined('ABSPATH')) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.4 and use SemVer - https://semver.org
+ * Start at version 1.0.5 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('EUROPARCELCOM_WC_VERSION', '1.0.4');
+define('EUROPARCELCOM_WC_VERSION', '1.0.5');
 
 /**
  * Plugin constants
@@ -69,7 +69,7 @@ if (!is_plugin_active('woocommerce/woocommerce.php')) {
 /**
  * Declare compatibility with WooCommerce High-Performance Order Storage (HPOS)
  * 
- * @since    1.0.4
+ * @since    1.0.5
  */
 add_action('before_woocommerce_init', function() {
     if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
@@ -80,14 +80,14 @@ add_action('before_woocommerce_init', function() {
 /**
  * Initialize the shipping method
  * 
- * @since    1.0.4
+ * @since    1.0.5
  */
 add_action('woocommerce_shipping_init', 'europarcelcom_wc_shipping_init');
 
 /**
  * Load the shipping method class
  * 
- * @since    1.0.4
+ * @since    1.0.5
  */
 function europarcelcom_wc_shipping_init() {
     if (!class_exists('EuroParcelComWC_Shipping_Method')) {
@@ -99,7 +99,7 @@ function europarcelcom_wc_shipping_init() {
 /**
  * Register the shipping method with WooCommerce
  * 
- * @since    1.0.4
+ * @since    1.0.5
  * @param    array    $methods    Existing shipping methods
  * @return   array                Updated shipping methods
  */
@@ -111,20 +111,20 @@ function europarcelcom_wc_shipping_add($methods) {
 /**
  * Enqueue admin styles and scripts
  * 
- * @since    1.0.4
+ * @since    1.0.5
  */
 add_action('admin_enqueue_scripts', function () {
     $current_screen = get_current_screen();
     if (is_admin() && $current_screen && strpos($current_screen->id, 'woocommerce_page_wc-settings') !== false) {
-        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/europarcel-admin.css', __FILE__), array(), '1.0.4');
-        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/europarcel-admin.js', __FILE__), array('jquery', 'select2'), '1.0.4', true);
+        wp_enqueue_style('europarcel-admin', plugins_url('assets/css/europarcel-admin.css', __FILE__), array(), '1.0.5');
+        wp_enqueue_script('europarcel-admin', plugins_url('assets/js/europarcel-admin.js', __FILE__), array('jquery', 'select2'), '1.0.5', true);
     }
 });
 
 /**
  * Initialize the main plugin class
  * 
- * @since    1.0.4
+ * @since    1.0.5
  */
 function europarcelcom_wc_plugin_run() {
     require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-main.php';
@@ -133,4 +133,20 @@ function europarcelcom_wc_plugin_run() {
 }
 
 europarcelcom_wc_plugin_run();
+
+/**
+ * Add plugin row meta links (Documentation, Video Tutorial)
+ * 
+ * @since    1.0.5
+ * @param    array     $links    Existing meta links
+ * @param    string    $file     Plugin file path
+ * @return   array               Updated meta links
+ */
+add_filter('plugin_row_meta', function($links, $file) {
+    if (plugin_basename(__FILE__) === $file) {
+        $links[] = '<a href="https://www.eawb.ro/docs/woocommerce" target="_blank">' . esc_html__('Documentation', 'europarcel-com') . '</a>';
+        $links[] = '<a href="https://www.eawb.ro/docs/woocommerce" target="_blank">' . esc_html__('Video tutorial', 'europarcel-com') . '</a>';
+    }
+    return $links;
+}, 10, 2);
 
