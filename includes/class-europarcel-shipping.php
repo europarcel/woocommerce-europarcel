@@ -73,9 +73,10 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
             return;
         }
         $this->settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $this->instance_id . '_settings');
-        $this->init_form_fields();
         $this->title = $this->get_option('title');
-        //add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
+        if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'wc-settings') {
+            $this->init_form_fields();
+        }
     }
 
     /**
@@ -118,6 +119,25 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
         }
         $customer = new \EuroparcelComWCShipping\EuroParcelComWC_Customer($this->instance_id);
         $customer_info = $customer->getCustomerInfo();
+
+        if ($customer_info) {
+            $this->update_option('europarcel_customer', $customer_info);
+        } else {
+            return;
+        }
+
+        if (!$customer_info) {
+            $this->form_fields = array_merge($this->form_fields, array(
+                'europarcel_customer' => array(
+                    'title' => __('Connection Error', 'europarcel-com'),
+                    'type' => 'title',
+                    'description' => '<div class="notice notice-error inline"><p><strong>' .
+                    __('Unable to connect to eAWB.', 'europarcel-com') . '</strong> ' .
+                    __('Please verify your API key is correct and try again.', 'europarcel-com') .
+                    '</p></div>',
+            )));
+            return;
+        }
         if (!$customer_info) {
             $this->form_fields = array_merge($this->form_fields, array(
                 'europarcel_customer' => array(
@@ -289,8 +309,8 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
         }
         foreach ($form_fields as $key => $field) {
             try {
-                $data =$this->get_field_value($key, $field, $post_data);
-                $this->settings[$key] = !empty($data)?$data:(isset($field['default'])?$field['default']:'');
+                $data = $this->get_field_value($key, $field, $post_data);
+                $this->settings[$key] = !empty($data) ? $data : (isset($field['default']) ? $field['default'] : '');
             } catch (Exception $e) {
                 $this->add_error($e->getMessage());
             }
@@ -415,7 +435,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
                 ));
             } else {
                 $this->add_rate(array(
-                    'id' => $this->id . ':' . $this->instance_id  . '_fixed_h2h',
+                    'id' => $this->id . ':' . $this->instance_id . '_fixed_h2h',
                     'label' => $home_label,
                     'cost' => $customer->settings['fixed_price_h2h'],
                     'package' => $package,
