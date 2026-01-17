@@ -7,7 +7,7 @@
  * methods, authentication, error handling, and response processing.
  *
  * @link       https://eawb.ro
- * @since      1.0.6
+ * @since      1.0.7
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
  * Handles authentication, request formatting, and response processing
  * for both GET and POST requests with proper error handling.
  *
- * @since      1.0.6
+ * @since      1.0.7
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -35,7 +35,7 @@ class EuroParcelComWC_HttpRequest {
 	/**
 	 * The shipping method instance ID
 	 *
-	 * @since    1.0.6
+	 * @since    1.0.7
 	 * @access   private
 	 * @var      int    $instance_id    WooCommerce shipping method instance ID
 	 */
@@ -47,7 +47,7 @@ class EuroParcelComWC_HttpRequest {
 	 * Sets up the instance ID for accessing the correct
 	 * shipping method settings and API key.
 	 *
-	 * @since    1.0.6
+	 * @since    1.0.7
 	 * @param    int    $instance_id    WooCommerce shipping method instance ID
 	 */
 	public function __construct($instance_id) {
@@ -59,7 +59,7 @@ class EuroParcelComWC_HttpRequest {
 	 * Sends a GET request to the specified API endpoint with optional
 	 * query parameters and handles the response.
 	 *
-	 * @since    1.0.6
+	 * @since    1.0.7
 	 * @param    string    $function    API endpoint function name
 	 * @param    array     $data        Optional query parameters
 	 * @param    int       $timeout     Request timeout in seconds
@@ -88,7 +88,7 @@ class EuroParcelComWC_HttpRequest {
 	 * Sends a POST request to the specified API endpoint with
 	 * the provided data and handles the response.
 	 *
-	 * @since    1.0.6
+	 * @since    1.0.7
 	 * @param    string    $function    API endpoint function name
 	 * @param    array     $data        POST data to send
 	 * @param    int       $timeout     Request timeout in seconds
@@ -114,7 +114,7 @@ class EuroParcelComWC_HttpRequest {
 	 * Processes the API response, handles errors, and decodes JSON.
 	 * Throws exceptions for various error conditions.
 	 *
-	 * @since    1.0.6
+	 * @since    1.0.7
 	 * @param    array|WP_Error    $response    WordPress HTTP API response
 	 * @return   array             Decoded JSON response
 	 * @throws   \Exception        On various error conditions
@@ -154,7 +154,7 @@ class EuroParcelComWC_HttpRequest {
 	 * Retrieves the API key from settings and prepares
 	 * the headers required for EuroParcel API authentication.
 	 *
-	 * @since    1.0.6
+	 * @since    1.0.7
 	 * @return   array    HTTP headers array with API key
 	 */
 	private function getHeader() {

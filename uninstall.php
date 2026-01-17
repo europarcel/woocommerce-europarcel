@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
  * Removes plugin data and options from the database.
  *
  * @link       https://eawb.ro
- * @since      1.0.6
+ * @since      1.0.7
  *
  * @package    Europarcel
  */
