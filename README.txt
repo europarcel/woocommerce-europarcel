@@ -4,7 +4,7 @@ Tags: woocommerce, shipping, europarcel, courier, romania
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -76,6 +76,9 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 
 == Changelog ==
 
+= 1.0.8 =
+* Fixed: Price fields now accept decimal values (e.g., 15.99) instead of integers only
+
 = 1.0.7 =
 * Performance fix: Eliminated unnecessary API requests on cart and checkout pages
 
@@ -102,6 +105,9 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 * HPOS compatibility
 
 == Upgrade Notice ==
+
+= 1.0.8 =
+Bug fix: Price fields now accept decimal values.
 
 = 1.0.7 =
 Performance fix: Eliminated unnecessary API requests on cart and checkout pages.

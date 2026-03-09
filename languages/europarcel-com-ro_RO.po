@@ -3,7 +3,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.7\n"
+"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.8\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
 "POT-Creation-Date: 2026-01-17 19:00+0200\n"
 "PO-Revision-Date: 2026-01-17T19:00:00+00:00\n"
