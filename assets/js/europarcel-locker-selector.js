@@ -6,7 +6,7 @@
  * and locker selection workflow.
  *
  * @package    Europarcel
- * @since      1.0.8
+ * @since      1.0.9
  */
 
 (function ($) {
@@ -364,6 +364,13 @@
                 if (window.EuroparcelModal) {
                     window.EuroparcelModal.close();
                 }
+
+                // Hide any locker validation error notices (don't remove — React manages these nodes)
+                document.querySelectorAll('.wc-block-store-notice, .woocommerce-error, .wc-block-components-notice-banner').forEach(function(notice) {
+                    if (notice.textContent && notice.textContent.indexOf('locker') !== -1) {
+                        notice.style.display = 'none';
+                    }
+                });
 
                 displayLockerInfo(locker, true);
                 updateWooCommerceFields(locker);

@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
  * enqueuing for the checkout process.
  *
  * @link       https://eawb.ro
- * @since      1.0.8
+ * @since      1.0.9
  *
  * @package    Europarcel
  * @subpackage Europarcel/includes
@@ -27,7 +27,7 @@ require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-customer.p
  * Handles smart initialization, script enqueuing, and AJAX functionality
  * for locker selection and shipping updates.
  *
- * @since      1.0.8
+ * @since      1.0.9
  * @package    Europarcel
  * @subpackage Europarcel/includes
  * @author     EuroParcel <cs@europarcel.com>
@@ -37,7 +37,7 @@ class EuroParcelComWC_Checkout {
     /**
      * Whether the current checkout is blocks-based
      *
-     * @since    1.0.8
+     * @since    1.0.9
      * @access   private
      * @var      bool    $is_blocks_checkout    True if blocks checkout detected
      */
@@ -49,7 +49,7 @@ class EuroParcelComWC_Checkout {
      * Constructor kept minimal - actual initialization happens
      * via smart_init method to detect checkout type first.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     public function __construct() {
         // Constructor kept minimal - initialization happens via smart_init
@@ -61,7 +61,7 @@ class EuroParcelComWC_Checkout {
      * Automatically detects whether the current checkout is Classic
      * or Blocks-based and initializes the appropriate functionality.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     public function smart_init() {
         if (!is_checkout()) {
@@ -82,7 +82,7 @@ class EuroParcelComWC_Checkout {
      *
      * Enqueues scripts and localizes data for WooCommerce Blocks checkout.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     private function init_blocks_checkout() {
         wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), '1.0', true);
@@ -95,7 +95,7 @@ class EuroParcelComWC_Checkout {
      *
      * Enqueues scripts and localizes data for WooCommerce Classic checkout.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     private function init_classic_checkout() {
         wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), '1.0', true);
@@ -109,7 +109,7 @@ class EuroParcelComWC_Checkout {
      * Prepares AJAX data including user lockers, available carriers,
      * and checkout type information for JavaScript usage.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     private function localize_script_data() {
         $user_id = get_current_user_id();
@@ -190,7 +190,7 @@ class EuroParcelComWC_Checkout {
      * Retrieves available locker carriers for a shipping instance.
      * Validates nonce and returns carrier data via JSON response.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     public function wp_ajax_europarcelcomwc_get_locker_carriers() {
         try {
@@ -220,7 +220,7 @@ class EuroParcelComWC_Checkout {
      * Updates the selected locker information in session and user meta.
      * Validates nonce and sanitizes all input data.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     public function wp_ajax_europarcelcomwc_update_locker_shipping() {
         // Verify nonce for security
@@ -270,12 +270,102 @@ class EuroParcelComWC_Checkout {
     }
 
     /**
+     * Check if the chosen shipping method requires a locker and if one is selected
+     *
+     * Shared validation logic used by both Classic and Blocks checkout.
+     * Returns null if validation passes, or an error message string if it fails.
+     *
+     * @since    1.0.9
+     * @return   string|null    Error message if locker not selected, null if valid
+     */
+    public static function check_locker_selection() {
+        $chosen_methods = WC()->session->get('chosen_shipping_methods', []);
+
+        if (empty($chosen_methods)) {
+            return null;
+        }
+
+        $is_locker = false;
+        $instance_id = null;
+
+        foreach ($chosen_methods as $method) {
+            if (strpos($method, 'europarcelcom_wc_shipping') !== false && strpos($method, '_locker') !== false) {
+                $is_locker = true;
+                $parts = explode(':', $method);
+                if (isset($parts[1]) && preg_match('/^(\d+)/', $parts[1], $matches)) {
+                    $instance_id = $matches[1];
+                }
+                break;
+            }
+        }
+
+        if (!$is_locker) {
+            return null;
+        }
+
+        // Check session locker_info
+        $locker_info = WC()->session->get('locker_info');
+        if (!empty($locker_info) && !empty($locker_info['locker_id'])) {
+            if ($instance_id === null || (isset($locker_info['instance_id']) && $locker_info['instance_id'] == $instance_id)) {
+                return null;
+            }
+        }
+
+        // Check saved user lockers
+        $user_id = get_current_user_id();
+        if ($user_id && $instance_id !== null) {
+            $user_lockers = get_user_meta($user_id, 'europarcelcom_wc_carrier_lockers', true);
+            if (is_array($user_lockers) && isset($user_lockers[$instance_id]) && !empty($user_lockers[$instance_id]['locker_id'])) {
+                return null;
+            }
+        }
+
+        return __('Please select a delivery locker before placing your order.', 'europarcel-com');
+    }
+
+    /**
+     * Validate locker selection for classic checkout
+     *
+     * Hooked to woocommerce_after_checkout_validation.
+     *
+     * @since    1.0.9
+     * @param    array       $data      Checkout posted data
+     * @param    WP_Error    $errors    Validation errors object
+     */
+    public function validate_checkout_locker($data, $errors) {
+        $message = self::check_locker_selection();
+        if ($message) {
+            $errors->add('europarcel_locker_required', $message);
+        }
+    }
+
+    /**
+     * Validate locker selection for blocks checkout
+     *
+     * Hooked to woocommerce_store_api_checkout_update_order_from_request.
+     *
+     * @since    1.0.9
+     * @param    WC_Order                                          $order     The order being created
+     * @param    \Automattic\WooCommerce\StoreApi\Routes\V1\Checkout    $request   The checkout request
+     */
+    public function validate_blocks_checkout_locker($order, $request) {
+        $message = self::check_locker_selection();
+        if ($message) {
+            throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException(
+                'europarcel_locker_required',
+                $message,
+                400
+            );
+        }
+    }
+
+    /**
      * Display locker selection button for classic checkout
      *
      * Called by woocommerce_review_order_after_shipping hook to display
      * the locker selection button in classic checkout when applicable.
      *
-     * @since    1.0.8
+     * @since    1.0.9
      */
     public function classic_checkout_button() {
         if (!is_checkout()) {
