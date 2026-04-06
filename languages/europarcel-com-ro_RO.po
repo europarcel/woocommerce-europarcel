@@ -3,7 +3,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: EuroParcel Integration for WooCommerce 1.0.9\n"
+"Project-Id-Version: EuroParcel Integration for WooCommerce 1.1.0\n"
 "Report-Msgid-Bugs-To: cs@europarcel.com\n"
 "POT-Creation-Date: 2026-01-17 19:00+0200\n"
 "PO-Revision-Date: 2026-01-17T19:00:00+00:00\n"
@@ -116,6 +116,10 @@ msgstr "Transport EuroParcel"
 #: includes/class-europarcel-shipping.php:279
 msgid "Excluded Shipping Classes for Lockers"
 msgstr "Clase de expediere excluse pentru lockere"
+
+#: includes/class-europarcel-shipping.php:121
+msgid "Not taxable"
+msgstr "Netaxabil"
 
 #: includes/class-europarcel-constants.php:50
 msgid "Fan Courier - Delivery to address"
@@ -295,6 +299,14 @@ msgstr ""
 msgid "Service Configuration"
 msgstr "Configurarea serviciilor"
 
+#: includes/class-europarcel-shipping.php:114
+msgid "Tax Status"
+msgstr "Status taxare"
+
+#: includes/class-europarcel-shipping.php:120
+msgid "Taxable"
+msgstr "Taxabil"
+
 #: includes/class-europarcel-shipping.php:221
 msgid "Set the fixed shipping cost for address deliveries"
 msgstr "Setează costul fix de transport pentru livrările la adresă"
@@ -327,6 +339,12 @@ msgstr ""
 #: includes/class-europarcel-shipping.php:135
 msgid "Unable to connect to eAWB."
 msgstr "Nu se poate conecta la eAWB."
+
+#: includes/class-europarcel-shipping.php:116
+msgid ""
+"Whether or not shipping taxes are applied to the shipping cost"
+msgstr ""
+"Dacă taxele de transport se aplică sau nu asupra costului de transport"
 
 #: includes/class-europarcel-shipping.php:109
 msgid ""

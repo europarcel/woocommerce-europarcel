@@ -74,6 +74,7 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
         }
         $this->settings = get_option('woocommerce_europarcelcom_wc_shipping_' . $this->instance_id . '_settings');
         $this->title = $this->get_option('title');
+        $this->tax_status = $this->get_option('tax_status', 'taxable');
         if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'wc-settings') {
             $this->init_form_fields();
         }
@@ -108,6 +109,17 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
                 'type' => 'text',
                 'description' => __('Your API key for accessing the shipping services.<br><a href="https://www.eawb.ro/dashboard/integrations" target="_blank" class="button button-secondary" style="margin-top: 5px;">Get Your API Key Here →</a>', 'europarcel-com'),
                 'desc_tip' => false,
+            ),
+            'tax_status' => array(
+                'title' => __('Tax Status', 'europarcel-com'),
+                'type' => 'select',
+                'description' => __('Whether or not shipping taxes are applied to the shipping cost', 'europarcel-com'),
+                'desc_tip' => true,
+                'default' => 'taxable',
+                'options' => array(
+                    'taxable' => __('Taxable', 'europarcel-com'),
+                    'none' => __('Not taxable', 'europarcel-com'),
+                ),
             ),
         );
         $post_data = $this->get_post_data();

@@ -4,7 +4,7 @@ Tags: woocommerce, shipping, europarcel, courier, romania
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -76,6 +76,9 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 
 == Changelog ==
 
+= 1.1.0 =
+* Added Tax Status setting for shipping rates (Taxable / Not taxable) with backward-compatible default
+
 = 1.0.9 =
 * Added mandatory locker selection validation at checkout for both Classic and Blocks checkout
 * Customers must now select a delivery locker before placing an order when locker shipping is chosen
@@ -109,6 +112,9 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 * HPOS compatibility
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+New setting to control whether shipping costs are taxable or tax-exempt.
 
 = 1.0.9 =
 Locker selection is now mandatory at checkout when a locker shipping method is chosen.

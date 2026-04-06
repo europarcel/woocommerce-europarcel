@@ -103,6 +103,10 @@ msgstr ""
 msgid "Excluded Shipping Classes for Lockers"
 msgstr ""
 
+#: includes/class-europarcel-shipping.php:121
+msgid "Not taxable"
+msgstr ""
+
 #: includes/class-europarcel-constants.php:50
 msgid "Fan Courier - Delivery to address"
 msgstr ""
@@ -263,6 +267,14 @@ msgstr ""
 msgid "Service Configuration"
 msgstr ""
 
+#: includes/class-europarcel-shipping.php:114
+msgid "Tax Status"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:120
+msgid "Taxable"
+msgstr ""
+
 #: includes/class-europarcel-shipping.php:221
 msgid "Set the fixed shipping cost for address deliveries"
 msgstr ""
@@ -288,6 +300,11 @@ msgstr ""
 
 #: includes/class-europarcel-shipping.php:135
 msgid "Unable to connect to eAWB."
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:116
+msgid ""
+"Whether or not shipping taxes are applied to the shipping cost"
 msgstr ""
 
 #: includes/class-europarcel-shipping.php:109

@@ -36,7 +36,7 @@ class EuroParcelComWC_Activator {
 	public static function activate() {
 		// Store plugin version
 		if (!get_option('EUROPARCELCOM_WC_VERSION')) {
-			add_option('EUROPARCELCOM_WC_VERSION', '1.0.9');
+			add_option('EUROPARCELCOM_WC_VERSION', '1.1.0');
 		}
 		
 		flush_rewrite_rules();
