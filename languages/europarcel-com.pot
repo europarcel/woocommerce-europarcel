@@ -6,13 +6,125 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-17 19:00+0200\n"
+"POT-Creation-Date: 2026-04-22 12:00+0200\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: europarcel-com.php:170
+msgid "Documentation"
+msgstr ""
+
+#: europarcel-com.php:171
+msgid "Video tutorial"
+msgstr ""
+
+#. translators: %s: locker unique identifier
+#: includes/class-europarcel-admin-order.php:110
+#, php-format
+msgid "ID %s"
+msgstr ""
+
+#: includes/class-europarcel-admin-order.php:119
+msgid "See on map"
+msgstr ""
+
+#: includes/class-europarcel-admin-order.php:159
+msgid "Close"
+msgstr ""
+
+#: includes/class-europarcel-admin-order.php:160
+msgid "Locker location"
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:175
+#: includes/class-europarcel-checkout.php:419
+msgid "Select Locker"
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:176
+msgid "Modify Locker"
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:177
+msgid "Loading..."
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:178
+msgid "No couriers configured for locker delivery."
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:179
+msgid "✓ Locker selected -"
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:180
+msgid "Delivery locker selection"
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:199
+#: includes/class-europarcel-checkout.php:228
+msgid "Security check failed. Please refresh the page and try again."
+msgstr ""
+
+#: includes/class-europarcel-checkout.php:325
+msgid "Please select a delivery locker before placing your order."
+msgstr ""
+
+#: includes/class-europarcel-constants.php:48
+msgid "Cargus - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:49
+msgid "DPD - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:50
+msgid "Fan Courier - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:51
+msgid "GLS - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:52
+msgid "SameDay - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:53
+msgid "Dragon star - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:54
+msgid "FedEx - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:55
+msgid "Bookurier - Delivery to address"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:56
+msgid "Sameday EasyBox - Delivery to locker"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:57
+msgid "Fan Courier FANbox - Delivery to locker"
+msgstr ""
+
+#: includes/class-europarcel-constants.php:58
+msgid "DPD Box - Delivery to locker"
+msgstr ""
+
+#: includes/class-europarcel-http-request.php:124
+msgid "HTTP request failed: "
+msgstr ""
+
+#: includes/class-europarcel-http-request.php:128
+msgid "Invalid response format"
+msgstr ""
 
 #: includes/class-europarcel-http-request.php:137
 msgid "API Error"
@@ -22,189 +134,13 @@ msgstr ""
 msgid "API Error: HTTP"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:107
-msgid "API Key"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:195
-msgid "Available Shipping Services"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:94
-msgid "Basic Settings"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:55
-msgid "Bookurier - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:48
-msgid "Cargus - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:207
-msgid "Configure address delivery options and pricing"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:244
-msgid "Configure locker delivery options and pricing"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:96
-msgid "Configure your connection and basic plugin settings"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:175
-msgid "Configure your shipping addresses and available services"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:132
-msgid "Connection Error"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:49
-msgid "DPD - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:58
-msgid "DPD Box - Delivery to locker"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:189
-msgid ""
-"Default billing address for eAWB order imports<br><a href=\"https://"
-"www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" "
-"class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Billing "
-"Addresses →</a>"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:181
-msgid ""
-"Default sender address for eAWB order imports<br><a href=\"https://"
-"www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" "
-"class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Sender "
-"Addresses →</a>"
-msgstr ""
-
-#: includes/class-europarcel-checkout.php:180
-msgid "Delivery locker selection"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:53
-msgid "Dragon star - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:55
-#: includes/class-europarcel-shipping.php:103
-msgid "Europarcel Shipping"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:279
-msgid "Excluded Shipping Classes for Lockers"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:121
-msgid "Not taxable"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:50
-msgid "Fan Courier - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:57
-msgid "Fan Courier FANbox - Delivery to locker"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:54
-msgid "FedEx - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:225
-msgid "Free Home Delivery Minimum Order Amount"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:232
-msgid "Free Home Delivery Shipping Classes"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:262
-msgid "Free Locker Delivery Minimum Order Amount"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:269
-msgid "Free Locker Delivery Shipping Classes"
-msgstr ""
-
-#: includes/class-europarcel-constants.php:51
-msgid "GLS - Delivery to address"
-msgstr ""
-
-#: includes/class-europarcel-http-request.php:124
-msgid "HTTP request failed: "
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:211
-msgid "Home Delivery Display Name"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:218
-msgid "Home Delivery Fixed Price"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:205
-msgid "Home Delivery Settings"
-msgstr ""
-
 #: includes/class-europarcel-http-request.php:145
 msgid "Invalid JSON response: "
 msgstr ""
 
-#: includes/class-europarcel-http-request.php:128
-msgid "Invalid response format"
-msgstr ""
-
-#: includes/class-europarcel-checkout.php:177
-msgid "Loading..."
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:248
-msgid "Locker Delivery Display Name"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:255
-msgid "Locker Delivery Fixed Price"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:242
-msgid "Locker Delivery Settings"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:100
-msgid "Method Title"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:228
-msgid ""
-"Minimum order amount required to qualify for free home delivery (leave empty "
-"for no free shipping)"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:265
-msgid ""
-"Minimum order amount required to qualify for free locker delivery (leave "
-"empty for no free shipping)"
-msgstr ""
-
-#: includes/class-europarcel-checkout.php:176
-msgid "Modify Locker"
-msgstr ""
-
-#: includes/class-europarcel-checkout.php:178
-msgid "No couriers configured for locker delivery."
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:136
-msgid "Please verify your API key is correct and try again."
+#: includes/class-europarcel-shipping.php:55
+#: includes/class-europarcel-shipping.php:104
+msgid "Europarcel Shipping"
 msgstr ""
 
 #: includes/class-europarcel-shipping.php:56
@@ -213,121 +149,209 @@ msgid ""
 "locker services"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:187
-msgid "Primary Billing Address"
+#: includes/class-europarcel-shipping.php:95
+msgid "Basic Settings"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:179
-msgid "Primary Sender Address"
+#: includes/class-europarcel-shipping.php:97
+msgid "Configure your connection and basic plugin settings"
 msgstr ""
 
-#: includes/class-europarcel-constants.php:52
-msgid "SameDay - Delivery to address"
+#: includes/class-europarcel-shipping.php:101
+msgid "Method Title"
 msgstr ""
 
-#: includes/class-europarcel-constants.php:56
-msgid "Sameday EasyBox - Delivery to locker"
-msgstr ""
-
-#: includes/class-europarcel-checkout.php:199
-#: includes/class-europarcel-checkout.php:228
-msgid "Security check failed. Please refresh the page and try again."
-msgstr ""
-
-#: includes/class-europarcel-checkout.php:175
-#: includes/class-europarcel-checkout.php:327
-msgid "Select Locker"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:284
-msgid ""
-"Select shipping classes that should not have locker delivery options "
-"available (e.g., large products or items unsuitable for lockers)"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:237
-msgid ""
-"Select shipping classes that will always have free home delivery regardless "
-"of order amount"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:274
-msgid ""
-"Select shipping classes that will always have free locker delivery "
-"regardless of order amount"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:197
-msgid ""
-"Select the shipping services that will be available to your customers during "
-"checkout"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:173
-msgid "Service Configuration"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:114
-msgid "Tax Status"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:120
-msgid "Taxable"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:221
-msgid "Set the fixed shipping cost for address deliveries"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:258
-msgid "Set the fixed shipping cost for locker deliveries"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:214
-msgid ""
-"The shipping method name shown to customers at checkout for home delivery"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:251
-msgid ""
-"The shipping method name shown to customers at checkout for locker delivery"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:102
+#: includes/class-europarcel-shipping.php:103
 msgid ""
 "The shipping method title displayed in the admin shipping zones configuration"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:135
-msgid "Unable to connect to eAWB."
+#: includes/class-europarcel-shipping.php:108
+msgid "API Key"
 msgstr ""
 
-#: includes/class-europarcel-shipping.php:116
-msgid ""
-"Whether or not shipping taxes are applied to the shipping cost"
-msgstr ""
-
-#: includes/class-europarcel-shipping.php:109
+#: includes/class-europarcel-shipping.php:110
 msgid ""
 "Your API key for accessing the shipping services.<br><a href=\"https://"
 "www.eawb.ro/dashboard/integrations\" target=\"_blank\" class=\"button button-"
 "secondary\" style=\"margin-top: 5px;\">Get Your API Key Here →</a>"
 msgstr ""
 
+#: includes/class-europarcel-shipping.php:114
+msgid "Tax Status"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:116
+msgid "Whether or not shipping taxes are applied to the shipping cost"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:120
+msgid "Taxable"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:121
+msgid "Not taxable"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:144
+#: includes/class-europarcel-shipping.php:156
+msgid "Connection Error"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:147
+#: includes/class-europarcel-shipping.php:158
+msgid "Unable to connect to eAWB."
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:148
+#: includes/class-europarcel-shipping.php:158
+msgid "Please verify your API key is correct and try again."
+msgstr ""
+
 #. translators: %s: Customer name from API
-#: includes/class-europarcel-shipping.php:169
+#: includes/class-europarcel-shipping.php:181
 #, php-format
 msgid "✅ Connected: %s"
 msgstr ""
 
-#: includes/class-europarcel-checkout.php:179
-msgid "✓ Locker selected -"
+#: includes/class-europarcel-shipping.php:185
+msgid "Service Configuration"
 msgstr ""
 
-#: europarcel-com.php:142
-msgid "Documentation"
+#: includes/class-europarcel-shipping.php:187
+msgid "Configure your shipping addresses and available services"
 msgstr ""
 
-#: europarcel-com.php:143
-msgid "Video tutorial"
+#: includes/class-europarcel-shipping.php:191
+msgid "Primary Sender Address"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:193
+msgid ""
+"Default sender address for eAWB order imports<br><a href=\"https://"
+"www.eawb.ro/dashboard/addresses?tab=sender\" target=\"_blank\" "
+"class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Sender "
+"Addresses →</a>"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:199
+msgid "Primary Billing Address"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:201
+msgid ""
+"Default billing address for eAWB order imports<br><a href=\"https://"
+"www.eawb.ro/dashboard/addresses?tab=billing\" target=\"_blank\" "
+"class=\"button button-secondary\" style=\"margin-top: 5px;\">Manage Billing "
+"Addresses →</a>"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:207
+msgid "Available Shipping Services"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:209
+msgid ""
+"Select the shipping services that will be available to your customers during "
+"checkout"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:217
+msgid "Home Delivery Settings"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:219
+msgid "Configure address delivery options and pricing"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:223
+msgid "Home Delivery Display Name"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:226
+msgid ""
+"The shipping method name shown to customers at checkout for home delivery"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:230
+msgid "Home Delivery Fixed Price"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:233
+msgid "Set the fixed shipping cost for address deliveries"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:238
+msgid "Free Home Delivery Minimum Order Amount"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:241
+msgid ""
+"Minimum order amount required to qualify for free home delivery (leave empty "
+"for no free shipping)"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:246
+msgid "Free Home Delivery Shipping Classes"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:251
+msgid ""
+"Select shipping classes that will always have free home delivery regardless "
+"of order amount"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:256
+msgid "Locker Delivery Settings"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:258
+msgid "Configure locker delivery options and pricing"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:262
+msgid "Locker Delivery Display Name"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:265
+msgid ""
+"The shipping method name shown to customers at checkout for locker delivery"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:269
+msgid "Locker Delivery Fixed Price"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:272
+msgid "Set the fixed shipping cost for locker deliveries"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:277
+msgid "Free Locker Delivery Minimum Order Amount"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:280
+msgid ""
+"Minimum order amount required to qualify for free locker delivery (leave "
+"empty for no free shipping)"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:285
+msgid "Free Locker Delivery Shipping Classes"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:290
+msgid ""
+"Select shipping classes that will always have free locker delivery "
+"regardless of order amount"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:295
+msgid "Excluded Shipping Classes for Lockers"
+msgstr ""
+
+#: includes/class-europarcel-shipping.php:300
+msgid ""
+"Select shipping classes that should not have locker delivery options "
+"available (e.g., large products or items unsuitable for lockers)"
 msgstr ""

@@ -481,7 +481,9 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
                                 'instance_id' => $instance_id,
                                 'carrier_name' => $locker['carrier_name'],
                                 'locker_name' => $locker['locker_name'],
-                                'locker_address' => $locker['locker_address']
+                                'locker_address' => $locker['locker_address'],
+                                'locker_locality' => $locker['locker_locality'] ?? '',
+                                'locker_county' => $locker['locker_county'] ?? ''
                             ];
                             break;
                         }
@@ -494,6 +496,10 @@ class EuroParcelComWC_Shipping_Method extends WC_Shipping_Method {
                 'is_locker' => true,
                 'fixed_location_id' => $locker_info ? $locker_info['locker_id'] : 0,
                 'carrier_id' => $locker_info ? $locker_info['carrier_id'] : 0,
+                '_europarcel_locker_name'     => $locker_info ? ($locker_info['locker_name']     ?? '') : '',
+                '_europarcel_locker_address'  => $locker_info ? ($locker_info['locker_address']  ?? '') : '',
+                '_europarcel_locker_locality' => $locker_info ? ($locker_info['locker_locality'] ?? '') : '',
+                '_europarcel_locker_county'   => $locker_info ? ($locker_info['locker_county']   ?? '') : '',
             ];
 
             $locker_label = isset($customer->settings['title_for_h2l']) ? $customer->settings['title_for_h2l'] : 'Livrare la locker';

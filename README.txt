@@ -4,7 +4,7 @@ Tags: woocommerce, shipping, europarcel, courier, romania
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -76,6 +76,10 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 
 == Changelog ==
 
+= 1.1.1 =
+* Added eAWB details inline under the shipping line item on the admin order edit screen for locker orders: carrier name, locker name & ID, full address, and a "See on map" button that opens maps.europarcel.com centered on the locker
+* Locker name and address are now persisted on the order's shipping line item at checkout so they remain visible after the session expires
+
 = 1.1.0 =
 * Added Tax Status setting for shipping rates (Taxable / Not taxable) with backward-compatible default
 
@@ -112,6 +116,9 @@ Yes, the plugin is fully compatible with WooCommerce High-Performance Order Stor
 * HPOS compatibility
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+Admin order view now shows the chosen carrier, delivery type, and locker details for eAWB shipping.
 
 = 1.1.0 =
 New setting to control whether shipping costs are taxable or tax-exempt.

@@ -34,11 +34,10 @@ class EuroParcelComWC_Activator {
 	 * @since    1.0.9
 	 */
 	public static function activate() {
-		// Store plugin version
-		if (!get_option('EUROPARCELCOM_WC_VERSION')) {
-			add_option('EUROPARCELCOM_WC_VERSION', '1.1.0');
-		}
-		
+		// Store/refresh plugin version. Uses update_option so upgrades actually
+		// bump the stored value — add_option is a no-op if the option exists.
+		update_option('EUROPARCELCOM_WC_VERSION', EUROPARCELCOM_WC_VERSION);
+
 		flush_rewrite_rules();
 	}
 

@@ -85,8 +85,8 @@ class EuroParcelComWC_Checkout {
      * @since    1.0.9
      */
     private function init_blocks_checkout() {
-        wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcelcom-wc-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery', 'europarcelcom-wc-modal'), '2.8', true);
+        wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), EUROPARCELCOM_WC_VERSION, true);
+        wp_enqueue_script('europarcelcom-wc-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery', 'europarcelcom-wc-modal'), EUROPARCELCOM_WC_VERSION, true);
         $this->localize_script_data();
     }
 
@@ -98,8 +98,8 @@ class EuroParcelComWC_Checkout {
      * @since    1.0.9
      */
     private function init_classic_checkout() {
-        wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), '1.0', true);
-        wp_enqueue_script('europarcelcom-wc-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery', 'europarcelcom-wc-modal'), '2.8', true);
+        wp_enqueue_script('europarcelcom-wc-modal', plugins_url('assets/js/europarcel-modal.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery'), EUROPARCELCOM_WC_VERSION, true);
+        wp_enqueue_script('europarcelcom-wc-locker-selector', plugins_url('assets/js/europarcel-locker-selector.js', dirname(__DIR__) . '/europarcel-com.php'), array('jquery', 'europarcelcom-wc-modal'), EUROPARCELCOM_WC_VERSION, true);
         $this->localize_script_data();
     }
 
@@ -236,7 +236,9 @@ class EuroParcelComWC_Checkout {
                 'instance_id' => sanitize_text_field(wp_unslash($_POST['instance_id'])),
                 'carrier_name' => isset($_POST['carrier_name']) ? sanitize_text_field(wp_unslash($_POST['carrier_name'])) : '',
                 'locker_name' => isset($_POST['locker_name']) ? sanitize_text_field(wp_unslash($_POST['locker_name'])) : '',
-                'locker_address' => isset($_POST['locker_address']) ? sanitize_text_field(wp_unslash($_POST['locker_address'])) : ''
+                'locker_address' => isset($_POST['locker_address']) ? sanitize_text_field(wp_unslash($_POST['locker_address'])) : '',
+                'locker_locality' => isset($_POST['locker_locality']) ? sanitize_text_field(wp_unslash($_POST['locker_locality'])) : '',
+                'locker_county' => isset($_POST['locker_county']) ? sanitize_text_field(wp_unslash($_POST['locker_county'])) : ''
             );
             WC()->session->set('locker_info', $locker_info);
             

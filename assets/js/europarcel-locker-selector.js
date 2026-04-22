@@ -389,7 +389,9 @@
                     carrier_id: locker.carrier_id,
                     carrier_name: locker.carrier_name,
                     locker_name: locker.name,
-                    locker_address: locker.address
+                    locker_address: locker.address,
+                    locker_locality: locker.locality_name || '',
+                    locker_county: locker.county_name || ''
                 },
                 dataType: 'json',
                 success: function (response) {

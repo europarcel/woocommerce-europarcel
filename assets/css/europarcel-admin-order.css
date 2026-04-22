@@ -1,0 +1,155 @@
+.europarcel-item-details {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #dcdcde;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #2c3338;
+}
+
+.europarcel-item-details__row {
+    margin: 6px 0;
+}
+
+.europarcel-item-details__brand {
+    display: flex;
+    align-items: center;
+}
+
+.europarcel-item-details__brand-logo {
+    height: 28px;
+    width: auto;
+    display: block;
+}
+
+.europarcel-item-details__locker-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.europarcel-item-details__carrier-inline {
+    font-weight: 400;
+    color: #50575e;
+}
+
+.europarcel-item-details__address {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    color: #2c3338;
+}
+
+.europarcel-item-details__address .dashicons {
+    color: #787c82;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.europarcel-item-details__id {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: Consolas, Menlo, Monaco, monospace;
+    font-size: 12px;
+    color: #50575e;
+}
+
+.europarcel-item-details__id .dashicons {
+    color: #787c82;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    line-height: 1.4;
+}
+
+.europarcel-item-details__actions {
+    margin-top: 8px;
+}
+
+.europarcel-item-details .europarcel-see-on-map {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.europarcel-item-details .europarcel-see-on-map .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+}
+
+.europarcel-admin-map-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 22, 30, 0.78);
+    /* Matches the z-index WP core uses for the media modal — above the admin bar (99999) and WP pointers. */
+    z-index: 160000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.europarcel-admin-map-dialog {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+    width: 100%;
+    max-width: 1100px;
+    height: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+}
+
+.europarcel-admin-map-iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.europarcel-admin-map-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.15s ease-in-out;
+}
+
+.europarcel-admin-map-close:hover,
+.europarcel-admin-map-close:focus {
+    background: rgba(0, 0, 0, 0.85);
+    outline: none;
+}
+
+body.europarcel-admin-map-open {
+    overflow: hidden;
+}
+
+@media (max-width: 782px) {
+    .europarcel-admin-map-overlay {
+        padding: 0;
+    }
+
+    .europarcel-admin-map-dialog {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+}

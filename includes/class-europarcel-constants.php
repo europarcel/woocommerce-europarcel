@@ -81,63 +81,8 @@ class EuroParcelComWC_Constants {
 			// Convert string to array
 			$services = [$services];
 		}
-		$carrier_settings = [
-			'cargus_national' => [
-				'carrier' => 'cargus_national',
-				'carrier_id' => 1,
-				'service_id' => 1
-			],
-			'dpd_standard' => [
-				'carrier' => 'dpd_standard',
-				'carrier_id' => 2,
-				'service_id' => 1
-			],
-			'fan_courier' => [
-				'carrier' => 'fan_courier',
-				'carrier_id' => 3,
-				'service_id' => 1
-			],
-			'gls_national' => [
-				'carrier' => 'gls_national',
-				'carrier_id' => 4,
-				'service_id' => 1
-			],
-			'sameday' => [
-				'carrier' => 'sameday',
-				'carrier_id' => 6,
-				'service_id' => 1
-			],
-			'dsc' => [
-				'carrier' => 'dsc',
-				'carrier_id' => 14,
-				'service_id' => 1
-			],
-			'fedex' => [
-				'carrier' => 'fedex',
-				'carrier_id' => 78,
-				'service_id' => 1
-			],
-			'bookurier' => [
-				'carrier' => 'bookurier',
-				'carrier_id' => 5,
-				'service_id' => 1
-			],
-			'easybox' => [
-				'carrier' => 'easybox',
-				'carrier_id' => 6,
-				'service_id' => 2
-			],
-			'fanbox' => [
-				'carrier' => 'fanbox',
-				'carrier_id' => 3,
-				'service_id' => 2
-			],
-			'dpdbox' => [
-				'carrier' => 'dpdbox',
-				'carrier_id' => 2,
-				'service_id' => 2
-			],
-		];
+
+		$carrier_settings = self::carrier_settings_table();
 
 		$service_configurations = [];
 		foreach ($services as $service) {
@@ -148,4 +93,53 @@ class EuroParcelComWC_Constants {
 
 		return $service_configurations;
 	}
+
+	/**
+	 * Get the display name for a carrier ID
+	 *
+	 * Returns the carrier display name for a given carrier ID. Used by the
+	 * admin order view to label shipping lines without relying on stored names.
+	 * Brand names are returned verbatim (not translated) and are sourced from
+	 * the same table as getSettingsServices() so the two never drift.
+	 *
+	 * @since    1.1.1
+	 * @param    int    $carrier_id    Numeric carrier ID
+	 * @return   string    Carrier brand name, or empty string if unknown
+	 */
+	public static function get_carrier_name($carrier_id) {
+		$carrier_id = (int) $carrier_id;
+		foreach (self::carrier_settings_table() as $entry) {
+			if ((int) $entry['carrier_id'] === $carrier_id) {
+				return $entry['name'];
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Canonical carrier + service configuration table.
+	 *
+	 * Single source of truth keyed by service slug. Each entry carries the
+	 * carrier_id, service_id (1 = home, 2 = locker), and the carrier brand
+	 * name — so adding a new carrier or renaming one is a one-line edit here.
+	 *
+	 * @since    1.1.1
+	 * @return   array
+	 */
+	private static function carrier_settings_table() {
+		return [
+			'cargus_national' => ['carrier' => 'cargus_national', 'carrier_id' => 1,  'service_id' => 1, 'name' => 'Cargus'],
+			'dpd_standard'    => ['carrier' => 'dpd_standard',    'carrier_id' => 2,  'service_id' => 1, 'name' => 'DPD'],
+			'fan_courier'     => ['carrier' => 'fan_courier',     'carrier_id' => 3,  'service_id' => 1, 'name' => 'FAN Courier'],
+			'gls_national'    => ['carrier' => 'gls_national',    'carrier_id' => 4,  'service_id' => 1, 'name' => 'GLS'],
+			'sameday'         => ['carrier' => 'sameday',         'carrier_id' => 6,  'service_id' => 1, 'name' => 'Sameday'],
+			'dsc'             => ['carrier' => 'dsc',             'carrier_id' => 14, 'service_id' => 1, 'name' => 'Dragon Star'],
+			'fedex'           => ['carrier' => 'fedex',           'carrier_id' => 78, 'service_id' => 1, 'name' => 'FedEx'],
+			'bookurier'       => ['carrier' => 'bookurier',       'carrier_id' => 5,  'service_id' => 1, 'name' => 'Bookurier'],
+			'easybox'         => ['carrier' => 'easybox',         'carrier_id' => 6,  'service_id' => 2, 'name' => 'Sameday'],
+			'fanbox'          => ['carrier' => 'fanbox',          'carrier_id' => 3,  'service_id' => 2, 'name' => 'FAN Courier'],
+			'dpdbox'          => ['carrier' => 'dpdbox',          'carrier_id' => 2,  'service_id' => 2, 'name' => 'DPD'],
+		];
+	}
+
 }

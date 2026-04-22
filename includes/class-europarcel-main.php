@@ -68,11 +68,7 @@ class EuroParcelComWC_Main {
 	 * @since    1.0.9
 	 */
 	public function __construct() {
-		if (defined('EUROPARCELCOM_WC_VERSION')) {
-			$this->version = EUROPARCELCOM_WC_VERSION;
-		} else {
-			$this->version = '1.1.0';
-		}
+		$this->version = EUROPARCELCOM_WC_VERSION;
 		$this->plugin_name = 'europarcel-com';
 
 		$this->load_dependencies();
@@ -88,8 +84,10 @@ class EuroParcelComWC_Main {
 	 * @since    1.0.9
 	 */
 	private function load_dependencies() {
-            $plugin_path=plugin_dir_path(dirname(__FILE__));
 		require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-checkout.php';
+		if (is_admin()) {
+			require_once EUROPARCELCOM_WC_ROOT_PATH . '/includes/class-europarcel-admin-order.php';
+		}
 	}
 
 	/**
@@ -114,6 +112,14 @@ class EuroParcelComWC_Main {
 
 		// Classic checkout integration
 		add_action('woocommerce_review_order_after_shipping', array($this->checkout_handler, 'classic_checkout_button'));
+
+		// Admin order view — render locker details inline under the shipping line item
+		if (is_admin()) {
+			$admin_order = new EuroParcelComWC_Admin_Order();
+			add_action('woocommerce_after_order_itemmeta', array($admin_order, 'render_shipping_item_details'), 10, 3);
+			add_action('admin_enqueue_scripts', array($admin_order, 'enqueue_assets'));
+			add_filter('woocommerce_hidden_order_itemmeta', array($admin_order, 'filter_hidden_order_itemmeta'));
+		}
 
 		// Locker selection validation hooks are registered in europarcel-com.php for early loading compatibility
 	}
